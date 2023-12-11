@@ -290,6 +290,417 @@ height = 4.0
 sides = 12
 cone = true
 
-[node name="CSGBox3D" type="CSGBox3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -157.822, 9.43546, 54.9395)
+[node name="Tree10" type="CSGMesh3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -9.63209, 3.21479, 12.8275)
+
+[node name="Trunk" type="CSGCylinder3D" parent="Tree10"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -59.4727, 0.957448, 0)
+height = 3.0
+sides = 12
+
+[node name="Bottom" type="CSGCylinder3D" parent="Tree10"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -59.4727, 4.33017, 0)
+radius = 3.0
+height = 4.0
+sides = 12
+cone = true
+
+[node name="Middle" type="CSGCylinder3D" parent="Tree10"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -59.4727, 6.13402, 0)
+radius = 2.5
+height = 4.0
+sides = 12
+cone = true
+
+[node name="Top" type="CSGCylinder3D" parent="Tree10"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -59.4727, 7.85667, 0)
+radius = 2.0
+height = 4.0
+sides = 12
+cone = true
+
+[node name="Tree11" type="CSGMesh3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -12.9749, 3.21479, 20.131)
+
+[node name="Trunk" type="CSGCylinder3D" parent="Tree11"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -59.4727, 0.957448, 0)
+height = 3.0
+sides = 12
+
+[node name="Bottom" type="CSGCylinder3D" parent="Tree11"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -59.4727, 4.33017, 0)
+radius = 3.0
+height = 4.0
+sides = 12
+cone = true
+
+[node name="Middle" type="CSGCylinder3D" parent="Tree11"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -59.4727, 6.13402, 0)
+radius = 2.5
+height = 4.0
+sides = 12
+cone = true
+
+[node name="Top" type="CSGCylinder3D" parent="Tree11"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -59.4727, 7.85667, 0)
+radius = 2.0
+height = 4.0
+sides = 12
+cone = true
+
+[node name="Tree12" type="CSGMesh3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -9.63209, 3.21479, 27.4137)
+
+[node name="Trunk" type="CSGCylinder3D" parent="Tree12"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -59.4727, 0.957448, 0)
+height = 3.0
+sides = 12
+
+[node name="Bottom" type="CSGCylinder3D" parent="Tree12"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -59.4727, 4.33017, 0)
+radius = 3.0
+height = 4.0
+sides = 12
+cone = true
+
+[node name="Middle" type="CSGCylinder3D" parent="Tree12"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -59.4727, 6.13402, 0)
+radius = 2.5
+height = 4.0
+sides = 12
+cone = true
+
+[node name="Top" type="CSGCylinder3D" parent="Tree12"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -59.4727, 7.85667, 0)
+radius = 2.0
+height = 4.0
+sides = 12
+cone = true
+
+[node name="Tree13" type="CSGMesh3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -12.9749, 3.21479, 34.7172)
+
+[node name="Trunk" type="CSGCylinder3D" parent="Tree13"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -59.4727, 0.957448, 0)
+height = 3.0
+sides = 12
+
+[node name="Bottom" type="CSGCylinder3D" parent="Tree13"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -59.4727, 4.33017, 0)
+radius = 3.0
+height = 4.0
+sides = 12
+cone = true
+
+[node name="Middle" type="CSGCylinder3D" parent="Tree13"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -59.4727, 6.13402, 0)
+radius = 2.5
+height = 4.0
+sides = 12
+cone = true
+
+[node name="Top" type="CSGCylinder3D" parent="Tree13"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -59.4727, 7.85667, 0)
+radius = 2.0
+height = 4.0
+sides = 12
+cone = true
+
+[node name="Tree14" type="CSGMesh3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -40.8462, 3.21479, -26.282)
+
+[node name="Trunk" type="CSGCylinder3D" parent="Tree14"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -59.4727, 0.957448, 0)
+height = 3.0
+sides = 12
+
+[node name="Bottom" type="CSGCylinder3D" parent="Tree14"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -59.4727, 4.33017, 0)
+radius = 3.0
+height = 4.0
+sides = 12
+cone = true
+
+[node name="Middle" type="CSGCylinder3D" parent="Tree14"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -59.4727, 6.13402, 0)
+radius = 2.5
+height = 4.0
+sides = 12
+cone = true
+
+[node name="Top" type="CSGCylinder3D" parent="Tree14"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -59.4727, 7.85667, 0)
+radius = 2.0
+height = 4.0
+sides = 12
+cone = true
+
+[node name="Tree15" type="CSGMesh3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -44.189, 3.21479, -18.9786)
+
+[node name="Trunk" type="CSGCylinder3D" parent="Tree15"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -59.4727, 0.957448, 0)
+height = 3.0
+sides = 12
+
+[node name="Bottom" type="CSGCylinder3D" parent="Tree15"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -59.4727, 4.33017, 0)
+radius = 3.0
+height = 4.0
+sides = 12
+cone = true
+
+[node name="Middle" type="CSGCylinder3D" parent="Tree15"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -59.4727, 6.13402, 0)
+radius = 2.5
+height = 4.0
+sides = 12
+cone = true
+
+[node name="Top" type="CSGCylinder3D" parent="Tree15"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -59.4727, 7.85667, 0)
+radius = 2.0
+height = 4.0
+sides = 12
+cone = true
+
+[node name="Tree16" type="CSGMesh3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -40.8462, 3.21479, -11.6958)
+
+[node name="Trunk" type="CSGCylinder3D" parent="Tree16"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -59.4727, 0.957448, 0)
+height = 3.0
+sides = 12
+
+[node name="Bottom" type="CSGCylinder3D" parent="Tree16"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -59.4727, 4.33017, 0)
+radius = 3.0
+height = 4.0
+sides = 12
+cone = true
+
+[node name="Middle" type="CSGCylinder3D" parent="Tree16"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -59.4727, 6.13402, 0)
+radius = 2.5
+height = 4.0
+sides = 12
+cone = true
+
+[node name="Top" type="CSGCylinder3D" parent="Tree16"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -59.4727, 7.85667, 0)
+radius = 2.0
+height = 4.0
+sides = 12
+cone = true
+
+[node name="Tree17" type="CSGMesh3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -44.189, 3.21479, -4.39233)
+
+[node name="Trunk" type="CSGCylinder3D" parent="Tree17"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -59.4727, 0.957448, 0)
+height = 3.0
+sides = 12
+
+[node name="Bottom" type="CSGCylinder3D" parent="Tree17"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -59.4727, 4.33017, 0)
+radius = 3.0
+height = 4.0
+sides = 12
+cone = true
+
+[node name="Middle" type="CSGCylinder3D" parent="Tree17"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -59.4727, 6.13402, 0)
+radius = 2.5
+height = 4.0
+sides = 12
+cone = true
+
+[node name="Top" type="CSGCylinder3D" parent="Tree17"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -59.4727, 7.85667, 0)
+radius = 2.0
+height = 4.0
+sides = 12
+cone = true
+
+[node name="Tree18" type="CSGMesh3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.581276, 0, 36.2272)
+
+[node name="Trunk" type="CSGCylinder3D" parent="Tree18"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -59.4727, 0.957448, 0)
+height = 3.0
+sides = 12
+
+[node name="Bottom" type="CSGCylinder3D" parent="Tree18"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -59.4727, 4.33017, 0)
+radius = 3.0
+height = 4.0
+sides = 12
+cone = true
+
+[node name="Middle" type="CSGCylinder3D" parent="Tree18"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -59.4727, 6.13402, 0)
+radius = 2.5
+height = 4.0
+sides = 12
+cone = true
+
+[node name="Top" type="CSGCylinder3D" parent="Tree18"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -59.4727, 7.85667, 0)
+radius = 2.0
+height = 4.0
+sides = 12
+cone = true
+
+[node name="Tree19" type="CSGMesh3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.58128, 0, 30.7285)
+
+[node name="Trunk" type="CSGCylinder3D" parent="Tree19"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -59.4727, 0.957448, 0)
+height = 3.0
+sides = 12
+
+[node name="Bottom" type="CSGCylinder3D" parent="Tree19"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -59.4727, 4.33017, 0)
+radius = 3.0
+height = 4.0
+sides = 12
+cone = true
+
+[node name="Middle" type="CSGCylinder3D" parent="Tree19"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -59.4727, 6.13402, 0)
+radius = 2.5
+height = 4.0
+sides = 12
+cone = true
+
+[node name="Top" type="CSGCylinder3D" parent="Tree19"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -59.4727, 7.85667, 0)
+radius = 2.0
+height = 4.0
+sides = 12
+cone = true
+
+[node name="Tree20" type="CSGMesh3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.581276, 0, -37.211)
+
+[node name="Trunk" type="CSGCylinder3D" parent="Tree20"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -59.4727, 0.957448, 0)
+height = 3.0
+sides = 12
+
+[node name="Bottom" type="CSGCylinder3D" parent="Tree20"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -59.4727, 4.33017, 0)
+radius = 3.0
+height = 4.0
+sides = 12
+cone = true
+
+[node name="Middle" type="CSGCylinder3D" parent="Tree20"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -59.4727, 6.13402, 0)
+radius = 2.5
+height = 4.0
+sides = 12
+cone = true
+
+[node name="Top" type="CSGCylinder3D" parent="Tree20"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -59.4727, 7.85667, 0)
+radius = 2.0
+height = 4.0
+sides = 12
+cone = true
+
+[node name="Tree21" type="CSGMesh3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.58128, 0, -31.211)
+
+[node name="Trunk" type="CSGCylinder3D" parent="Tree21"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -59.4727, 0.957448, 0)
+height = 3.0
+sides = 12
+
+[node name="Bottom" type="CSGCylinder3D" parent="Tree21"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -59.4727, 4.33017, 0)
+radius = 3.0
+height = 4.0
+sides = 12
+cone = true
+
+[node name="Middle" type="CSGCylinder3D" parent="Tree21"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -59.4727, 6.13402, 0)
+radius = 2.5
+height = 4.0
+sides = 12
+cone = true
+
+[node name="Top" type="CSGCylinder3D" parent="Tree21"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -59.4727, 7.85667, 0)
+radius = 2.0
+height = 4.0
+sides = 12
+cone = true
+
+[node name="Floodlight1" type="CSGMesh3D" parent="."]
+transform = Transform3D(0.707107, 0, 0.707107, 0, 1, 0, -0.707107, 0, 0.707107, -28.1255, 0, -20.0676)
+
+[node name="CSGBox3D" type="CSGBox3D" parent="Floodlight1"]
+transform = Transform3D(0.5, 0, 0, 0, 15, 0, 0, 0, 0.5, -56.7592, 7.43128, 22.6166)
+
+[node name="CSGBox3D2" type="CSGBox3D" parent="Floodlight1"]
+transform = Transform3D(0.482963, 1.03528, 0, -0.12941, 3.8637, 0, 0, 0, 7, -55.9949, 15.1031, 22.6166)
+
+[node name="Floodlight2" type="CSGMesh3D" parent="."]
+transform = Transform3D(0.707107, 0, -0.707107, 0, 1, 0, 0.707107, 0, 0.707107, 3.60671, 0, -11.6919)
+
+[node name="CSGBox3D" type="CSGBox3D" parent="Floodlight2"]
+transform = Transform3D(0.5, 0, 0, 0, 15, 0, 0, 0, 0.5, -56.7592, 7.43128, 22.6166)
+
+[node name="CSGBox3D2" type="CSGBox3D" parent="Floodlight2"]
+transform = Transform3D(0.482963, 1.03528, 0, -0.12941, 3.8637, 0, 0, 0, 7, -55.9949, 15.1031, 22.6166)
+
+[node name="Floodlight3" type="CSGMesh3D" parent="."]
+transform = Transform3D(1, 0, 5.96046e-08, 0, 1, 0, -5.96046e-08, 0, 1, 3.60671, -2.05655, -22.4968)
+
+[node name="CSGBox3D" type="CSGBox3D" parent="Floodlight3"]
+transform = Transform3D(0.5, 0, 0, 0, 15, 0, 0, 0, 0.5, -56.7592, 7.43128, 22.6166)
+
+[node name="CSGBox3D2" type="CSGBox3D" parent="Floodlight3"]
+transform = Transform3D(0.482963, 1.03528, 0, -0.12941, 3.8637, 0, 0, 0, 7, -55.9949, 15.1031, 22.6166)
+
+[node name="Building1" type="CSGBox3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -157.822, 9.43546, -42.5142)
 size = Vector3(30, 20, 60)
+
+[node name="Building2" type="CSGBox3D" parent="."]
+transform = Transform3D(0.5, 0, 0, 0, 1, 0, 0, 0, 0.75, -115.278, 11.4263, 46.4365)
+size = Vector3(30, 20, 60)
+
+[node name="Hill1" type="CSGSphere3D" parent="."]
+transform = Transform3D(40, 0, 0, 0, 7, 0, 0, 0, 40, -76.7204, 0, 19.0523)
+
+[node name="Hill2" type="CSGSphere3D" parent="."]
+transform = Transform3D(50, 0, 0, 0, 7, 0, 0, 0, 50, -113.789, 0, -16.1659)
+
+[node name="Cone1" type="CSGMesh3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.221927, -0.0282536, -1.27585)
+
+[node name="CSGBox3D" type="CSGBox3D" parent="Cone1"]
+transform = Transform3D(0.4, 0, 0, 0, 0.01, 0, 0, 0, 0.4, 0, 0.0844666, 0)
+
+[node name="CSGCylinder3D" type="CSGCylinder3D" parent="Cone1"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.289474, 0)
+radius = 0.2
+height = 0.4
+cone = true
+
+[node name="BallLauncher1" type="CSGMesh3D" parent="."]
+
+[node name="CSGBox3D" type="CSGBox3D" parent="BallLauncher1"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.590308, 0)
+
+[node name="CSGCylinder3D" type="CSGCylinder3D" parent="BallLauncher1"]
+transform = Transform3D(0.258819, -0.965926, 0, 0.965926, 0.258819, 0, 0, 0, 1, -0.382521, 0.927746, 0)
+radius = 0.3
+height = 1.0
+
+[node name="CSGCylinder3D2" type="CSGCylinder3D" parent="BallLauncher1"]
+transform = Transform3D(0.724444, 0.194114, 0, -0.194114, 0.724444, 0, 0, 0, 0.75, 0, 1.35236, -0.144628)
+sides = 3
