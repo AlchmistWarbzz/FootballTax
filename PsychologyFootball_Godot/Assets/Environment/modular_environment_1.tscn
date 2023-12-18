@@ -1,0 +1,9 @@
+[gd_scene load_steps=3 format=3 uid="uid://coymvrqw1rf3y"]
+
+[ext_resource type="PackedScene" uid="uid://dowtcxiuibenc" path="res://Assets/ModularEnvironment1.glb" id="1_naxjv"]
+[ext_resource type="Material" uid="uid://twc115n28atx" path="res://Materials/M_Temp.tres" id="2_a3tmr"]
+
+[node name="ModularEnvironment1" instance=ExtResource("1_naxjv")]
+
+[node name="Plane" parent="." index="0"]
+surface_material_override/0 = ExtResource("2_a3tmr")
