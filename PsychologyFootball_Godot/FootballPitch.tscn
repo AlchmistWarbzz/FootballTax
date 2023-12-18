@@ -1,4 +1,14 @@
-[gd_scene format=3 uid="uid://cvy3pwmsrldbg"]
+[gd_scene load_steps=4 format=3 uid="uid://cvy3pwmsrldbg"]
+
+[ext_resource type="Material" uid="uid://t05uv2wgginr" path="res://Materials/M_TempHill.tres" id="1_kmkgr"]
+[ext_resource type="PackedScene" uid="uid://coymvrqw1rf3y" path="res://Assets/Environment/modular_environment_1.tscn" id="2_ia2tp"]
+
+[sub_resource type="Curve3D" id="Curve3D_gfqk1"]
+_data = {
+"points": PackedVector3Array(0, 0, 0, 0, 0, 0, 1.795, 0, 0, 0, 0.035, 0, 0, 0, 0, -0.225, 0, 0.77),
+"tilts": PackedFloat32Array(0, 0)
+}
+point_count = 2
 
 [node name="Node3D" type="Node3D"]
 
@@ -11,6 +21,7 @@ size = Vector3(50, 0.1, 30)
 
 [node name="Floor1" type="CSGBox3D" parent="."]
 transform = Transform3D(6, 0, 0, 0, 6, 0, 0, 0, 6, 0, -0.5, 0)
+visible = false
 size = Vector3(100, 0.1, 69)
 
 [node name="Pitch3" type="CSGBox3D" parent="."]
@@ -1275,30 +1286,48 @@ size = Vector3(30, 20, 60)
 
 [node name="Hill1" type="CSGSphere3D" parent="."]
 transform = Transform3D(40, 0, 0, 0, 7, 0, 0, 0, 40, -71.3193, 0, 11.3433)
+visible = false
+material = ExtResource("1_kmkgr")
 
 [node name="Hill2" type="CSGSphere3D" parent="."]
 transform = Transform3D(50, 0, 0, 0, 12.2754, 0, 0, 0, 50, -113.938, -1.56138, -15.9148)
+visible = false
+material = ExtResource("1_kmkgr")
 
 [node name="Hill3" type="CSGSphere3D" parent="."]
 transform = Transform3D(100, 0, 0, 0, 25, 0, 0, 0, 100, -175.127, -1.65175, -16.1659)
+visible = false
+material = ExtResource("1_kmkgr")
 
 [node name="Hill4" type="CSGSphere3D" parent="."]
 transform = Transform3D(100, 0, 0, 0, 25, 0, 0, 0, 100, -138.798, -1.65175, -42.878)
+visible = false
+material = ExtResource("1_kmkgr")
 
 [node name="Hill5" type="CSGSphere3D" parent="."]
 transform = Transform3D(100, 0, 0, 0, 25, 0, 0, 0, 100, -100.041, -1.78973, -82.9571)
+visible = false
+material = ExtResource("1_kmkgr")
 
 [node name="Hill6" type="CSGSphere3D" parent="."]
 transform = Transform3D(-12.941, 0, 48.2963, 0, 12.2754, 0, -48.2963, 0, -12.941, -7.49742, -1.56138, 81.5722)
+visible = false
+material = ExtResource("1_kmkgr")
 
 [node name="Hill7" type="CSGSphere3D" parent="."]
 transform = Transform3D(-25.8819, 0, 96.5926, 0, 25, 0, -96.5926, 0, -25.8819, 8.09691, -1.65175, 140.741)
+visible = false
+material = ExtResource("1_kmkgr")
 
 [node name="Hill8" type="CSGSphere3D" parent="."]
 transform = Transform3D(-25.8819, 0, 96.5926, 0, 25, 0, -96.5926, 0, -25.8819, -27.1076, -1.65175, 112.564)
+visible = false
+material = ExtResource("1_kmkgr")
 
 [node name="Hill9" type="CSGSphere3D" parent="."]
 transform = Transform3D(-25.8819, 0, 96.5926, 0, 25, 0, -96.5926, 0, -25.8819, -75.8521, -1.78973, 85.5006)
+visible = false
+material = ExtResource("1_kmkgr")
 
 [node name="Cone1" type="CSGMesh3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.221927, -0.0282536, -1.27585)
@@ -1367,3 +1396,21 @@ transform = Transform3D(0, 0, 10, 0, 10, 0, -20, 0, 0, -75.9121, 11.4611, -81.85
 
 [node name="House12" type="CSGBox3D" parent="."]
 transform = Transform3D(14.1421, 0, 7.07107, 0, 10, 0, -14.1421, 0, 7.07107, -93.984, 12.0803, -63.7787)
+
+[node name="Path3D" type="Path3D" parent="."]
+transform = Transform3D(100, 0, 0, 0, 25, 0, 0, 0, 100, 106.682, 21.8467, -29.7021)
+curve = SubResource("Curve3D_gfqk1")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+
+[node name="ModularEnvironment1" parent="." instance=ExtResource("2_ia2tp")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.380342, 0)
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(0.602497, 0.0262607, -0.797689, -0.75307, 0.349746, -0.557282, 0.264354, 0.936476, 0.230497, 16.9199, 88.5458, 38.1219)
+light_energy = 0.288
+light_angular_distance = 45.41
+
+[node name="DirectionalLight3D2" type="DirectionalLight3D" parent="."]
+transform = Transform3D(0.560485, 0.334662, -0.757534, -0.199051, 0.942338, 0.269031, 0.803888, -1.19789e-08, 0.594781, 16.9199, 88.5458, 38.1219)
+light_angular_distance = 12.84
