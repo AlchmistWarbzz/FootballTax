@@ -1,7 +1,22 @@
-[gd_scene load_steps=4 format=3 uid="uid://cvy3pwmsrldbg"]
+[gd_scene load_steps=19 format=3 uid="uid://cvy3pwmsrldbg"]
 
 [ext_resource type="Material" uid="uid://t05uv2wgginr" path="res://Materials/M_TempHill.tres" id="1_kmkgr"]
-[ext_resource type="PackedScene" uid="uid://coymvrqw1rf3y" path="res://Assets/Environment/modular_environment_1.tscn" id="2_ia2tp"]
+[ext_resource type="Material" uid="uid://cmggx3m1r0r7k" path="res://Materials/M_TempGrass.tres" id="3_lvdvd"]
+[ext_resource type="ArrayMesh" uid="uid://347ph4boc7rd" path="res://Assets/Environment/SM_ENV__Dirt MountT1.tres" id="3_nbxm6"]
+[ext_resource type="ArrayMesh" uid="uid://b1mx0an1170m8" path="res://Assets/Environment/SM_ENV__Dirt MountT2.tres" id="4_wpqbd"]
+[ext_resource type="ArrayMesh" uid="uid://di7vt3k11dq5f" path="res://Assets/Environment/SM_ENV__Dirt MountT3.tres" id="5_iiqm3"]
+[ext_resource type="ArrayMesh" uid="uid://b1jcr2rmb7qhm" path="res://Assets/Environment/SM_ENV__Dirt MountT4.tres" id="6_5qvoi"]
+[ext_resource type="ArrayMesh" uid="uid://cjikp6hgp7v13" path="res://Assets/Environment/SM_ENV__Dirt MountT5.tres" id="7_2qsfm"]
+[ext_resource type="ArrayMesh" uid="uid://dd6p4jjvqev3u" path="res://Assets/Environment/SM_ENV__Dirt MountT6.tres" id="8_7kack"]
+[ext_resource type="ArrayMesh" uid="uid://ypffltvy2gtc" path="res://Assets/Environment/SM_ENV__RockT1.tres" id="9_nkt6y"]
+[ext_resource type="Material" uid="uid://x10arfulfx5e" path="res://Materials/M_TempRock.tres" id="10_0p6br"]
+[ext_resource type="ArrayMesh" uid="uid://nihsnndtvfdn" path="res://Assets/Environment/SM_ENV__RockT2.tres" id="10_7k68u"]
+[ext_resource type="ArrayMesh" uid="uid://cu2mifu43tl5v" path="res://Assets/Environment/SM_ENV__RockT3.tres" id="11_i1466"]
+[ext_resource type="ArrayMesh" uid="uid://udfmy80b74em" path="res://Assets/Environment/SM_ENV__RockT4.tres" id="12_x6piq"]
+[ext_resource type="ArrayMesh" uid="uid://bsnh4y5v7plvv" path="res://Assets/Environment/SM_ENV__HedgeS.res" id="13_b2c7o"]
+[ext_resource type="ArrayMesh" uid="uid://elubhltt8das" path="res://Assets/Environment/SM_ENV__HedgeL.res" id="14_ensvx"]
+[ext_resource type="Material" uid="uid://dodlmwsjuysu0" path="res://Materials/M_TempHedge.tres" id="15_e6ir0"]
+[ext_resource type="ArrayMesh" uid="uid://bq6qqtmp2xsjc" path="res://Assets/Environment/Landscape/Landscape_Plane_001.res" id="17_enhrl"]
 
 [sub_resource type="Curve3D" id="Curve3D_gfqk1"]
 _data = {
@@ -1401,11 +1416,6 @@ transform = Transform3D(14.1421, 0, 7.07107, 0, 10, 0, -14.1421, 0, 7.07107, -93
 transform = Transform3D(100, 0, 0, 0, 25, 0, 0, 0, 100, 106.682, 21.8467, -29.7021)
 curve = SubResource("Curve3D_gfqk1")
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
-
-[node name="ModularEnvironment1" parent="." instance=ExtResource("2_ia2tp")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.380342, 0)
-
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
 transform = Transform3D(0.602497, 0.0262607, -0.797689, -0.75307, 0.349746, -0.557282, 0.264354, 0.936476, 0.230497, 16.9199, 88.5458, 38.1219)
 light_energy = 0.288
@@ -1414,3 +1424,67 @@ light_angular_distance = 45.41
 [node name="DirectionalLight3D2" type="DirectionalLight3D" parent="."]
 transform = Transform3D(0.560485, 0.334662, -0.757534, -0.199051, 0.942338, 0.269031, 0.803888, -1.19789e-08, 0.594781, 16.9199, 88.5458, 38.1219)
 light_angular_distance = 12.84
+
+[node name="SmEnvDirtMountT1" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 113.146, 0, -81.9385)
+mesh = ExtResource("3_nbxm6")
+surface_material_override/0 = ExtResource("3_lvdvd")
+
+[node name="SmEnvDirtMountT2" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 105.731, 0, -135.862)
+mesh = ExtResource("4_wpqbd")
+surface_material_override/0 = ExtResource("3_lvdvd")
+
+[node name="SmEnvDirtMountT3" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 152.523, 0, -105.246)
+mesh = ExtResource("5_iiqm3")
+surface_material_override/0 = ExtResource("3_lvdvd")
+
+[node name="SmEnvDirtMountT4" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 150.157, 0, -158.986)
+mesh = ExtResource("6_5qvoi")
+surface_material_override/0 = ExtResource("3_lvdvd")
+
+[node name="SmEnvDirtMountT5" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 159.435, 0, -195.343)
+mesh = ExtResource("7_2qsfm")
+surface_material_override/0 = ExtResource("3_lvdvd")
+
+[node name="SmEnvDirtMountT6" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 114.873, 0, -191.452)
+mesh = ExtResource("8_7kack")
+surface_material_override/0 = ExtResource("3_lvdvd")
+
+[node name="SmEnvRockT1" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 73.9719, -0.599335, -117.718)
+mesh = ExtResource("9_nkt6y")
+surface_material_override/0 = ExtResource("10_0p6br")
+
+[node name="SmEnvRockT2" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 73.9719, -0.599335, -140.767)
+mesh = ExtResource("10_7k68u")
+surface_material_override/0 = ExtResource("10_0p6br")
+
+[node name="SmEnvRockT3" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 73.9719, -0.599335, -163.576)
+mesh = ExtResource("11_i1466")
+surface_material_override/0 = ExtResource("10_0p6br")
+
+[node name="SmEnvRockT4" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 73.9719, -0.599335, -191.865)
+mesh = ExtResource("12_x6piq")
+surface_material_override/0 = ExtResource("10_0p6br")
+
+[node name="SmEnvHedgeS" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 53.0329, 0.079277, -186.071)
+mesh = ExtResource("13_b2c7o")
+surface_material_override/0 = ExtResource("15_e6ir0")
+
+[node name="SmEnvHedgeL" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 50.0971, 2.65415, -157.948)
+mesh = ExtResource("14_ensvx")
+surface_material_override/0 = ExtResource("15_e6ir0")
+
+[node name="LandscapePlane001" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.1, 0)
+mesh = ExtResource("17_enhrl")
