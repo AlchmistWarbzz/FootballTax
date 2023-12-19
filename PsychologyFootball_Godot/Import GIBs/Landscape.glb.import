@@ -4,12 +4,12 @@ importer="scene"
 importer_version=1
 type="PackedScene"
 uid="uid://dowtcxiuibenc"
-path="res://.godot/imported/ModularEnvironment1.glb-52007e6ac2611ab365b0f479429ab06a.scn"
+path="res://.godot/imported/Landscape.glb-5b252e1b7423885a991aaeeedad46ea1.scn"
 
 [deps]
 
-source_file="res://Assets/ModularEnvironment1.glb"
-dest_files=["res://.godot/imported/ModularEnvironment1.glb-52007e6ac2611ab365b0f479429ab06a.scn"]
+source_file="res://Import GIBs/Landscape.glb"
+dest_files=["res://.godot/imported/Landscape.glb-5b252e1b7423885a991aaeeedad46ea1.scn"]
 
 [params]
 
