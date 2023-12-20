@@ -39,12 +39,9 @@ transform = Transform3D(6, 0, 0, 0, 6, 0, 0, 0, 6, 0, -0.5, 0)
 visible = false
 size = Vector3(100, 0.1, 69)
 
-[node name="Pitch3" type="CSGBox3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -219.245, 5.70186, -17.6506)
-size = Vector3(100, 0.1, 69)
-
 [node name="Wall1" type="CSGBox3D" parent="."]
 transform = Transform3D(-4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0, 1, -50, 2.5, 0)
+visible = false
 size = Vector3(5, 0.1, 69)
 
 [node name="Wall2" type="CSGBox3D" parent="."]
@@ -57,10 +54,12 @@ size = Vector3(5, 0.1, 25)
 
 [node name="Wall3" type="CSGBox3D" parent="."]
 transform = Transform3D(1.91069e-15, 4.37114e-08, 1, 1, -4.37114e-08, 0, 4.37114e-08, 1, -4.37114e-08, 0, 2, 34.5)
+visible = false
 size = Vector3(4, 0.1, 100)
 
 [node name="Wall4" type="CSGBox3D" parent="."]
 transform = Transform3D(1.91069e-15, 4.37114e-08, 1, 1, -4.37114e-08, 0, 4.37114e-08, 1, -4.37114e-08, 0, 2, -34.5)
+visible = false
 size = Vector3(4, 0.1, 100)
 
 [node name="Wall6" type="CSGBox3D" parent="."]
@@ -337,7 +336,7 @@ sides = 12
 cone = true
 
 [node name="Tree10" type="CSGMesh3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -9.63209, 3.21479, 5.10329)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -11.9411, 3.92705, 5.10329)
 
 [node name="Trunk" type="CSGCylinder3D" parent="Tree10"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -59.4727, 0.957448, 0)
@@ -366,7 +365,7 @@ sides = 12
 cone = true
 
 [node name="Tree11" type="CSGMesh3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -12.9749, 3.21479, 12.4068)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -15.2839, 3.92705, 12.4068)
 
 [node name="Trunk" type="CSGCylinder3D" parent="Tree11"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -59.4727, 0.957448, 0)
@@ -395,7 +394,7 @@ sides = 12
 cone = true
 
 [node name="Tree12" type="CSGMesh3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -9.63209, 3.21479, 19.6895)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -11.9411, 3.92705, 19.6895)
 
 [node name="Trunk" type="CSGCylinder3D" parent="Tree12"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -59.4727, 0.957448, 0)
@@ -424,7 +423,7 @@ sides = 12
 cone = true
 
 [node name="Tree13" type="CSGMesh3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -12.9749, 3.21479, 26.993)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -15.2839, 3.92705, 26.993)
 
 [node name="Trunk" type="CSGCylinder3D" parent="Tree13"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -59.4727, 0.957448, 0)
@@ -453,7 +452,7 @@ sides = 12
 cone = true
 
 [node name="Tree14" type="CSGMesh3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -40.8462, 3.21479, -26.282)
+transform = Transform3D(0.95876, 0, -0.284216, 0, 1, 0, 0.284216, 0, 0.95876, -44.9631, 7.22682, -10.4077)
 
 [node name="Trunk" type="CSGCylinder3D" parent="Tree14"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -59.4727, 0.957448, 0)
@@ -482,7 +481,7 @@ sides = 12
 cone = true
 
 [node name="Tree15" type="CSGMesh3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -44.189, 3.21479, -18.9786)
+transform = Transform3D(0.95876, 0, -0.284216, 0, 1, 0, 0.284216, 0, 0.95876, -50.2438, 7.22682, -4.35553)
 
 [node name="Trunk" type="CSGCylinder3D" parent="Tree15"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -59.4727, 0.957448, 0)
@@ -685,7 +684,7 @@ sides = 12
 cone = true
 
 [node name="Tree22" type="CSGMesh3D" parent="."]
-transform = Transform3D(0.866025, 0, -0.5, 0, 1, 0, 0.5, 0, 0.866025, -35.5977, 6.02916, -23.237)
+transform = Transform3D(0.866025, 0, -0.5, 0, 1, 0, 0.5, 0, 0.866025, -35.5977, 7.65677, -23.237)
 
 [node name="Trunk" type="CSGCylinder3D" parent="Tree22"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -59.4727, 0.957448, 0)
@@ -714,7 +713,7 @@ sides = 12
 cone = true
 
 [node name="Tree23" type="CSGMesh3D" parent="."]
-transform = Transform3D(0.866025, 0, -0.5, 0, 1, 0, 0.5, 0, 0.866025, -42.1444, 5.86516, -18.5834)
+transform = Transform3D(0.866025, 0, -0.5, 0, 1, 0, 0.5, 0, 0.866025, -42.1444, 7.49277, -18.5834)
 
 [node name="Trunk" type="CSGCylinder3D" parent="Tree23"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -59.4727, 0.957448, 0)
@@ -743,7 +742,7 @@ sides = 12
 cone = true
 
 [node name="Tree24" type="CSGMesh3D" parent="."]
-transform = Transform3D(0.866025, 0, -0.5, 0, 1, 0, 0.5, 0, 0.866025, -42.8908, 3.21479, -10.605)
+transform = Transform3D(0.866025, 0, -0.5, 0, 1, 0, 0.5, 0, 0.866025, -36.2977, 7.20608, -8.80275)
 
 [node name="Trunk" type="CSGCylinder3D" parent="Tree24"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -59.4727, 0.957448, 0)
@@ -772,7 +771,7 @@ sides = 12
 cone = true
 
 [node name="Tree25" type="CSGMesh3D" parent="."]
-transform = Transform3D(0.866025, 0, -0.5, 0, 1, 0, 0.5, 0, 0.866025, -49.4375, 3.21479, -5.95137)
+transform = Transform3D(0.866025, 0, -0.5, 0, 1, 0, 0.5, 0, 0.866025, -41.1861, 7.20608, -3.31187)
 
 [node name="Trunk" type="CSGCylinder3D" parent="Tree25"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -59.4727, 0.957448, 0)
@@ -1292,11 +1291,11 @@ transform = Transform3D(0.5, 0, 0, 0, 15, 0, 0, 0, 0.5, -56.7592, 7.43128, 22.61
 transform = Transform3D(0.482963, 1.03528, 0, -0.12941, 3.8637, 0, 0, 0, 7, -55.9949, 15.1031, 22.6166)
 
 [node name="Building1" type="CSGBox3D" parent="."]
-transform = Transform3D(0.482963, 0, 0.194114, 0, 1, 0, -0.12941, 0, 0.724444, -125.755, 9.28998, 34.1828)
+transform = Transform3D(0.482963, 0, 0.194114, 0, 1, 0, -0.12941, 0, 0.724444, -153.736, 9.28998, 67.5826)
 size = Vector3(30, 20, 60)
 
 [node name="Building2" type="CSGBox3D" parent="."]
-transform = Transform3D(0.482963, 0, 0.0647048, 0, 1, 0, -0.12941, 0, 0.241481, -129.082, 24.5154, 35.0742)
+transform = Transform3D(0.482963, 0, 0.0647048, 0, 1, 0, -0.12941, 0, 0.241481, -157.063, 24.5154, 68.474)
 size = Vector3(30, 20, 60)
 
 [node name="Hill1" type="CSGSphere3D" parent="."]
@@ -1371,7 +1370,7 @@ transform = Transform3D(0.965926, 0.258819, 0, -0.258819, 0.965926, 0, 0, 0, 1, 
 size = Vector3(0.5, 1, 0.5)
 
 [node name="CSGCylinder3D" type="CSGCylinder3D" parent="."]
-transform = Transform3D(0.965926, 0, 0.258819, 0, 1, 0, -0.258819, 0, 0.965926, -128.761, 40.2401, 35.0092)
+transform = Transform3D(0.965926, 0, 0.258819, 0, 1, 0, -0.258819, 0, 0.965926, -156.742, 40.2401, 68.409)
 radius = 6.947
 height = 12.0
 cone = true
@@ -1383,7 +1382,7 @@ transform = Transform3D(0, 0, 10, 0, 10, 0, -20, 0, 0, -177.281, 14.0607, -30.75
 transform = Transform3D(-5.17638, 0, 9.65926, 0, 10, 0, -19.3185, 0, -2.58819, -177.281, 14.5368, -5.19977)
 
 [node name="House3" type="CSGBox3D" parent="."]
-transform = Transform3D(-5.17638, 0, 9.65926, 0, 10, 0, -19.3185, 0, -2.58819, -213.576, 10.1967, -23.6205)
+transform = Transform3D(-5.17638, 0, 9.65926, 0, 10, 0, -19.3185, 0, -2.58819, -213.576, 15.8683, -23.6205)
 
 [node name="House4" type="CSGBox3D" parent="."]
 transform = Transform3D(5.17638, 0, 9.65926, 0, 10, 0, -19.3185, 0, 2.58819, -239.131, 10.1967, -2.91284)
@@ -1431,17 +1430,27 @@ mesh = ExtResource("3_nbxm6")
 surface_material_override/0 = ExtResource("3_lvdvd")
 
 [node name="SmEnvDirtMountT2" type="MeshInstance3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 105.731, 0, -135.862)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -72.1072, 1.87582, 22.8836)
+mesh = ExtResource("4_wpqbd")
+surface_material_override/0 = ExtResource("3_lvdvd")
+
+[node name="SmEnvDirtMountT4" type="MeshInstance3D" parent="."]
+transform = Transform3D(-0.208403, 0, 0.974968, 0, 1, 0, -1.04457, 0, -0.194517, -29.6778, 1.28168, 50.9269)
+mesh = ExtResource("4_wpqbd")
+surface_material_override/0 = ExtResource("3_lvdvd")
+
+[node name="SmEnvDirtMountT7" type="MeshInstance3D" parent="."]
+transform = Transform3D(1.03245, 0, -0.70466, 0, 1.25, 0, 0.70466, 0, 1.03245, -100.999, 5.34805, -39.9851)
 mesh = ExtResource("4_wpqbd")
 surface_material_override/0 = ExtResource("3_lvdvd")
 
 [node name="SmEnvDirtMountT3" type="MeshInstance3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 152.523, 0, -105.246)
+transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, -8.85911, 0, 61.9202)
 mesh = ExtResource("5_iiqm3")
 surface_material_override/0 = ExtResource("3_lvdvd")
 
-[node name="SmEnvDirtMountT4" type="MeshInstance3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 150.157, 0, -158.986)
+[node name="SmEnvDirtMountT8" type="MeshInstance3D" parent="."]
+transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 18.9977, 0, -106.327)
 mesh = ExtResource("6_5qvoi")
 surface_material_override/0 = ExtResource("3_lvdvd")
 
@@ -1456,32 +1465,52 @@ mesh = ExtResource("8_7kack")
 surface_material_override/0 = ExtResource("3_lvdvd")
 
 [node name="SmEnvRockT1" type="MeshInstance3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 73.9719, -0.599335, -117.718)
+transform = Transform3D(0.990166, 0, 0.139899, 0, 1, 0, -0.139899, 0, 0.990166, -66.9442, -0.936373, 15.0619)
+mesh = ExtResource("9_nkt6y")
+surface_material_override/0 = ExtResource("10_0p6br")
+
+[node name="SmEnvRockT5" type="MeshInstance3D" parent="."]
+transform = Transform3D(0.320034, 0, -0.947406, 0, 1, 0, 0.947406, 0, 0.320034, -38.2523, -0.189668, 44.3813)
 mesh = ExtResource("9_nkt6y")
 surface_material_override/0 = ExtResource("10_0p6br")
 
 [node name="SmEnvRockT2" type="MeshInstance3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 73.9719, -0.599335, -140.767)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -103.094, 2.39107, -22.4565)
 mesh = ExtResource("10_7k68u")
 surface_material_override/0 = ExtResource("10_0p6br")
 
 [node name="SmEnvRockT3" type="MeshInstance3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 73.9719, -0.599335, -163.576)
+transform = Transform3D(0.346706, 0, 0.937974, 0, 1, 0, -0.937974, 0, 0.346706, 0.92988, -3.44197, 60.8975)
+mesh = ExtResource("11_i1466")
+surface_material_override/0 = ExtResource("10_0p6br")
+
+[node name="SmEnvRockT6" type="MeshInstance3D" parent="."]
+transform = Transform3D(-0.814186, 0, 0.580604, 0, 1, 0, -0.580604, 0, -0.814186, -88.2217, -0.95299, -38.3463)
+mesh = ExtResource("11_i1466")
+surface_material_override/0 = ExtResource("10_0p6br")
+
+[node name="SmEnvRockT7" type="MeshInstance3D" parent="."]
+transform = Transform3D(0.715741, 0, -0.698365, 0, 1, 0, 0.698365, 0, 0.715741, -88.2217, -0.95299, -50.6647)
 mesh = ExtResource("11_i1466")
 surface_material_override/0 = ExtResource("10_0p6br")
 
 [node name="SmEnvRockT4" type="MeshInstance3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 73.9719, -0.599335, -191.865)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 73.9719, -0.599335, -90.0925)
 mesh = ExtResource("12_x6piq")
 surface_material_override/0 = ExtResource("10_0p6br")
 
 [node name="SmEnvHedgeS" type="MeshInstance3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 53.0329, 0.079277, -186.071)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -48.8103, -1.0501, -40.4351)
 mesh = ExtResource("13_b2c7o")
 surface_material_override/0 = ExtResource("15_e6ir0")
 
 [node name="SmEnvHedgeL" type="MeshInstance3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 50.0971, 2.65415, -157.948)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -10.6916, -1.02705, -40.4243)
+mesh = ExtResource("14_ensvx")
+surface_material_override/0 = ExtResource("15_e6ir0")
+
+[node name="SmEnvHedgeL2" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -32.4474, -1.02705, -40.4243)
 mesh = ExtResource("14_ensvx")
 surface_material_override/0 = ExtResource("15_e6ir0")
 
