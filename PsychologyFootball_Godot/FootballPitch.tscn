@@ -1,22 +1,31 @@
-[gd_scene load_steps=19 format=3 uid="uid://cvy3pwmsrldbg"]
+[gd_scene load_steps=28 format=3 uid="uid://cvy3pwmsrldbg"]
 
 [ext_resource type="Material" uid="uid://t05uv2wgginr" path="res://Materials/M_TempHill.tres" id="1_kmkgr"]
 [ext_resource type="Material" uid="uid://cmggx3m1r0r7k" path="res://Materials/M_TempGrass.tres" id="3_lvdvd"]
-[ext_resource type="ArrayMesh" uid="uid://347ph4boc7rd" path="res://Assets/Environment/SM_ENV__Dirt MountT1.tres" id="3_nbxm6"]
-[ext_resource type="ArrayMesh" uid="uid://b1mx0an1170m8" path="res://Assets/Environment/SM_ENV__Dirt MountT2.tres" id="4_wpqbd"]
-[ext_resource type="ArrayMesh" uid="uid://di7vt3k11dq5f" path="res://Assets/Environment/SM_ENV__Dirt MountT3.tres" id="5_iiqm3"]
-[ext_resource type="ArrayMesh" uid="uid://b1jcr2rmb7qhm" path="res://Assets/Environment/SM_ENV__Dirt MountT4.tres" id="6_5qvoi"]
-[ext_resource type="ArrayMesh" uid="uid://cjikp6hgp7v13" path="res://Assets/Environment/SM_ENV__Dirt MountT5.tres" id="7_2qsfm"]
-[ext_resource type="ArrayMesh" uid="uid://dd6p4jjvqev3u" path="res://Assets/Environment/SM_ENV__Dirt MountT6.tres" id="8_7kack"]
-[ext_resource type="ArrayMesh" uid="uid://ypffltvy2gtc" path="res://Assets/Environment/SM_ENV__RockT1.tres" id="9_nkt6y"]
+[ext_resource type="ArrayMesh" uid="uid://347ph4boc7rd" path="res://Assets/Environment/DirtMount/SM_ENV__Dirt MountT1.tres" id="3_nbxm6"]
+[ext_resource type="ArrayMesh" uid="uid://b1mx0an1170m8" path="res://Assets/Environment/DirtMount/SM_ENV__Dirt MountT2.tres" id="4_wpqbd"]
+[ext_resource type="ArrayMesh" uid="uid://di7vt3k11dq5f" path="res://Assets/Environment/DirtMount/SM_ENV__Dirt MountT3.tres" id="5_iiqm3"]
+[ext_resource type="ArrayMesh" uid="uid://b1jcr2rmb7qhm" path="res://Assets/Environment/DirtMount/SM_ENV__Dirt MountT4.tres" id="6_5qvoi"]
+[ext_resource type="ArrayMesh" uid="uid://cjikp6hgp7v13" path="res://Assets/Environment/DirtMount/SM_ENV__Dirt MountT5.tres" id="7_2qsfm"]
+[ext_resource type="ArrayMesh" uid="uid://dd6p4jjvqev3u" path="res://Assets/Environment/DirtMount/SM_ENV__Dirt MountT6.tres" id="8_7kack"]
+[ext_resource type="ArrayMesh" uid="uid://ypffltvy2gtc" path="res://Assets/Environment/Rocks/SM_ENV__RockT1.tres" id="9_nkt6y"]
 [ext_resource type="Material" uid="uid://x10arfulfx5e" path="res://Materials/M_TempRock.tres" id="10_0p6br"]
-[ext_resource type="ArrayMesh" uid="uid://nihsnndtvfdn" path="res://Assets/Environment/SM_ENV__RockT2.tres" id="10_7k68u"]
-[ext_resource type="ArrayMesh" uid="uid://cu2mifu43tl5v" path="res://Assets/Environment/SM_ENV__RockT3.tres" id="11_i1466"]
-[ext_resource type="ArrayMesh" uid="uid://udfmy80b74em" path="res://Assets/Environment/SM_ENV__RockT4.tres" id="12_x6piq"]
+[ext_resource type="ArrayMesh" uid="uid://nihsnndtvfdn" path="res://Assets/Environment/Rocks/SM_ENV__RockT2.tres" id="10_7k68u"]
+[ext_resource type="ArrayMesh" uid="uid://cu2mifu43tl5v" path="res://Assets/Environment/Rocks/SM_ENV__RockT3.tres" id="11_i1466"]
+[ext_resource type="ArrayMesh" uid="uid://udfmy80b74em" path="res://Assets/Environment/Rocks/SM_ENV__RockT4.tres" id="12_x6piq"]
 [ext_resource type="ArrayMesh" uid="uid://bsnh4y5v7plvv" path="res://Assets/Environment/SM_ENV__HedgeS.res" id="13_b2c7o"]
 [ext_resource type="ArrayMesh" uid="uid://elubhltt8das" path="res://Assets/Environment/SM_ENV__HedgeL.res" id="14_ensvx"]
-[ext_resource type="Material" uid="uid://dodlmwsjuysu0" path="res://Materials/M_TempHedge.tres" id="15_e6ir0"]
+[ext_resource type="Material" uid="uid://dodlmwsjuysu0" path="res://Materials/M_TempHedge.tres" id="15_g503p"]
 [ext_resource type="ArrayMesh" uid="uid://bq6qqtmp2xsjc" path="res://Assets/Environment/Landscape/Landscape_Plane_001.res" id="17_enhrl"]
+[ext_resource type="ArrayMesh" uid="uid://d3e6ptcggdtdo" path="res://Assets/Props/Assets_SM_Cone.res" id="18_6insm"]
+[ext_resource type="ArrayMesh" uid="uid://4vtf8v03x1vi" path="res://Assets/Props/Assets_SM_Feeder.res" id="19_fmmk2"]
+[ext_resource type="ArrayMesh" uid="uid://b72xx7vwtrmhr" path="res://Assets/Props/Assets_SM_Fencing.res" id="20_ieawe"]
+[ext_resource type="ArrayMesh" uid="uid://ck3sws4x5gu6a" path="res://Assets/Props/Assets_SM_Flag.res" id="21_pmbnc"]
+[ext_resource type="ArrayMesh" uid="uid://c47gbavrj88vk" path="res://Assets/Props/Assets_SM_FloodLight.res" id="22_fbri6"]
+[ext_resource type="ArrayMesh" uid="uid://d3loukadqx6do" path="res://Assets/Props/Assets_SM_Football.res" id="23_jruc3"]
+[ext_resource type="ArrayMesh" uid="uid://d0h82vnms1pg5" path="res://Assets/Props/Assets_SM_GoalPost.res" id="24_wnvvu"]
+[ext_resource type="ArrayMesh" uid="uid://ds6nfyb0la4uu" path="res://Assets/Props/Assets_SM_Target.res" id="25_3jc4t"]
+[ext_resource type="ArrayMesh" uid="uid://byv3khafxpxdn" path="res://Assets/Pitch_SM_Pitch.res" id="26_epx0c"]
 
 [sub_resource type="Curve3D" id="Curve3D_gfqk1"]
 _data = {
@@ -26,9 +35,6 @@ _data = {
 point_count = 2
 
 [node name="Node3D" type="Node3D"]
-
-[node name="Pitch1" type="CSGBox3D" parent="."]
-size = Vector3(100, 0.1, 69)
 
 [node name="CarPark1" type="CSGBox3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 25.0154, 0, -49.4456)
@@ -1502,18 +1508,55 @@ surface_material_override/0 = ExtResource("10_0p6br")
 [node name="SmEnvHedgeS" type="MeshInstance3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -48.8103, -1.0501, -40.4351)
 mesh = ExtResource("13_b2c7o")
-surface_material_override/0 = ExtResource("15_e6ir0")
+surface_material_override/0 = ExtResource("15_g503p")
 
 [node name="SmEnvHedgeL" type="MeshInstance3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -10.6916, -1.02705, -40.4243)
 mesh = ExtResource("14_ensvx")
-surface_material_override/0 = ExtResource("15_e6ir0")
+surface_material_override/0 = ExtResource("15_g503p")
 
 [node name="SmEnvHedgeL2" type="MeshInstance3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -32.4474, -1.02705, -40.4243)
 mesh = ExtResource("14_ensvx")
-surface_material_override/0 = ExtResource("15_e6ir0")
+surface_material_override/0 = ExtResource("15_g503p")
 
 [node name="LandscapePlane001" type="MeshInstance3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.1, 0)
 mesh = ExtResource("17_enhrl")
+
+[node name="AssetsSmCone" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 11.2244, 0.043612, -49.5676)
+mesh = ExtResource("18_6insm")
+
+[node name="AssetsSmFeeder" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 12.5125, 0, -51.927)
+mesh = ExtResource("19_fmmk2")
+
+[node name="AssetsSmFencing" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 19.2712, -4.76837e-07, -57.0177)
+mesh = ExtResource("20_ieawe")
+
+[node name="AssetsSmFlag" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 17.169, 0, -54.0633)
+mesh = ExtResource("21_pmbnc")
+
+[node name="AssetsSmFloodLight" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 12.0143, 0, -56.9126)
+mesh = ExtResource("22_fbri6")
+
+[node name="AssetsSmFootball" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 12.6604, 0.154907, -49.3522)
+mesh = ExtResource("23_jruc3")
+
+[node name="AssetsSmGoalPost" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9.11441, 0, -50.6089)
+mesh = ExtResource("24_wnvvu")
+
+[node name="AssetsSmTarget" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 12.6172, 4.76837e-07, -54.5004)
+mesh = ExtResource("25_3jc4t")
+
+[node name="PitchSmPitch" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1.04354, 0)
+mesh = ExtResource("26_epx0c")
+surface_material_override/0 = ExtResource("15_g503p")

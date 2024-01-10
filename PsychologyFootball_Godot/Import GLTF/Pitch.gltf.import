@@ -3,13 +3,13 @@
 importer="scene"
 importer_version=1
 type="PackedScene"
-uid="uid://dowtcxiuibenc"
-path="res://.godot/imported/Landscape.glb-5b252e1b7423885a991aaeeedad46ea1.scn"
+uid="uid://b8qjc3fl3nlr2"
+path="res://.godot/imported/Pitch.gltf-054c059dc68b33e0a7e4589ad5e8f611.scn"
 
 [deps]
 
-source_file="res://Import GIBs/Landscape.glb"
-dest_files=["res://.godot/imported/Landscape.glb-5b252e1b7423885a991aaeeedad46ea1.scn"]
+source_file="res://Import GLTF/Pitch.gltf"
+dest_files=["res://.godot/imported/Pitch.gltf-054c059dc68b33e0a7e4589ad5e8f611.scn"]
 
 [params]
 
@@ -29,6 +29,19 @@ animation/fps=30
 animation/trimming=false
 animation/remove_immutable_tracks=true
 import_script/path=""
-_subresources={}
+_subresources={
+"meshes": {
+"Pitch_SM_Pitch": {
+"generate/lightmap_uv": 0,
+"generate/lods": 0,
+"generate/shadow_meshes": 0,
+"lods/normal_merge_angle": 60.0,
+"lods/normal_split_angle": 25.0,
+"save_to_file/enabled": true,
+"save_to_file/make_streamable": "",
+"save_to_file/path": "res://Assets/Pitch_SM_Pitch.res"
+}
+}
+}
 gltf/naming_version=1
 gltf/embedded_image_handling=1
