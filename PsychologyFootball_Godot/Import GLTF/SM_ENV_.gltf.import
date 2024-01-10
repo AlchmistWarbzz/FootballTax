@@ -4,12 +4,12 @@ importer="scene"
 importer_version=1
 type="PackedScene"
 uid="uid://bntw10upekir1"
-path="res://.godot/imported/SM_ENV_.gltf-24df55db34c0ab35f9f405b3ffabb22c.scn"
+path="res://.godot/imported/SM_ENV_.gltf-702932cb5f56581ae666401bfd70e527.scn"
 
 [deps]
 
-source_file="res://Import GIBs/SM_ENV_.gltf"
-dest_files=["res://.godot/imported/SM_ENV_.gltf-24df55db34c0ab35f9f405b3ffabb22c.scn"]
+source_file="res://Import GLTF/SM_ENV_.gltf"
+dest_files=["res://.godot/imported/SM_ENV_.gltf-702932cb5f56581ae666401bfd70e527.scn"]
 
 [params]
 
