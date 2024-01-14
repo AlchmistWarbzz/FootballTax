@@ -1,3 +1,8 @@
-[gd_scene format=3 uid="uid://cdt6315of2aeu"]
+[gd_scene load_steps=2 format=3 uid="uid://cdt6315of2aeu"]
+
+[ext_resource type="ArrayMesh" uid="uid://4vtf8v03x1vi" path="res://Assets/Props/Assets_SM_Feeder.res" id="1_7j60d"]
 
 [node name="BallFeeder" type="Node3D"]
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+mesh = ExtResource("1_7j60d")
