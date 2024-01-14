@@ -1,7 +1,7 @@
 [gd_scene load_steps=3 format=3 uid="uid://cdt6315of2aeu"]
 
 [ext_resource type="ArrayMesh" uid="uid://4vtf8v03x1vi" path="res://Assets/Props/Assets_SM_Feeder.res" id="1_7j60d"]
-[ext_resource type="Script" path="res://SubScenes/Ball_Feeder.gd" id="1_hg50f"]
+[ext_resource type="Script" path="res://Scripts/Ball_Feeder.gd" id="1_hg50f"]
 
 [node name="BallFeeder" type="Node3D"]
 script = ExtResource("1_hg50f")
