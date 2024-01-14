@@ -1,3 +1,8 @@
-[gd_scene format=3 uid="uid://dpk3su3q7mfhs"]
+[gd_scene load_steps=2 format=3 uid="uid://dpk3su3q7mfhs"]
+
+[ext_resource type="ArrayMesh" uid="uid://d3loukadqx6do" path="res://Assets/Props/Assets_SM_Football.res" id="1_c2ryv"]
 
 [node name="Ball" type="RigidBody3D"]
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+mesh = ExtResource("1_c2ryv")
