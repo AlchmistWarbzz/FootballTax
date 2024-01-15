@@ -4,7 +4,7 @@ var ball_node = preload("res://SubScenes/Ball.tscn")
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	instantiate_ball(Vector3(0,0,0))
+	instantiate_ball($BallSpawnPoint.position)
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
