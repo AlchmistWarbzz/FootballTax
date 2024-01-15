@@ -8,3 +8,5 @@ script = ExtResource("1_hg50f")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]
 mesh = ExtResource("1_7j60d")
+
+[node name="BallSpawnPoint" type="Node3D" parent="."]
