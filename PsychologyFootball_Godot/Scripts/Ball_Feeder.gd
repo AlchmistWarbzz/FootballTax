@@ -14,9 +14,11 @@ func _process(delta):
 		ball_to_spawn = true
 		
 	if ball_to_spawn:
-		instantiate_ball($BallSpawnPoint.position)
+		var spawned_ball = instantiate_ball()
+		spawned_ball.position = $BallSpawnPoint.position
+		#spawned_ball.get_script().kick()
 
-func instantiate_ball(pos):
+func instantiate_ball():
 	var instance = ball_node.instantiate()
-	instance.position = pos
 	add_child(instance)
+	return instance
