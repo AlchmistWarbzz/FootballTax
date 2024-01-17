@@ -1,4 +1,4 @@
-[gd_scene load_steps=33 format=3 uid="uid://cvy3pwmsrldbg"]
+[gd_scene load_steps=32 format=3 uid="uid://cvy3pwmsrldbg"]
 
 [ext_resource type="Material" uid="uid://t05uv2wgginr" path="res://Materials/M_TempHill.tres" id="1_kmkgr"]
 [ext_resource type="Material" uid="uid://cmggx3m1r0r7k" path="res://Materials/M_TempGrass.tres" id="3_lvdvd"]
@@ -26,7 +26,6 @@
 [ext_resource type="ArrayMesh" uid="uid://d0h82vnms1pg5" path="res://Assets/Props/Assets_SM_GoalPost.res" id="24_wnvvu"]
 [ext_resource type="ArrayMesh" uid="uid://ds6nfyb0la4uu" path="res://Assets/Props/Assets_SM_Target.res" id="25_3jc4t"]
 [ext_resource type="ArrayMesh" uid="uid://byv3khafxpxdn" path="res://Assets/Pitch_SM_Pitch.res" id="26_epx0c"]
-[ext_resource type="PackedScene" uid="uid://dpk3su3q7mfhs" path="res://SubScenes/Ball.tscn" id="27_4yhmi"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_1r10j"]
 sky_horizon_color = Color(0.64625, 0.65575, 0.67075, 1)
@@ -1578,9 +1577,6 @@ shape = SubResource("ConcavePolygonShape3D_mk57i")
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
 transform = Transform3D(0.838052, 0, 0.54559, -0.158577, 0.956829, 0.243582, -0.522036, -0.290652, 0.801872, 0, 5.89974, 0)
 shadow_enabled = true
-
-[node name="Ball" parent="." instance=ExtResource("27_4yhmi")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5.86276, 1.1094, -3.68465)
 
 [node name="Camera3D" type="Camera3D" parent="."]
 transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0, 1.8, 0)
