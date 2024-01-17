@@ -1,4 +1,4 @@
-[gd_scene load_steps=32 format=3 uid="uid://rjin0qqtw7jx"]
+[gd_scene load_steps=31 format=3 uid="uid://rjin0qqtw7jx"]
 
 [ext_resource type="Material" uid="uid://t05uv2wgginr" path="res://Materials/M_TempHill.tres" id="1_niqus"]
 [ext_resource type="ArrayMesh" uid="uid://347ph4boc7rd" path="res://Assets/Environment/DirtMount/SM_ENV__Dirt MountT1.tres" id="2_ffkib"]
@@ -18,14 +18,13 @@
 [ext_resource type="ArrayMesh" uid="uid://elubhltt8das" path="res://Assets/Environment/SM_ENV__HedgeL.res" id="16_x0a63"]
 [ext_resource type="ArrayMesh" uid="uid://bq6qqtmp2xsjc" path="res://Assets/Environment/Landscape/Landscape_Plane_001.res" id="17_gxm08"]
 [ext_resource type="ArrayMesh" uid="uid://d3e6ptcggdtdo" path="res://Assets/Props/Assets_SM_Cone.res" id="18_shci7"]
-[ext_resource type="ArrayMesh" uid="uid://4vtf8v03x1vi" path="res://Assets/Props/Assets_SM_Feeder.res" id="19_qgheh"]
 [ext_resource type="ArrayMesh" uid="uid://b72xx7vwtrmhr" path="res://Assets/Props/Assets_SM_Fencing.res" id="20_v74ck"]
 [ext_resource type="ArrayMesh" uid="uid://ck3sws4x5gu6a" path="res://Assets/Props/Assets_SM_Flag.res" id="21_scumy"]
 [ext_resource type="ArrayMesh" uid="uid://c47gbavrj88vk" path="res://Assets/Props/Assets_SM_FloodLight.res" id="22_b0xcb"]
 [ext_resource type="ArrayMesh" uid="uid://d3loukadqx6do" path="res://Assets/Props/Assets_SM_Football.res" id="23_h3jml"]
 [ext_resource type="ArrayMesh" uid="uid://d0h82vnms1pg5" path="res://Assets/Props/Assets_SM_GoalPost.res" id="24_hyqpp"]
-[ext_resource type="ArrayMesh" uid="uid://ds6nfyb0la4uu" path="res://Assets/Props/Assets_SM_Target.res" id="25_lbr24"]
 [ext_resource type="ArrayMesh" uid="uid://byv3khafxpxdn" path="res://Assets/Pitch_SM_Pitch.res" id="26_o844s"]
+[ext_resource type="PackedScene" uid="uid://cdt6315of2aeu" path="res://SubScenes/Ball_Feeder.tscn" id="27_77l7n"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_1r10j"]
 sky_horizon_color = Color(0.64625, 0.65575, 0.67075, 1)
@@ -1496,14 +1495,6 @@ mesh = ExtResource("17_gxm08")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 11.2244, 0.043612, -49.5676)
 mesh = ExtResource("18_shci7")
 
-[node name="AssetsSmFeeder" type="MeshInstance3D" parent="."]
-transform = Transform3D(-0.258819, 0, 0.965926, 0, 1, 0, -0.965926, 0, -0.258819, -9.04492, 0, 2.97403)
-mesh = ExtResource("19_qgheh")
-
-[node name="AssetsSmFeeder2" type="MeshInstance3D" parent="."]
-transform = Transform3D(0.258819, 0, 0.965926, 0, 1, 0, -0.965926, 0, 0.258819, -9.04492, 0, -3.02401)
-mesh = ExtResource("19_qgheh")
-
 [node name="AssetsSmFencing" type="MeshInstance3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 19.2712, -4.76837e-07, -57.0177)
 mesh = ExtResource("20_v74ck")
@@ -1540,30 +1531,6 @@ mesh = ExtResource("24_hyqpp")
 transform = Transform3D(-1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, 48.6472, 0, -0.00961637)
 mesh = ExtResource("24_hyqpp")
 
-[node name="AssetsSmTarget" type="MeshInstance3D" parent="."]
-transform = Transform3D(0.5, 0, 0.866025, 0, 1, 0, -0.866025, 0, 0.5, -13.2121, 4.76837e-07, -6.90008)
-mesh = ExtResource("25_lbr24")
-
-[node name="AssetsSmTarget3" type="MeshInstance3D" parent="."]
-transform = Transform3D(0.707107, 0, 0.707107, 0, 1, 0, -0.707107, 0, 0.707107, -7.99688, 4.76837e-07, -5.8401)
-mesh = ExtResource("25_lbr24")
-
-[node name="AssetsSmTarget2" type="MeshInstance3D" parent="."]
-transform = Transform3D(0.258819, 0, 0.965926, 0, 1, 0, -0.965926, 0, 0.258819, -9.24691, 4.76837e-07, -1.57351)
-mesh = ExtResource("25_lbr24")
-
-[node name="AssetsSmTarget4" type="MeshInstance3D" parent="."]
-transform = Transform3D(-0.5, 0, 0.866025, 0, 1, 0, -0.866025, 0, -0.5, -13.7572, 4.76837e-07, 6.9773)
-mesh = ExtResource("25_lbr24")
-
-[node name="AssetsSmTarget5" type="MeshInstance3D" parent="."]
-transform = Transform3D(-0.258819, 0, 0.965926, 0, 1, 0, -0.965926, 0, -0.258819, -9.09565, 4.76837e-07, 1.35775)
-mesh = ExtResource("25_lbr24")
-
-[node name="AssetsSmTarget6" type="MeshInstance3D" parent="."]
-transform = Transform3D(-0.5, 0, 0.866025, 0, 1, 0, -0.866025, 0, -0.5, -6.96262, 4.76837e-07, 5.25858)
-mesh = ExtResource("25_lbr24")
-
 [node name="PitchSmPitch" type="MeshInstance3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1.04354, 0)
 mesh = ExtResource("26_o844s")
@@ -1578,5 +1545,11 @@ shape = SubResource("ConcavePolygonShape3D_mk57i")
 transform = Transform3D(0.838052, 0, 0.54559, -0.158577, 0.956829, 0.243582, -0.522036, -0.290652, 0.801872, 0, 5.89974, 0)
 shadow_enabled = true
 
-[node name="Camera3D" type="Camera3D" parent="."]
+[node name="SST_Task_Elements" type="Node3D" parent="."]
+
+[node name="Camera3D" type="Camera3D" parent="SST_Task_Elements"]
 transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0, 1.8, 0)
+current = true
+
+[node name="BallFeeder" parent="SST_Task_Elements" instance=ExtResource("27_77l7n")]
+transform = Transform3D(-0.42314, 0, 0.906064, 0, 1, 0, -0.906064, 0, -0.42314, -8.82182, 0, 3.80666)
