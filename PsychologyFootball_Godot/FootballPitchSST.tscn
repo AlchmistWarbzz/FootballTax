@@ -1552,4 +1552,8 @@ transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0, 1.8
 current = true
 
 [node name="BallFeeder" parent="SST_Task_Elements" instance=ExtResource("27_77l7n")]
-transform = Transform3D(-0.42314, 0, 0.906064, 0, 1, 0, -0.906064, 0, -0.42314, -8.82182, 0, 3.80666)
+transform = Transform3D(-0.630744, 0, 0.775991, 0, 1, 0, -0.775991, 0, -0.630744, -8.0147, 0, 5.53492)
+
+[node name="FixationCone" type="MeshInstance3D" parent="SST_Task_Elements"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -9, 0, 0)
+mesh = ExtResource("18_shci7")
