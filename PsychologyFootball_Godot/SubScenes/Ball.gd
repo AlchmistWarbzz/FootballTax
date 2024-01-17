@@ -12,4 +12,4 @@ func _process(delta):
 
 
 func kick():
-	apply_central_impulse(Vector3.MODEL_FRONT * 7)
+	apply_central_impulse(get_global_transform().basis.z * 7)
