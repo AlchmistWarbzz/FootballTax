@@ -19,9 +19,15 @@ func _process(delta):
 func scene_reset():
 	if $PlaceholderBallFeederLeft.get_child_count() != 0:
 		$PlaceholderBallFeederLeft/BallFeeder.free()
-		
+	
 	if $PlaceholderBallFeederRight.get_child_count() != 0:
 		$PlaceholderBallFeederRight/BallFeeder.free()
+	
+	if $PlaceholderDefenderLeft.get_child_count() != 0:
+		$PlaceholderDefenderLeft/Defender.free()
+	
+	if $PlaceholderDefenderRight.get_child_count() != 0:
+		$PlaceholderDefenderRight/Defender.free()
 
 func scene_setup():
 	var new_ball_feeder = ball_feeder_scene.instantiate()
@@ -29,3 +35,10 @@ func scene_setup():
 		$PlaceholderBallFeederLeft.add_child(new_ball_feeder)
 	else:
 		$PlaceholderBallFeederRight.add_child(new_ball_feeder)
+	
+	var new_defender_left = defender_scene.instantiate()
+	$PlaceholderDefenderLeft.add_child(new_defender_left)
+	
+	var new_defender_right = defender_scene.instantiate()
+	$PlaceholderDefenderRight.add_child(new_defender_right)
+
