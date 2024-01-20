@@ -1565,7 +1565,7 @@ transform = Transform3D(-0.630744, 0, 0.775991, 0, 1, 0, -0.775991, 0, -0.630744
 transform = Transform3D(0.644257, 0, 0.764809, 0, 1, 0, -0.764809, 0, 0.644257, -8.015, 0, -5.535)
 
 [node name="PlaceholderDefenderLeft" type="Node3D" parent="SST_Task_Manager"]
-transform = Transform3D(-0.367865, 0, 0.929879, 0, 1, 0, -0.929879, 0, -0.367865, -10, 1, 4)
+transform = Transform3D(-0.51435, 0, 0.85758, 0, 1, 0, -0.85758, 0, -0.51435, -10, 1, 4)
 
 [node name="Defender" parent="SST_Task_Manager/PlaceholderDefenderLeft" instance=ExtResource("26_x7mje")]
 
@@ -1573,3 +1573,4 @@ transform = Transform3D(-0.367865, 0, 0.929879, 0, 1, 0, -0.929879, 0, -0.367865
 transform = Transform3D(0.37315, 0, 0.927771, 0, 1, 0, -0.927771, 0, 0.37315, -10, 1, -4)
 
 [node name="Defender" parent="SST_Task_Manager/PlaceholderDefenderRight" instance=ExtResource("26_x7mje")]
+transform = Transform3D(0.992986, 0, -0.118231, 0, 1, 0, 0.118231, 0, 0.992986, 0, 0, 0)
