@@ -32,8 +32,8 @@ func scene_reset():
 		$PlaceholderBallFeederRight/BallFeeder.free()
 	
 	# remove fixation cone
-	if $PlaceholderFixationCone.get_child_count() != 0:
-		$PlaceholderFixationCone/FixationCone.free()
+	if $PlaceholderFixation.get_child_count() != 0:
+		$PlaceholderFixation/FixationCone.free()
 	
 	# remove and respawn left defender
 	if $PlaceholderDefenderLeft.get_child_count() != 0:
@@ -57,15 +57,15 @@ func scene_setup():
 	
 	# spawn fixation cone
 	var new_fixation_cone = fixation_cone_scene.instantiate()
-	$PlaceholderFixationCone.add_child(new_fixation_cone)
+	$PlaceholderFixation.add_child(new_fixation_cone)
 
 func go_trial_start():
 	# remove fixation cone
-	if $PlaceholderFixationCone.get_child_count() != 0:
-		$PlaceholderFixationCone/FixationCone.free()
+	if $PlaceholderFixation.get_child_count() != 0:
+		$PlaceholderFixation/FixationCone.free()
 
 func stop_trial_start():
 	# remove fixation cone
-	if $PlaceholderFixationCone.get_child_count() != 0:
-		$PlaceholderFixationCone/FixationCone.free()
+	if $PlaceholderFixation.get_child_count() != 0:
+		$PlaceholderFixation/FixationCone.free()
 

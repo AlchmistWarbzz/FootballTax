@@ -30,7 +30,7 @@ transform = Transform3D(0.463265, 0, 0.88622, 0, 1, 0, -0.88622, 0, 0.463265, -1
 
 [node name="Defender" parent="PlaceholderDefenderRight" instance=ExtResource("3_t0scl")]
 
-[node name="PlaceholderFixationCone" type="Node3D" parent="."]
+[node name="PlaceholderFixation" type="Node3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -9, 0, 0)
 
-[node name="FixationCone" parent="PlaceholderFixationCone" instance=ExtResource("4_vxlwt")]
+[node name="FixationCone" parent="PlaceholderFixation" instance=ExtResource("4_vxlwt")]
