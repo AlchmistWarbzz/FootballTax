@@ -1,4 +1,4 @@
-[gd_scene load_steps=32 format=3 uid="uid://rjin0qqtw7jx"]
+[gd_scene load_steps=31 format=3 uid="uid://rjin0qqtw7jx"]
 
 [ext_resource type="Material" uid="uid://t05uv2wgginr" path="res://Materials/M_TempHill.tres" id="1_niqus"]
 [ext_resource type="ArrayMesh" uid="uid://347ph4boc7rd" path="res://Assets/Environment/DirtMount/SM_ENV__Dirt MountT1.tres" id="2_ffkib"]
@@ -23,9 +23,8 @@
 [ext_resource type="ArrayMesh" uid="uid://c47gbavrj88vk" path="res://Assets/Props/Assets_SM_FloodLight.res" id="22_b0xcb"]
 [ext_resource type="ArrayMesh" uid="uid://d3loukadqx6do" path="res://Assets/Props/Assets_SM_Football.res" id="23_h3jml"]
 [ext_resource type="ArrayMesh" uid="uid://d0h82vnms1pg5" path="res://Assets/Props/Assets_SM_GoalPost.res" id="24_hyqpp"]
+[ext_resource type="PackedScene" uid="uid://dfwgvi5kn4ifi" path="res://SubScenes/SST_Task_Manager.tscn" id="25_xenpo"]
 [ext_resource type="ArrayMesh" uid="uid://byv3khafxpxdn" path="res://Assets/Pitch_SM_Pitch.res" id="26_o844s"]
-[ext_resource type="PackedScene" uid="uid://ca41om8xqbbts" path="res://SubScenes/Defender.tscn" id="26_x7mje"]
-[ext_resource type="PackedScene" uid="uid://cdt6315of2aeu" path="res://SubScenes/Ball_Feeder.tscn" id="27_77l7n"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_1r10j"]
 sky_horizon_color = Color(0.64625, 0.65575, 0.67075, 1)
@@ -1546,30 +1545,4 @@ shape = SubResource("ConcavePolygonShape3D_mk57i")
 transform = Transform3D(0.838052, 0, 0.54559, -0.158577, 0.956829, 0.243582, -0.522036, -0.290652, 0.801872, 0, 5.89974, 0)
 shadow_enabled = true
 
-[node name="SST_Task_Manager" type="Node3D" parent="."]
-
-[node name="Camera3D" type="Camera3D" parent="SST_Task_Manager"]
-transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0, 1.8, 0)
-current = true
-
-[node name="FixationCone" type="MeshInstance3D" parent="SST_Task_Manager"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -9, 0, 0)
-mesh = ExtResource("18_shci7")
-
-[node name="PlaceholderBallFeederLeft" type="Node3D" parent="SST_Task_Manager"]
-transform = Transform3D(-0.630744, 0, 0.775991, 0, 1, 0, -0.775991, 0, -0.630744, -8.0147, 0, 5.53492)
-
-[node name="BallFeeder" parent="SST_Task_Manager/PlaceholderBallFeederLeft" instance=ExtResource("27_77l7n")]
-
-[node name="PlaceholderBallFeederRight" type="Node3D" parent="SST_Task_Manager"]
-transform = Transform3D(0.644257, 0, 0.764809, 0, 1, 0, -0.764809, 0, 0.644257, -8.015, 0, -5.535)
-
-[node name="PlaceholderDefenderLeft" type="Node3D" parent="SST_Task_Manager"]
-transform = Transform3D(-0.71005, 0, 0.704151, 0, 1, 0, -0.704151, 0, -0.71005, -10, 1, 4)
-
-[node name="Defender" parent="SST_Task_Manager/PlaceholderDefenderLeft" instance=ExtResource("26_x7mje")]
-
-[node name="PlaceholderDefenderRight" type="Node3D" parent="SST_Task_Manager"]
-transform = Transform3D(0.463265, 0, 0.88622, 0, 1, 0, -0.88622, 0, 0.463265, -10, 1, -4)
-
-[node name="Defender" parent="SST_Task_Manager/PlaceholderDefenderRight" instance=ExtResource("26_x7mje")]
+[node name="SST_Task_Manager" parent="." instance=ExtResource("25_xenpo")]
