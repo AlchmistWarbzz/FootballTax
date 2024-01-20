@@ -5,6 +5,10 @@ var defender_scene = preload("res://SubScenes/Defender.tscn")
 var fixation_cone_scene = preload("res://SubScenes/Fixation_Cone.tscn")
 var teammate_scene = preload("res://SubScenes/Teammate.tscn")
 
+var ticks_msec_bookmark = Time.get_ticks_msec()
+
+const MSEC_BETWEEN_TRIALS = 3000
+
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	pass # Replace with function body.
@@ -22,6 +26,9 @@ func _process(delta):
 	
 	if Input.is_action_just_pressed("s"):
 		trial_start()
+	
+	# tick-based scene sequencing
+	
 
 func scene_reset():
 	# remove left ball feeder
