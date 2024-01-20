@@ -1,0 +1,36 @@
+[gd_scene load_steps=5 format=3 uid="uid://dfwgvi5kn4ifi"]
+
+[ext_resource type="Script" path="res://SubScenes/SST_Task_Manager.gd" id="1_hrvas"]
+[ext_resource type="PackedScene" uid="uid://cdt6315of2aeu" path="res://SubScenes/Ball_Feeder.tscn" id="2_rgtr6"]
+[ext_resource type="PackedScene" uid="uid://ca41om8xqbbts" path="res://SubScenes/Defender.tscn" id="3_t0scl"]
+[ext_resource type="PackedScene" uid="uid://ch6twcwku22s0" path="res://SubScenes/Fixation_Cone.tscn" id="4_vxlwt"]
+
+[node name="SST_Task_Manager" type="Node3D"]
+script = ExtResource("1_hrvas")
+
+[node name="Camera3D" type="Camera3D" parent="."]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0, 1.8, 0)
+current = true
+
+[node name="PlaceholderBallFeederLeft" type="Node3D" parent="."]
+transform = Transform3D(-0.630744, 0, 0.775991, 0, 1, 0, -0.775991, 0, -0.630744, -8.0147, 0, 5.53492)
+
+[node name="BallFeeder" parent="PlaceholderBallFeederLeft" instance=ExtResource("2_rgtr6")]
+
+[node name="PlaceholderBallFeederRight" type="Node3D" parent="."]
+transform = Transform3D(0.644257, 0, 0.764809, 0, 1, 0, -0.764809, 0, 0.644257, -8.015, 0, -5.535)
+
+[node name="PlaceholderDefenderLeft" type="Node3D" parent="."]
+transform = Transform3D(-0.71005, 0, 0.704151, 0, 1, 0, -0.704151, 0, -0.71005, -10.8796, 1, 4)
+
+[node name="Defender" parent="PlaceholderDefenderLeft" instance=ExtResource("3_t0scl")]
+
+[node name="PlaceholderDefenderRight" type="Node3D" parent="."]
+transform = Transform3D(0.463265, 0, 0.88622, 0, 1, 0, -0.88622, 0, 0.463265, -10.8796, 1, -4)
+
+[node name="Defender" parent="PlaceholderDefenderRight" instance=ExtResource("3_t0scl")]
+
+[node name="PlaceholderFixationCone" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -9, 0, 0)
+
+[node name="FixationCone" parent="PlaceholderFixationCone" instance=ExtResource("4_vxlwt")]
