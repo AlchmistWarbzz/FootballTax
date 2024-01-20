@@ -1,6 +1,6 @@
 [gd_scene load_steps=4 format=3 uid="uid://ca41om8xqbbts"]
 
-[ext_resource type="Script" path="res://Scripts/Defender.gd" id="1_hnn54"]
+[ext_resource type="Script" path="res://Scripts/Defender.gd" id="1_5mqex"]
 
 [sub_resource type="CapsuleMesh" id="CapsuleMesh_q0v8i"]
 
@@ -10,7 +10,7 @@ points = PackedVector3Array(-0.125207, -0.532801, -0.480507, 0.0227831, 0.47607,
 [node name="Defender" type="CharacterBody3D"]
 axis_lock_angular_x = true
 axis_lock_angular_z = true
-script = ExtResource("1_hnn54")
+script = ExtResource("1_5mqex")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]
 mesh = SubResource("CapsuleMesh_q0v8i")
