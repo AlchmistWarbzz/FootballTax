@@ -10,7 +10,7 @@ func _ready():
 func _process(delta):
 	var ball_to_spawn = false
 	
-	if Input.is_action_just_pressed("ui_accept"):
+	if Input.is_action_just_pressed("s"):
 		ball_to_spawn = true
 		
 	if ball_to_spawn:
