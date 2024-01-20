@@ -1,6 +1,6 @@
 extends Node3D
 
-var ball_node = preload("res://SubScenes/Ball.tscn")
+var ball_scene = preload("res://SubScenes/Ball.tscn")
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -19,6 +19,6 @@ func _process(delta):
 		#spawned_ball.get_script().kick()
 
 func instantiate_ball():
-	var instance = ball_node.instantiate()
+	var instance = ball_scene.instantiate()
 	add_child(instance)
 	return instance
