@@ -3,6 +3,7 @@ extends Node3D
 var ball_feeder_scene = preload("res://SubScenes/Ball_Feeder.tscn")
 var defender_scene = preload("res://SubScenes/Defender.tscn")
 var fixation_cone_scene = preload("res://SubScenes/Fixation_Cone.tscn")
+var teammate_scene = preload("res://SubScenes/Teammate.tscn")
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -17,10 +18,10 @@ func _process(delta):
 		scene_setup()
 	
 	if Input.is_action_just_pressed("g"):
-		go_trial_start()
+		trial_start()
 	
 	if Input.is_action_just_pressed("s"):
-		stop_trial_start()
+		trial_start()
 
 func scene_reset():
 	# remove left ball feeder
@@ -31,9 +32,9 @@ func scene_reset():
 	if $PlaceholderBallFeederRight.get_child_count() != 0:
 		$PlaceholderBallFeederRight/BallFeeder.free()
 	
-	# remove fixation cone
+	# remove teammate
 	if $PlaceholderFixation.get_child_count() != 0:
-		$PlaceholderFixation/FixationCone.free()
+		$PlaceholderFixation/Teammate.free()
 	
 	# remove and respawn left defender
 	if $PlaceholderDefenderLeft.get_child_count() != 0:
@@ -59,13 +60,17 @@ func scene_setup():
 	var new_fixation_cone = fixation_cone_scene.instantiate()
 	$PlaceholderFixation.add_child(new_fixation_cone)
 
-func go_trial_start():
+func trial_start():
 	# remove fixation cone
 	if $PlaceholderFixation.get_child_count() != 0:
 		$PlaceholderFixation/FixationCone.free()
+	
+	# spawn teammate
+	var new_teammate = teammate_scene.instantiate()
+	$PlaceholderFixation.add_child(new_teammate)
 
-func stop_trial_start():
-	# remove fixation cone
-	if $PlaceholderFixation.get_child_count() != 0:
-		$PlaceholderFixation/FixationCone.free()
+#func stop_trial_start():
+	## remove fixation cone
+	#if $PlaceholderFixation.get_child_count() != 0:
+		#$PlaceholderFixation/FixationCone.free()
 
