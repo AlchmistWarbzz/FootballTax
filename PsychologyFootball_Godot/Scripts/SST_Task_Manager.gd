@@ -1,18 +1,24 @@
 extends Node3D
 
+# spawnables
 var ball_feeder_scene = preload("res://SubScenes/Ball_Feeder.tscn")
 var defender_scene = preload("res://SubScenes/Defender.tscn")
 var fixation_cone_scene = preload("res://SubScenes/Fixation_Cone.tscn")
 var teammate_scene = preload("res://SubScenes/Teammate.tscn")
 
+# time
 const TICKS_BETWEEN_TRIALS_MSEC = 3000
 const READY_TICKS_MSEC = 1000
-const TRIALS_TICKS_MSEC = 600
+const TRIAL_TICKS_MSEC = 600
 @onready var ticks_msec_bookmark = 0
 
+# states
 enum scene_state {WAIT, READY, GO_TRIAL, STOP_TRIAL}
 # TODO create dict of states and corresponding funcs for defensive prog.
 @onready var current_state = scene_state.WAIT
+
+# signals
+signal trial_started
 
 func _ready():
 	scene_reset() # ensure scene and scene_state are in agreement
@@ -27,10 +33,10 @@ func _process(delta):
 		scene_ready()
 	
 	if Input.is_action_just_pressed("g"):
-		trial_start(false)
+		scene_trial_start(false)
 	
 	if Input.is_action_just_pressed("s"):
-		trial_start(true)
+		scene_trial_start(true)
 	
 	# tick-based scene sequencing
 	match current_state:
@@ -45,13 +51,20 @@ func _process(delta):
 			if (Time.get_ticks_msec() - ticks_msec_bookmark) > READY_TICKS_MSEC:
 				# ready time is up
 				
-				# determine go or stop trial
+				# TODO determine go or stop trial
+				
+				# TODO call go or stop trial
+				scene_trial_start(false)
 				
 				current_state = scene_state.GO_TRIAL
 				ticks_msec_bookmark = Time.get_ticks_msec()
 		
 		scene_state.GO_TRIAL:
-			pass
+			if (Time.get_ticks_msec() - ticks_msec_bookmark) > TRIAL_TICKS_MSEC:
+				# trial time is up
+				scene_reset()
+				current_state = scene_state.WAIT
+				ticks_msec_bookmark = Time.get_ticks_msec()
 
 func scene_reset():
 	# remove left ball feeder
@@ -90,7 +103,7 @@ func scene_ready():
 	var new_fixation_cone = fixation_cone_scene.instantiate()
 	$PlaceholderFixation.add_child(new_fixation_cone)
 
-func trial_start(is_stop_trial: bool):
+func scene_trial_start(is_stop_trial: bool):
 	# remove fixation cone
 	if $PlaceholderFixation.get_child_count() != 0:
 		$PlaceholderFixation/FixationCone.free()
@@ -98,6 +111,9 @@ func trial_start(is_stop_trial: bool):
 	# spawn teammate
 	var new_teammate = teammate_scene.instantiate()
 	$PlaceholderFixation.add_child(new_teammate)
+	
+	# emit signal
+	trial_started.emit(is_stop_trial)
 
 #func stop_trial_start():
 	## remove fixation cone
