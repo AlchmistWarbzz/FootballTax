@@ -9,7 +9,7 @@ var teammate_scene = preload("res://SubScenes/Teammate.tscn")
 # time
 const TICKS_BETWEEN_TRIALS_MSEC = 3000
 const READY_TICKS_MSEC = 1000
-const TRIAL_TICKS_MSEC = 1000
+const TRIAL_TICKS_MSEC = 600
 @onready var ticks_msec_bookmark = 0
 
 # states
