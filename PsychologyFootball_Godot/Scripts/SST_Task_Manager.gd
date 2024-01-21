@@ -5,7 +5,8 @@ var defender_scene = preload("res://SubScenes/Defender.tscn")
 var fixation_cone_scene = preload("res://SubScenes/Fixation_Cone.tscn")
 var teammate_scene = preload("res://SubScenes/Teammate.tscn")
 
-var ticks_msec_bookmark = Time.get_ticks_msec()
+var ticks_msec_bookmark = 0
+enum scene_state {WAIT, READY, GO_TRIAL, STOP_TRIAL}
 
 const MSEC_BETWEEN_TRIALS = 3000
 
