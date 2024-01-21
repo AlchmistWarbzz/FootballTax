@@ -21,12 +21,13 @@ transform = Transform3D(-0.630744, 0, 0.775991, 0, 1, 0, -0.775991, 0, -0.630744
 transform = Transform3D(0.644257, 0, 0.764809, 0, 1, 0, -0.764809, 0, 0.644257, -8.015, 0, -5.535)
 
 [node name="PlaceholderDefenderLeft" type="Node3D" parent="."]
-transform = Transform3D(-0.71005, 0, 0.704151, 0, 1, 0, -0.704151, 0, -0.71005, -10.8796, 1, 4)
+transform = Transform3D(-0.693791, 0, 0.720176, 0, 1, 0, -0.720176, 0, -0.693791, -10.8796, 1, 4)
 
 [node name="Defender" parent="PlaceholderDefenderLeft" instance=ExtResource("3_t0scl")]
+transform = Transform3D(0.999691, 0, -0.0248683, 0, 1, 0, 0.0248683, 0, 0.999691, 0, 0, 0)
 
 [node name="PlaceholderDefenderRight" type="Node3D" parent="."]
-transform = Transform3D(0.463265, 0, 0.88622, 0, 1, 0, -0.88622, 0, 0.463265, -10.8796, 1, -4)
+transform = Transform3D(0.456368, 0, 0.889791, 0, 1, 0, -0.889791, 0, 0.456368, -10.8796, 1, -4)
 
 [node name="Defender" parent="PlaceholderDefenderRight" instance=ExtResource("3_t0scl")]
 
@@ -34,3 +35,9 @@ transform = Transform3D(0.463265, 0, 0.88622, 0, 1, 0, -0.88622, 0, 0.463265, -1
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -9, 0, 0)
 
 [node name="Teammate" parent="PlaceholderFixation" instance=ExtResource("4_pxf4c")]
+
+[node name="DefenderCenter" parent="." instance=ExtResource("3_t0scl")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, -15)
+
+[node name="DefenderGK" parent="." instance=ExtResource("3_t0scl")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -40, 1, 0)

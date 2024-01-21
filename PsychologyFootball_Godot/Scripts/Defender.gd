@@ -1,7 +1,7 @@
 extends CharacterBody3D
 
 
-const SPEED = 7.0
+const SPEED = 9.0
 const JUMP_VELOCITY = 4.5
 
 # Get the gravity from the project settings to be synced with RigidBody nodes.
@@ -17,7 +17,8 @@ func _ready():
 		task_manager_node = placeholder_node.get_parent()
 	
 	if task_manager_node != null:
-		task_manager_node.trial_started.connect(_on_task_manager_trial_started)
+		if task_manager_node.name == "SST_Task_Manager":
+			task_manager_node.trial_started.connect(_on_task_manager_trial_started)
 
 func _on_task_manager_trial_started(is_stop_trial: bool):
 	if is_stop_trial:
