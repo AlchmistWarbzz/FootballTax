@@ -5,18 +5,21 @@ var defender_scene = preload("res://SubScenes/Defender.tscn")
 var fixation_cone_scene = preload("res://SubScenes/Fixation_Cone.tscn")
 var teammate_scene = preload("res://SubScenes/Teammate.tscn")
 
-var ticks_msec_bookmark = 0
-const MSEC_BETWEEN_TRIALS = 3000
+const TICKS_BETWEEN_TRIALS_MSEC = 3000
+const READY_TICKS_MSEC = 1000
+const TRIALS_TICKS_MSEC = 600
+@onready var ticks_msec_bookmark = 0
 
 enum scene_state {WAIT, READY, GO_TRIAL, STOP_TRIAL}
-var current_state = scene_state.WAIT
+# TODO create dict of states and corresponding funcs for defensive prog.
+@onready var current_state = scene_state.WAIT
 
-# Called when the node enters the scene tree for the first time.
 func _ready():
-	pass # Replace with function body.
+	scene_reset() # ensure scene and scene_state are in agreement
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
+	# Manual Keypress Sequencing
 	if Input.is_action_just_pressed("r"):
 		scene_reset()
 	
@@ -30,7 +33,25 @@ func _process(delta):
 		trial_start(true)
 	
 	# tick-based scene sequencing
-	
+	match current_state:
+		scene_state.WAIT:
+			if (Time.get_ticks_msec() - ticks_msec_bookmark) > TICKS_BETWEEN_TRIALS_MSEC:
+				# wait time is up
+				scene_ready()
+				current_state = scene_state.READY
+				ticks_msec_bookmark = Time.get_ticks_msec()
+		
+		scene_state.READY:
+			if (Time.get_ticks_msec() - ticks_msec_bookmark) > READY_TICKS_MSEC:
+				# ready time is up
+				
+				# determine go or stop trial
+				
+				current_state = scene_state.GO_TRIAL
+				ticks_msec_bookmark = Time.get_ticks_msec()
+		
+		scene_state.GO_TRIAL:
+			pass
 
 func scene_reset():
 	# remove left ball feeder
