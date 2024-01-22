@@ -19,6 +19,12 @@ enum scene_state {WAIT, READY, GO_TRIAL, STOP_TRIAL}
 
 # signals
 signal trial_started
+signal ball_kicked
+signal go_trial_failed
+signal stop_trial_failed
+
+# flags
+var is_feeder_left: bool = false
 
 func _ready():
 	scene_reset() # ensure scene and scene_state are in agreement
@@ -69,6 +75,12 @@ func _process(delta):
 				scene_reset()
 				current_state = scene_state.WAIT
 				ticks_msec_bookmark = Time.get_ticks_msec()
+			elif Input.is_action_just_pressed("kick_left"):
+				if is_feeder_left:
+					ball_kicked.emit()
+			elif Input.is_action_just_pressed("kick_right"):
+				if not is_feeder_left:
+					ball_kicked.emit()
 		
 		scene_state.STOP_TRIAL:
 			if (Time.get_ticks_msec() - ticks_msec_bookmark) > TRIAL_TICKS_MSEC:
@@ -76,13 +88,15 @@ func _process(delta):
 				scene_reset()
 				current_state = scene_state.WAIT
 				ticks_msec_bookmark = Time.get_ticks_msec()
+			elif Input.is_action_just_pressed("kick_left") or Input.is_action_just_pressed("kick_right"):
+				stop_trial_failed.emit()
 
 func scene_reset():
 	# remove left ball feeder
 	if $PlaceholderBallFeederLeft.get_child_count() != 0:
 		$PlaceholderBallFeederLeft/BallFeeder.free()
 	
-	# remove left ball feeder
+	# remove right ball feeder
 	if $PlaceholderBallFeederRight.get_child_count() != 0:
 		$PlaceholderBallFeederRight/BallFeeder.free()
 	
@@ -96,18 +110,20 @@ func scene_reset():
 		var new_defender_left = defender_scene.instantiate()
 		$PlaceholderDefenderLeft.add_child(new_defender_left)
 	
-	# remove and respawn left defender
+	# remove and respawn right defender
 	if $PlaceholderDefenderRight.get_child_count() != 0:
 		$PlaceholderDefenderRight/Defender.free()
 		var new_defender_right = defender_scene.instantiate()
 		$PlaceholderDefenderRight.add_child(new_defender_right)
 
 func scene_ready():
-	# spawn new ball feeder, randomly choosing left or right side
+	# spawn ball feeder, randomly choosing left or right side
 	var new_ball_feeder = ball_feeder_scene.instantiate()
 	if randf() > 0.5:
+		is_feeder_left = true
 		$PlaceholderBallFeederLeft.add_child(new_ball_feeder)
 	else:
+		is_feeder_left = false
 		$PlaceholderBallFeederRight.add_child(new_ball_feeder)
 	
 	# spawn fixation cone
@@ -123,7 +139,7 @@ func scene_trial_start(is_stop_trial: bool):
 	var new_teammate = teammate_scene.instantiate()
 	$PlaceholderFixation.add_child(new_teammate)
 	
-	# emit signal
+	# emit signal for ball feeder and defenders
 	trial_started.emit(is_stop_trial)
 
 #func stop_trial_start():
