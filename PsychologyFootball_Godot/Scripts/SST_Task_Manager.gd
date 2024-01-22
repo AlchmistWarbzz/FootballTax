@@ -78,9 +78,13 @@ func _process(delta):
 			elif Input.is_action_just_pressed("kick_left"):
 				if is_feeder_left:
 					ball_kicked.emit()
+				else:
+					go_trial_failed.emit()
 			elif Input.is_action_just_pressed("kick_right"):
-				if not is_feeder_left:
+				if not is_feeder_left: # is feeder right
 					ball_kicked.emit()
+				else:
+					go_trial_failed.emit()
 		
 		scene_state.STOP_TRIAL:
 			if (Time.get_ticks_msec() - ticks_msec_bookmark) > TRIAL_TICKS_MSEC:
