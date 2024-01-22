@@ -9,7 +9,7 @@ var teammate_scene = preload("res://SubScenes/Teammate.tscn")
 # time
 const TICKS_BETWEEN_TRIALS_MSEC = 3000
 const READY_TICKS_MSEC = 1000
-const TRIAL_TICKS_MSEC = 600
+const TRIAL_TICKS_MSEC = 500
 @onready var ticks_msec_bookmark = 0
 
 # states
@@ -52,7 +52,7 @@ func _process(delta):
 				# ready time is up
 				
 				# TODO determine go or stop trial
-				var is_stop: bool = (randf() > 0.5)
+				var is_stop: bool = (randf() < 0.25)
 				
 				# TODO call go or stop trial
 				scene_trial_start(is_stop)
