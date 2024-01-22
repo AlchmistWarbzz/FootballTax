@@ -29,6 +29,7 @@ func _physics_process(delta):
 	if not is_on_floor():
 		velocity.y -= gravity * delta
 	
+	# manual keypress sequencing
 	if Input.is_action_just_pressed("s"):
 		moveTriggerFlag = true
 	

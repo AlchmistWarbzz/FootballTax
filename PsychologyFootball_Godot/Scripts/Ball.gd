@@ -5,9 +5,11 @@ extends RigidBody3D
 func _ready():
 	var task_manager_node
 	
-	var placeholder_node = get_parent()
-	if placeholder_node != null:
-		task_manager_node = placeholder_node.get_parent()
+	#var placeholder_node = get_parent()
+	#if placeholder_node != null:
+		#task_manager_node = placeholder_node.get_parent()
+	#task_manager_node = get_node("root/SST_Task_Manager")
+	task_manager_node = get_parent().get_parent().get_parent().get_parent() # ...
 	
 	if task_manager_node != null:
 		task_manager_node.ball_kicked.connect(_on_task_manager_ball_kicked)
@@ -18,6 +20,7 @@ func _ready():
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
+	# temp kick method
 	if Input.is_action_just_pressed("space"):
 		kick()
 
