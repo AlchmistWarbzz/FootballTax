@@ -1461,32 +1461,26 @@ surface_material_override/0 = ExtResource("10_0p6br")
 [node name="SmEnvHedgeS" type="MeshInstance3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -48.8103, -1.0501, -40.4351)
 mesh = ExtResource("13_b2c7o")
-surface_material_override/0 = ExtResource("15_g503p")
 
 [node name="SmEnvHedgeS2" type="MeshInstance3D" parent="."]
 transform = Transform3D(0.335073, 0, -0.942192, 0, 1, 0, 0.942192, 0, 0.335073, -65.8143, 1.74847, 13.1477)
 mesh = ExtResource("13_b2c7o")
-surface_material_override/0 = ExtResource("15_g503p")
 
 [node name="SmEnvHedgeS3" type="MeshInstance3D" parent="."]
 transform = Transform3D(-0.461872, 0, -0.886946, 0, 1, 0, 0.886946, 0, -0.461872, -100.495, 3.85664, -22.1139)
 mesh = ExtResource("13_b2c7o")
-surface_material_override/0 = ExtResource("15_g503p")
 
 [node name="SmEnvHedgeS4" type="MeshInstance3D" parent="."]
 transform = Transform3D(0.941565, 0, -0.336832, 0, 1, 0, 0.336832, 0, 0.941565, -51.2707, 2.7941, 54.5485)
 mesh = ExtResource("13_b2c7o")
-surface_material_override/0 = ExtResource("15_g503p")
 
 [node name="SmEnvHedgeL" type="MeshInstance3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -10.6916, -1.02705, -40.4243)
 mesh = ExtResource("14_ensvx")
-surface_material_override/0 = ExtResource("15_g503p")
 
 [node name="SmEnvHedgeL2" type="MeshInstance3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -32.4474, -1.02705, -40.4243)
 mesh = ExtResource("14_ensvx")
-surface_material_override/0 = ExtResource("15_g503p")
 
 [node name="LandscapePlane001" type="MeshInstance3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.1, 0)

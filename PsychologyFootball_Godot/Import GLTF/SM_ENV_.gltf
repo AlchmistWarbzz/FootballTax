@@ -19,7 +19,9 @@
 				8,
 				9,
 				10,
-				11
+				11,
+				12,
+				13
 			]
 		}
 	],
@@ -35,7 +37,7 @@
 				0,
 				-1,
 				0,
-				1.6292068494294654e-07
+				1.9470718370939721e-07
 			]
 		},
 		{
@@ -77,6 +79,14 @@
 		{
 			"mesh":11,
 			"name":"Hedge1"
+		},
+		{
+			"mesh":12,
+			"name":"TreeT1"
+		},
+		{
+			"mesh":13,
+			"name":"TreeT2"
 		}
 	],
 	"materials":[
@@ -282,6 +292,32 @@
 					},
 					"indices":36,
 					"material":2
+				}
+			]
+		},
+		{
+			"name":"TreeT1",
+			"primitives":[
+				{
+					"attributes":{
+						"POSITION":40,
+						"NORMAL":41,
+						"TEXCOORD_0":42
+					},
+					"indices":43
+				}
+			]
+		},
+		{
+			"name":"TreeT2",
+			"primitives":[
+				{
+					"attributes":{
+						"POSITION":44,
+						"NORMAL":45,
+						"TEXCOORD_0":46
+					},
+					"indices":47
 				}
 			]
 		}
@@ -649,6 +685,74 @@
 			"componentType":5126,
 			"count":307,
 			"type":"VEC2"
+		},
+		{
+			"bufferView":40,
+			"componentType":5126,
+			"count":516,
+			"max":[
+				3.2864418029785156,
+				8.693618774414062,
+				2.9166758060455322
+			],
+			"min":[
+				-2.980617046356201,
+				-0.11455272883176804,
+				-3.292055130004883
+			],
+			"type":"VEC3"
+		},
+		{
+			"bufferView":41,
+			"componentType":5126,
+			"count":516,
+			"type":"VEC3"
+		},
+		{
+			"bufferView":42,
+			"componentType":5126,
+			"count":516,
+			"type":"VEC2"
+		},
+		{
+			"bufferView":43,
+			"componentType":5123,
+			"count":1554,
+			"type":"SCALAR"
+		},
+		{
+			"bufferView":44,
+			"componentType":5126,
+			"count":1880,
+			"max":[
+				7.275298118591309,
+				10.641674041748047,
+				5.455339431762695
+			],
+			"min":[
+				-6.306750297546387,
+				0.06666354089975357,
+				-6.640186786651611
+			],
+			"type":"VEC3"
+		},
+		{
+			"bufferView":45,
+			"componentType":5126,
+			"count":1880,
+			"type":"VEC3"
+		},
+		{
+			"bufferView":46,
+			"componentType":5126,
+			"count":1880,
+			"type":"VEC2"
+		},
+		{
+			"bufferView":47,
+			"componentType":5123,
+			"count":9864,
+			"type":"SCALAR"
 		}
 	],
 	"bufferViews":[
@@ -891,11 +995,59 @@
 			"byteLength":2456,
 			"byteOffset":454732,
 			"target":34962
+		},
+		{
+			"buffer":0,
+			"byteLength":6192,
+			"byteOffset":457188,
+			"target":34962
+		},
+		{
+			"buffer":0,
+			"byteLength":6192,
+			"byteOffset":463380,
+			"target":34962
+		},
+		{
+			"buffer":0,
+			"byteLength":4128,
+			"byteOffset":469572,
+			"target":34962
+		},
+		{
+			"buffer":0,
+			"byteLength":3108,
+			"byteOffset":473700,
+			"target":34963
+		},
+		{
+			"buffer":0,
+			"byteLength":22560,
+			"byteOffset":476808,
+			"target":34962
+		},
+		{
+			"buffer":0,
+			"byteLength":22560,
+			"byteOffset":499368,
+			"target":34962
+		},
+		{
+			"buffer":0,
+			"byteLength":15040,
+			"byteOffset":521928,
+			"target":34962
+		},
+		{
+			"buffer":0,
+			"byteLength":19728,
+			"byteOffset":536968,
+			"target":34963
 		}
 	],
 	"buffers":[
 		{
-			"byteLength":457188,
+			"byteLength":556696,
 			"uri":"SM_ENV_.bin"
 		}
 	]
