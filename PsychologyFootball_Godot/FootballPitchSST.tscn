@@ -1,4 +1,4 @@
-[gd_scene load_steps=34 format=3 uid="uid://rjin0qqtw7jx"]
+[gd_scene load_steps=36 format=3 uid="uid://rjin0qqtw7jx"]
 
 [ext_resource type="Material" uid="uid://t05uv2wgginr" path="res://Materials/M_TempHill.tres" id="1_niqus"]
 [ext_resource type="Material" uid="uid://cmggx3m1r0r7k" path="res://Materials/M_TempGrass.tres" id="3_4b7q1"]
@@ -21,6 +21,7 @@
 [ext_resource type="ArrayMesh" uid="uid://ck3sws4x5gu6a" path="res://Assets/Props/Assets_SM_Flag.res" id="21_scumy"]
 [ext_resource type="ArrayMesh" uid="uid://c47gbavrj88vk" path="res://Assets/Props/Assets_SM_FloodLight.res" id="22_b0xcb"]
 [ext_resource type="ArrayMesh" uid="uid://d3loukadqx6do" path="res://Assets/Props/Assets_SM_Football.res" id="23_h3jml"]
+[ext_resource type="Texture2D" uid="uid://dut41g42uglgf" path="res://Import GLTF/M_PitchDiffuse.png" id="23_me20w"]
 [ext_resource type="ArrayMesh" uid="uid://d0h82vnms1pg5" path="res://Assets/Props/Assets_SM_GoalPost.res" id="24_hyqpp"]
 [ext_resource type="PackedScene" uid="uid://dfwgvi5kn4ifi" path="res://SubScenes/SST_Task_Manager.tscn" id="25_xenpo"]
 [ext_resource type="ArrayMesh" uid="uid://bonv8lx6wjpvj" path="res://Assets/Environment/SM_ENV__TreeT1.res" id="26_lwsue"]
@@ -48,6 +49,9 @@ _data = {
 "tilts": PackedFloat32Array(0, 0)
 }
 point_count = 2
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_kl0cy"]
+albedo_texture = ExtResource("23_me20w")
 
 [sub_resource type="ConcavePolygonShape3D" id="ConcavePolygonShape3D_mk57i"]
 data = PackedVector3Array(-50, 0, 34.499, 50, 0, -34.5, -50, 0, -34.5, -50, 0, 34.499, 50, 0, 34.499, 50, 0, -34.5, -50, 1.0577, 34.499, 50, 1.0577, -34.5, 50, 1.0577, 34.499, -50, 1.0577, 34.499, -50, 1.0577, -34.5, 50, 1.0577, -34.5, 50, 0, 34.499, 50, 1.0577, -34.5, 50, 0, -34.5, 50, 0, 34.499, 50, 1.0577, 34.499, 50, 1.0577, -34.5, -50, 0, -34.5, -50, 1.0577, 34.499, -50, 0, 34.499, -50, 0, -34.5, -50, 1.0577, -34.5, -50, 1.0577, 34.499, 50, 0, -34.5, -50, 1.0577, -34.5, -50, 0, -34.5, 50, 0, -34.5, 50, 1.0577, -34.5, -50, 1.0577, -34.5, -50, 0, 34.499, 50, 1.0577, 34.499, 50, 0, 34.499, -50, 0, 34.499, -50, 1.0577, 34.499, 50, 1.0577, 34.499)
@@ -409,8 +413,8 @@ mesh = ExtResource("24_hyqpp")
 
 [node name="PitchSmPitch" type="MeshInstance3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1.04354, 0)
+material_override = SubResource("StandardMaterial3D_kl0cy")
 mesh = ExtResource("26_o844s")
-surface_material_override/0 = ExtResource("15_u8v5q")
 
 [node name="StaticBody3D" type="StaticBody3D" parent="PitchSmPitch"]
 
