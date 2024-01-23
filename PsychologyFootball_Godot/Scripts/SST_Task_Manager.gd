@@ -81,15 +81,19 @@ func _process(delta):
 				if is_feeder_left:
 					ball_kicked.emit()
 					is_go_trial_passed = true
+					print("go_trial_passed")
 				else:
 					go_trial_failed.emit()
+					print("go_trial_failed")
 			
 			elif Input.is_action_just_pressed("kick_right") and not is_go_trial_passed:
 				if not is_feeder_left: # is feeder right
 					ball_kicked.emit()
 					is_go_trial_passed = true
+					print("go_trial_passed")
 				else:
 					go_trial_failed.emit()
+					print("go_trial_failed")
 		
 		scene_state.STOP_TRIAL:
 			if (Time.get_ticks_msec() - ticks_msec_bookmark) > TRIAL_TICKS_MSEC:
@@ -100,8 +104,11 @@ func _process(delta):
 				
 			elif Input.is_action_just_pressed("kick_left") or Input.is_action_just_pressed("kick_right"):
 				stop_trial_failed.emit()
+				print("stop_trial_failed")
 
 func scene_reset():
+	print("scene_reset")
+	
 	# reset flags
 	is_go_trial_passed = false
 	
@@ -130,6 +137,8 @@ func scene_reset():
 		$PlaceholderDefenderRight.add_child(new_defender_right)
 
 func scene_ready():
+	print("scene_ready")
+	
 	# spawn ball feeder, randomly choosing left or right side
 	var new_ball_feeder = ball_feeder_scene.instantiate()
 	if randf() > 0.5:
@@ -144,6 +153,9 @@ func scene_ready():
 	$PlaceholderFixation.add_child(new_fixation_cone)
 
 func scene_trial_start(is_stop_trial: bool):
+	var bool_string = "stop" if is_stop_trial else "go"
+	print("scene_trial_start " + bool_string)
+	
 	# remove fixation cone
 	if $PlaceholderFixation.get_child_count() != 0:
 		$PlaceholderFixation/FixationCone.free()
