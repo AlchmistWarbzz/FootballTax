@@ -7,14 +7,18 @@ var fixation_cone_scene = preload("res://SubScenes/Fixation_Cone.tscn")
 var teammate_scene = preload("res://SubScenes/Teammate.tscn")
 
 # time
-const TICKS_BETWEEN_TRIALS_MSEC = 3000
-const READY_TICKS_MSEC = 1000
-const TRIAL_TICKS_MSEC = 500
-@onready var ticks_msec_bookmark = 0
+const TICKS_BETWEEN_TRIALS_MSEC: int = 3000
+const READY_TICKS_MSEC: int = 1000
+const TRIAL_TICKS_MSEC: int = 500
+@onready var ticks_msec_bookmark: int = 0
+
+# metrics
+var trial_counter: int = 0
+@onready var metrics_array = Array()
 
 # states
 enum scene_state {WAIT, READY, GO_TRIAL, STOP_TRIAL}
-# TODO create dict of states and corresponding funcs for defensive prog.
+# TODO create dict of states and corresponding func callables for defensive prog.
 @onready var current_state = scene_state.WAIT
 
 # signals
@@ -25,25 +29,31 @@ signal stop_trial_failed
 
 # flags
 var is_feeder_left: bool = false
-var is_go_trial_passed = false
+var is_trial_passed = false
 
 func _ready():
 	scene_reset() # ensure scene and scene_state are in agreement
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
+	#if trial_counter > 9:
+		#var file = FileAccess.open("/sst_log.txt", FileAccess.WRITE)
+		#file.store_var(metrics_array)
+	
 	# Manual Keypress Sequencing
-	if Input.is_action_just_pressed("r"):
-		scene_reset()
-	
-	if Input.is_action_just_pressed("t"):
-		scene_ready()
-	
-	if Input.is_action_just_pressed("g"):
-		scene_trial_start(false)
+	#if Input.is_action_just_pressed("r"):
+		#scene_reset()
+	#
+	#if Input.is_action_just_pressed("t"):
+		#scene_ready()
+	#
+	#if Input.is_action_just_pressed("g"):
+		#scene_trial_start(false)
 	
 	if Input.is_action_just_pressed("s"):
-		scene_trial_start(true)
+		#scene_trial_start(true)
+		var log_file = FileAccess.open("/sst_log.txt", FileAccess.WRITE)
+		log_file.store_var(metrics_array)
 	
 	# tick-based scene sequencing
 	match current_state:
@@ -73,44 +83,61 @@ func _process(delta):
 		scene_state.GO_TRIAL:
 			if (Time.get_ticks_msec() - ticks_msec_bookmark) > TRIAL_TICKS_MSEC:
 				# trial time is up
+				
+				if not is_trial_passed:
+					go_trial_failed.emit()
+					print("go_trial_failed")
+					metrics_array[trial_counter] = ["go", is_feeder_left, is_trial_passed, 0] # 0 response time means did not respond
+				
 				scene_reset()
+				
+				trial_counter += 1
 				current_state = scene_state.WAIT
 				ticks_msec_bookmark = Time.get_ticks_msec()
 			
-			elif Input.is_action_just_pressed("kick_left") and not is_go_trial_passed:
+			elif Input.is_action_just_pressed("kick_left") and not is_trial_passed:
 				if is_feeder_left:
 					ball_kicked.emit()
-					is_go_trial_passed = true
+					is_trial_passed = true
 					print("go_trial_passed")
+					metrics_array[trial_counter] = ["go", is_feeder_left, is_trial_passed, Time.get_ticks_msec() - ticks_msec_bookmark]
 				else:
 					go_trial_failed.emit()
 					print("go_trial_failed")
+					metrics_array[trial_counter] = ["go", is_feeder_left, is_trial_passed, Time.get_ticks_msec() - ticks_msec_bookmark]
 			
-			elif Input.is_action_just_pressed("kick_right") and not is_go_trial_passed:
+			elif Input.is_action_just_pressed("kick_right") and not is_trial_passed:
 				if not is_feeder_left: # is feeder right
 					ball_kicked.emit()
-					is_go_trial_passed = true
+					is_trial_passed = true
 					print("go_trial_passed")
+					metrics_array[trial_counter] = ["go", is_feeder_left, is_trial_passed, Time.get_ticks_msec() - ticks_msec_bookmark]
 				else:
 					go_trial_failed.emit()
 					print("go_trial_failed")
+					metrics_array[trial_counter] = ["go", is_feeder_left, is_trial_passed, Time.get_ticks_msec() - ticks_msec_bookmark]
 		
 		scene_state.STOP_TRIAL:
 			if (Time.get_ticks_msec() - ticks_msec_bookmark) > TRIAL_TICKS_MSEC:
 				# trial time is up
 				scene_reset()
+				
+				if is_trial_passed:
+					print("stop_trial_passed")
+					metrics_array[trial_counter] = ["stop", is_feeder_left, is_trial_passed, 0] # 0 response time means did not respond
+				
+				trial_counter += 1
 				current_state = scene_state.WAIT
 				ticks_msec_bookmark = Time.get_ticks_msec()
 				
 			elif Input.is_action_just_pressed("kick_left") or Input.is_action_just_pressed("kick_right"):
+				is_trial_passed = false
 				stop_trial_failed.emit()
 				print("stop_trial_failed")
+				metrics_array[trial_counter] = ["stop", is_feeder_left, is_trial_passed, Time.get_ticks_msec() - ticks_msec_bookmark]
 
 func scene_reset():
 	print("scene_reset")
-	
-	# reset flags
-	is_go_trial_passed = false
 	
 	# remove left ball feeder
 	if $PlaceholderBallFeederLeft.get_child_count() != 0:
@@ -155,6 +182,9 @@ func scene_ready():
 func scene_trial_start(is_stop_trial: bool):
 	var bool_string = "stop" if is_stop_trial else "go"
 	print("scene_trial_start " + bool_string)
+	
+	# set flags
+	is_trial_passed = is_stop_trial
 	
 	# remove fixation cone
 	if $PlaceholderFixation.get_child_count() != 0:
