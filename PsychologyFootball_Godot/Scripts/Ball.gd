@@ -20,9 +20,7 @@ func _ready():
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
-	# temp kick method
-	if Input.is_action_just_pressed("space"):
-		kick()
+	pass
 
 
 func _on_task_manager_ball_kicked():
