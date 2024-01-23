@@ -25,6 +25,7 @@ signal stop_trial_failed
 
 # flags
 var is_feeder_left: bool = false
+var is_go_trial_passed = false
 
 func _ready():
 	scene_reset() # ensure scene and scene_state are in agreement
@@ -75,14 +76,18 @@ func _process(delta):
 				scene_reset()
 				current_state = scene_state.WAIT
 				ticks_msec_bookmark = Time.get_ticks_msec()
-			elif Input.is_action_just_pressed("kick_left"):
+			
+			elif Input.is_action_just_pressed("kick_left") and not is_go_trial_passed:
 				if is_feeder_left:
 					ball_kicked.emit()
+					is_go_trial_passed = true
 				else:
 					go_trial_failed.emit()
-			elif Input.is_action_just_pressed("kick_right"):
+			
+			elif Input.is_action_just_pressed("kick_right") and not is_go_trial_passed:
 				if not is_feeder_left: # is feeder right
 					ball_kicked.emit()
+					is_go_trial_passed = true
 				else:
 					go_trial_failed.emit()
 		
@@ -92,10 +97,14 @@ func _process(delta):
 				scene_reset()
 				current_state = scene_state.WAIT
 				ticks_msec_bookmark = Time.get_ticks_msec()
+				
 			elif Input.is_action_just_pressed("kick_left") or Input.is_action_just_pressed("kick_right"):
 				stop_trial_failed.emit()
 
 func scene_reset():
+	# reset flags
+	is_go_trial_passed = false
+	
 	# remove left ball feeder
 	if $PlaceholderBallFeederLeft.get_child_count() != 0:
 		$PlaceholderBallFeederLeft/BallFeeder.free()
