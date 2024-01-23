@@ -18,6 +18,7 @@ func _process(delta):
 	# manual keypress sequencing
 	#if Input.is_action_just_pressed("g") or Input.is_action_just_pressed("s"):
 		#instantiate_ball()
+	pass
 
 func _on_task_manager_trial_started(is_stop_trial: bool):
 	instantiate_ball()
