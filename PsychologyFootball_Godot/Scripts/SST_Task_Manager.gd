@@ -93,7 +93,7 @@ func _process(delta):
 				if not is_trial_passed:
 					go_trial_failed.emit()
 					print("go_trial_failed")
-					metrics_array.append(["go", is_feeder_left, is_trial_passed, 0]) # 0 response time means did not respond
+					metrics_array.append(["go", is_feeder_left, is_trial_passed, "no_response"])
 				
 				scene_reset()
 				
@@ -130,7 +130,7 @@ func _process(delta):
 				
 				if is_trial_passed:
 					print("stop_trial_passed")
-					metrics_array.append(["stop", is_feeder_left, is_trial_passed, 0]) # 0 response time means did not respond
+					metrics_array.append(["stop", is_feeder_left, is_trial_passed, "no_response"])
 				
 				trial_counter += 1
 				current_state = scene_state.WAIT
