@@ -50,10 +50,16 @@ func _process(delta):
 	#if Input.is_action_just_pressed("g"):
 		#scene_trial_start(false)
 	
-	if Input.is_action_just_pressed("s"):
+	if Input.is_action_just_pressed("save_log"):
 		#scene_trial_start(true)
-		var log_file = FileAccess.open("/sst_log.txt", FileAccess.WRITE)
-		log_file.store_var(metrics_array)
+		var log_file = FileAccess.open("res://sst_log.txt", FileAccess.WRITE)
+		print(FileAccess.get_open_error())
+		
+		for sub_array in metrics_array:
+			var line = "{0}, {1}, {2}, {3}"
+			log_file.store_line(line.format(sub_array))
+		
+		log_file.close()
 	
 	# tick-based scene sequencing
 	match current_state:
@@ -87,7 +93,7 @@ func _process(delta):
 				if not is_trial_passed:
 					go_trial_failed.emit()
 					print("go_trial_failed")
-					metrics_array[trial_counter] = ["go", is_feeder_left, is_trial_passed, 0] # 0 response time means did not respond
+					metrics_array.append(["go", is_feeder_left, is_trial_passed, 0]) # 0 response time means did not respond
 				
 				scene_reset()
 				
@@ -100,22 +106,22 @@ func _process(delta):
 					ball_kicked.emit()
 					is_trial_passed = true
 					print("go_trial_passed")
-					metrics_array[trial_counter] = ["go", is_feeder_left, is_trial_passed, Time.get_ticks_msec() - ticks_msec_bookmark]
+					metrics_array.append(["go", is_feeder_left, is_trial_passed, Time.get_ticks_msec() - ticks_msec_bookmark])
 				else:
 					go_trial_failed.emit()
 					print("go_trial_failed")
-					metrics_array[trial_counter] = ["go", is_feeder_left, is_trial_passed, Time.get_ticks_msec() - ticks_msec_bookmark]
+					metrics_array.append(["go", is_feeder_left, is_trial_passed, Time.get_ticks_msec() - ticks_msec_bookmark])
 			
 			elif Input.is_action_just_pressed("kick_right") and not is_trial_passed:
 				if not is_feeder_left: # is feeder right
 					ball_kicked.emit()
 					is_trial_passed = true
 					print("go_trial_passed")
-					metrics_array[trial_counter] = ["go", is_feeder_left, is_trial_passed, Time.get_ticks_msec() - ticks_msec_bookmark]
+					metrics_array.append(["go", is_feeder_left, is_trial_passed, Time.get_ticks_msec() - ticks_msec_bookmark])
 				else:
 					go_trial_failed.emit()
 					print("go_trial_failed")
-					metrics_array[trial_counter] = ["go", is_feeder_left, is_trial_passed, Time.get_ticks_msec() - ticks_msec_bookmark]
+					metrics_array.append(["go", is_feeder_left, is_trial_passed, Time.get_ticks_msec() - ticks_msec_bookmark])
 		
 		scene_state.STOP_TRIAL:
 			if (Time.get_ticks_msec() - ticks_msec_bookmark) > TRIAL_TICKS_MSEC:
@@ -124,7 +130,7 @@ func _process(delta):
 				
 				if is_trial_passed:
 					print("stop_trial_passed")
-					metrics_array[trial_counter] = ["stop", is_feeder_left, is_trial_passed, 0] # 0 response time means did not respond
+					metrics_array.append(["stop", is_feeder_left, is_trial_passed, 0]) # 0 response time means did not respond
 				
 				trial_counter += 1
 				current_state = scene_state.WAIT
@@ -134,7 +140,7 @@ func _process(delta):
 				is_trial_passed = false
 				stop_trial_failed.emit()
 				print("stop_trial_failed")
-				metrics_array[trial_counter] = ["stop", is_feeder_left, is_trial_passed, Time.get_ticks_msec() - ticks_msec_bookmark]
+				metrics_array.append(["stop", is_feeder_left, is_trial_passed, Time.get_ticks_msec() - ticks_msec_bookmark])
 
 func scene_reset():
 	print("scene_reset")
