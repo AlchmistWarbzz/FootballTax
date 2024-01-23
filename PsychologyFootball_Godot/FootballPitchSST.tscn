@@ -616,3 +616,4 @@ mesh = ExtResource("26_lwsue")
 
 [node name="Character" parent="." instance=ExtResource("28_0rfv3")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.6938, 0.0141597, -0.302888)
+visible = false
