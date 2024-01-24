@@ -27,6 +27,12 @@ signal ball_kicked
 signal go_trial_failed
 signal stop_trial_failed
 
+# counters
+const GO_TRIALS_PER_BLOCK = 75
+const STOP_TRIALS_PER_BLOCK = 25
+var go_trial_counter: int = 0
+var stop_trial_counter: int = 0
+
 # flags
 var is_feeder_left: bool = false
 var is_trial_passed = false
@@ -52,17 +58,7 @@ func _process(delta):
 	
 	if Input.is_action_just_pressed("save_log"):
 		#scene_trial_start(true)
-		var datetime_dict = Time.get_datetime_dict_from_system()
-		var log_file_path: String = "res://TaskLogs/stop_signal_raw_{year}-{month}-{day}-{hour}-{minute}-{second}.txt".format(datetime_dict)
-		print("log created at " + log_file_path)
-		var log_file = FileAccess.open(log_file_path, FileAccess.WRITE)
-		print(FileAccess.get_open_error())
-		
-		for sub_array in metrics_array:
-			var line = "{0}, {1}, {2}, {3}"
-			log_file.store_line(line.format(sub_array))
-		
-		log_file.close()
+		write_sst_logs()
 	
 	# tick-based scene sequencing
 	match current_state:
@@ -77,11 +73,15 @@ func _process(delta):
 			if (Time.get_ticks_msec() - ticks_msec_bookmark) > READY_TICKS_MSEC:
 				# ready time is up
 				
-				# TODO determine go or stop trial
+				# determine go or stop trial
 				var is_stop: bool = (randf() < 0.25)
-				
-				# TODO call go or stop trial
-				scene_trial_start(is_stop)
+				if is_stop and stop_trial_counter < STOP_TRIALS_PER_BLOCK:
+					scene_trial_start(is_stop)
+				elif not is_stop and go_trial_counter < GO_TRIALS_PER_BLOCK:
+					scene_trial_start(is_stop)
+				else:
+					# 100-trial block finished
+					pass
 				
 				if is_stop:
 					current_state = scene_state.STOP_TRIAL
@@ -210,4 +210,32 @@ func scene_trial_start(is_stop_trial: bool):
 	## remove fixation cone
 	#if $PlaceholderFixation.get_child_count() != 0:
 		#$PlaceholderFixation/FixationCone.free()
+
+func write_sst_logs():
+	var datetime_dict = Time.get_datetime_dict_from_system()
+	
+	# raw log
+	var raw_log_file_path: String = "res://TaskLogs/stop_signal_raw_{year}-{month}-{day}-{hour}-{minute}-{second}.txt".format(datetime_dict)
+	print("raw log created at " + raw_log_file_path)
+	var raw_log_file = FileAccess.open(raw_log_file_path, FileAccess.WRITE)
+	print(FileAccess.get_open_error())
+	
+	for sub_array in metrics_array:
+		var line = "{0}, {1}, {2}, {3}"
+		raw_log_file.store_line(line.format(sub_array))
+	
+	raw_log_file.close()
+	
+	# summary log
+	var summary_log_file_path: String = "res://TaskLogs/stop_signal_summary_{year}-{month}-{day}-{hour}-{minute}-{second}.txt".format(datetime_dict)
+	print("raw log created at " + summary_log_file_path)
+	var summary_log_file = FileAccess.open(summary_log_file_path, FileAccess.WRITE)
+	print(FileAccess.get_open_error())
+	
+	for sub_array in metrics_array:
+		pass
+	
+	summary_log_file.close()
+
+
 
