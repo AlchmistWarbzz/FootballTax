@@ -63,7 +63,7 @@ func _process(delta):
 		#scene_trial_start(true)
 		var datetime = Time.get_datetime_dict_from_system()
 		write_sst_raw_log(datetime)
-		#write_sst_summary_log(datetime)
+		write_sst_summary_log(datetime)
 	
 	# tick-based scene sequencing
 	match current_state:
@@ -261,18 +261,30 @@ func write_sst_summary_log(datetime_dict):
 	summary_log_file.store_line("PsychologyFootball - Stop Signal Task - Summary Data Log")
 	summary_log_file.store_line("date: {year}-{month}-{day}".format(datetime_dict))
 	summary_log_file.store_line("time: {hour}-{minute}-{second}".format(datetime_dict))
-	summary_log_file.store_line("subject: test")
-	summary_log_file.store_line("group: test")
+	summary_log_file.store_line("subject: test") # TODO fill user-input subject
+	summary_log_file.store_line("group: test") # TODO fill user-input group
+	summary_log_file.store_string("\n\n")
 	
 	# calculate probability of reacting in Stop Signal Trials (prob(response|signal))
-	var p_react_signal = (stop_trial_counter - stop_trials_passed) / stop_trial_counter # fails / total
+	var p_rs: float = (stop_trial_counter - stop_trials_passed) / stop_trial_counter # fails / total
 	
 	#TODO calculate mean stop signal delays (in ms) in StopSignal trials 
 	
 	# calculate mean reaction time (in ms) in StopSignal trials (response times of incorrectly hitting a response key)
+	var rolling_total_reaction_time: int = 0
+	for sub_array in metrics_array:
+		if sub_array[3]:
+			# if stop signal
+			rolling_total_reaction_time += sub_array[5]
+	var sr_rt = rolling_total_reaction_time / (stop_trial_counter - stop_trials_passed) # (stops failed)
 	
+	# write summary data
+	summary_log_file.store_line("p_rs: " + str(p_rs))
+	summary_log_file.store_line("sr_rt: " + str(sr_rt))
 	
 	summary_log_file.close()
+
+
 
 
 
