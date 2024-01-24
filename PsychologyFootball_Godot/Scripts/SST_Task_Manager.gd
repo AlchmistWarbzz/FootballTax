@@ -52,7 +52,10 @@ func _process(delta):
 	
 	if Input.is_action_just_pressed("save_log"):
 		#scene_trial_start(true)
-		var log_file = FileAccess.open("res://sst_log.txt", FileAccess.WRITE)
+		var datetime_dict = Time.get_datetime_dict_from_system()
+		var log_file_path: String = "res://TaskLogs/stop_signal_raw_{year}-{month}-{day}-{hour}-{minute}-{second}.txt".format(datetime_dict)
+		print("log created at " + log_file_path)
+		var log_file = FileAccess.open(log_file_path, FileAccess.WRITE)
 		print(FileAccess.get_open_error())
 		
 		for sub_array in metrics_array:
