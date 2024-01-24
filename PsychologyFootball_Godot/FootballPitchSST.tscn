@@ -56,7 +56,7 @@ albedo_texture = ExtResource("23_me20w")
 [sub_resource type="ConcavePolygonShape3D" id="ConcavePolygonShape3D_mk57i"]
 data = PackedVector3Array(-50, 0, 34.499, 50, 0, -34.5, -50, 0, -34.5, -50, 0, 34.499, 50, 0, 34.499, 50, 0, -34.5, -50, 1.0577, 34.499, 50, 1.0577, -34.5, 50, 1.0577, 34.499, -50, 1.0577, 34.499, -50, 1.0577, -34.5, 50, 1.0577, -34.5, 50, 0, 34.499, 50, 1.0577, -34.5, 50, 0, -34.5, 50, 0, 34.499, 50, 1.0577, 34.499, 50, 1.0577, -34.5, -50, 0, -34.5, -50, 1.0577, 34.499, -50, 0, 34.499, -50, 0, -34.5, -50, 1.0577, -34.5, -50, 1.0577, 34.499, 50, 0, -34.5, -50, 1.0577, -34.5, -50, 0, -34.5, 50, 0, -34.5, 50, 1.0577, -34.5, -50, 1.0577, -34.5, -50, 0, 34.499, 50, 1.0577, 34.499, 50, 0, 34.499, -50, 0, 34.499, -50, 1.0577, 34.499, 50, 1.0577, 34.499)
 
-[node name="Node3D" type="Node3D"]
+[node name="root" type="Node3D"]
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = SubResource("Environment_vmebv")
@@ -616,3 +616,4 @@ mesh = ExtResource("26_lwsue")
 
 [node name="Character" parent="." instance=ExtResource("28_0rfv3")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.6938, 0.0141597, -0.302888)
+visible = false

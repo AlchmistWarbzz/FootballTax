@@ -15,8 +15,10 @@ func _ready():
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
-	if Input.is_action_just_pressed("g") or Input.is_action_just_pressed("s"):
-		instantiate_ball()
+	# manual keypress sequencing
+	#if Input.is_action_just_pressed("g") or Input.is_action_just_pressed("s"):
+		#instantiate_ball()
+	pass
 
 func _on_task_manager_trial_started(is_stop_trial: bool):
 	instantiate_ball()
