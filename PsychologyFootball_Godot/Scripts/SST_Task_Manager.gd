@@ -12,8 +12,15 @@ const READY_TICKS_MSEC: int = 1000
 const TRIAL_TICKS_MSEC: int = 500
 @onready var ticks_msec_bookmark: int = 0
 
-# metrics
+# counters
+const GO_TRIALS_PER_BLOCK = 75
+const STOP_TRIALS_PER_BLOCK = 25
+var block_counter: int = 0
 var trial_counter: int = 0
+var go_trial_counter: int = 0
+var stop_trial_counter: int = 0
+
+# metrics
 @onready var metrics_array = Array()
 
 # states
@@ -26,12 +33,6 @@ signal trial_started
 signal ball_kicked
 signal go_trial_failed
 signal stop_trial_failed
-
-# counters
-const GO_TRIALS_PER_BLOCK = 75
-const STOP_TRIALS_PER_BLOCK = 25
-var go_trial_counter: int = 0
-var stop_trial_counter: int = 0
 
 # flags
 var is_feeder_left: bool = false
@@ -58,7 +59,8 @@ func _process(delta):
 	
 	if Input.is_action_just_pressed("save_log"):
 		#scene_trial_start(true)
-		write_sst_logs()
+		write_sst_raw_log()
+		#write_sst_summary_log()
 	
 	# tick-based scene sequencing
 	match current_state:
@@ -96,11 +98,10 @@ func _process(delta):
 				if not is_trial_passed:
 					go_trial_failed.emit()
 					print("go_trial_failed")
-					metrics_array.append(["go", is_feeder_left, is_trial_passed, "no_response"])
+					append_new_metrics_entry(false, is_trial_passed, 0)
 				
 				scene_reset()
 				
-				trial_counter += 1
 				current_state = scene_state.WAIT
 				ticks_msec_bookmark = Time.get_ticks_msec()
 			
@@ -109,22 +110,20 @@ func _process(delta):
 					ball_kicked.emit()
 					is_trial_passed = true
 					print("go_trial_passed")
-					metrics_array.append(["go", is_feeder_left, is_trial_passed, Time.get_ticks_msec() - ticks_msec_bookmark])
 				else:
 					go_trial_failed.emit()
 					print("go_trial_failed")
-					metrics_array.append(["go", is_feeder_left, is_trial_passed, Time.get_ticks_msec() - ticks_msec_bookmark])
+				append_new_metrics_entry(false, is_trial_passed, Time.get_ticks_msec() - ticks_msec_bookmark)
 			
 			elif Input.is_action_just_pressed("kick_right") and not is_trial_passed:
 				if not is_feeder_left: # is feeder right
 					ball_kicked.emit()
 					is_trial_passed = true
 					print("go_trial_passed")
-					metrics_array.append(["go", is_feeder_left, is_trial_passed, Time.get_ticks_msec() - ticks_msec_bookmark])
 				else:
 					go_trial_failed.emit()
 					print("go_trial_failed")
-					metrics_array.append(["go", is_feeder_left, is_trial_passed, Time.get_ticks_msec() - ticks_msec_bookmark])
+				append_new_metrics_entry(false, is_trial_passed, Time.get_ticks_msec() - ticks_msec_bookmark)
 		
 		scene_state.STOP_TRIAL:
 			if (Time.get_ticks_msec() - ticks_msec_bookmark) > TRIAL_TICKS_MSEC:
@@ -133,9 +132,8 @@ func _process(delta):
 				
 				if is_trial_passed:
 					print("stop_trial_passed")
-					metrics_array.append(["stop", is_feeder_left, is_trial_passed, "no_response"])
+					append_new_metrics_entry(true, is_trial_passed, 0)
 				
-				trial_counter += 1
 				current_state = scene_state.WAIT
 				ticks_msec_bookmark = Time.get_ticks_msec()
 				
@@ -143,7 +141,7 @@ func _process(delta):
 				is_trial_passed = false
 				stop_trial_failed.emit()
 				print("stop_trial_failed")
-				metrics_array.append(["stop", is_feeder_left, is_trial_passed, Time.get_ticks_msec() - ticks_msec_bookmark])
+				append_new_metrics_entry(true, is_trial_passed, Time.get_ticks_msec() - ticks_msec_bookmark)
 
 func scene_reset():
 	print("scene_reset")
@@ -192,6 +190,13 @@ func scene_trial_start(is_stop_trial: bool):
 	var bool_string = "stop" if is_stop_trial else "go"
 	print("scene_trial_start " + bool_string)
 	
+	# update trial counters
+	trial_counter += 1
+	if is_stop_trial:
+		stop_trial_counter += 1
+	else:
+		go_trial_counter += 1
+	
 	# set flags
 	is_trial_passed = is_stop_trial
 	
@@ -211,7 +216,10 @@ func scene_trial_start(is_stop_trial: bool):
 	#if $PlaceholderFixation.get_child_count() != 0:
 		#$PlaceholderFixation/FixationCone.free()
 
-func write_sst_logs():
+func append_new_metrics_entry(stop_signal: bool, correct_response: bool, response_time: int):
+		metrics_array.append([block_counter, trial_counter, is_feeder_left, stop_signal, correct_response, response_time])
+
+func write_sst_raw_log():
 	var datetime_dict = Time.get_datetime_dict_from_system()
 	
 	# raw log
@@ -220,20 +228,39 @@ func write_sst_logs():
 	var raw_log_file = FileAccess.open(raw_log_file_path, FileAccess.WRITE)
 	print(FileAccess.get_open_error())
 	
+	# format guide
+	# block_counter: int, trial_counter: int, TODO ssd: int (msec), stimulus_left: bool,
+	# stop_signal: bool, correct_response: bool, response_time: int (msec)
+	
+	# write date, time, subject, group, format guide
+	raw_log_file.store_line("PsychologyFootball - Stop Signal Task - Raw Data Log")
+	raw_log_file.store_line("date: {year}-{month}-{day}".format(datetime_dict))
+	raw_log_file.store_line("time: {hour}-{minute}-{second}".format(datetime_dict))
+	raw_log_file.store_line("subject: test")
+	raw_log_file.store_line("group: test")
+	raw_log_file.store_string("format guide:\n\nblock_counter: int, trial_counter: int, stop signal delay: int (msec), stimulus_side: bool (true = left, false = right), stop_signal_shown: bool, correct_response: bool, response_time: int (msec)\n\n")
+	
 	for sub_array in metrics_array:
-		var line = "{0}, {1}, {2}, {3}"
+		var line = "{0}, {1}, {2}, {3}, {4}, {5}"
 		raw_log_file.store_line(line.format(sub_array))
 	
 	raw_log_file.close()
+
+func write_sst_summary_log():
+	var datetime_dict = Time.get_datetime_dict_from_system()
 	
 	# summary log
 	var summary_log_file_path: String = "res://TaskLogs/stop_signal_summary_{year}-{month}-{day}-{hour}-{minute}-{second}.txt".format(datetime_dict)
-	print("raw log created at " + summary_log_file_path)
+	print("summary log created at " + summary_log_file_path)
 	var summary_log_file = FileAccess.open(summary_log_file_path, FileAccess.WRITE)
 	print(FileAccess.get_open_error())
 	
+	var go_successes: int
 	for sub_array in metrics_array:
-		pass
+		if sub_array[0] == "go":
+			pass
+		elif sub_array[0] == "stop":
+			pass
 	
 	summary_log_file.close()
 
