@@ -18,7 +18,9 @@ const STOP_TRIALS_PER_BLOCK = 25
 var block_counter: int = 0
 var trial_counter: int = 0
 var go_trial_counter: int = 0
+var go_trials_passed: int = 0
 var stop_trial_counter: int = 0
+var stop_trials_passed: int = 0
 
 # metrics
 @onready var metrics_array = Array()
@@ -59,8 +61,9 @@ func _process(delta):
 	
 	if Input.is_action_just_pressed("save_log"):
 		#scene_trial_start(true)
-		write_sst_raw_log()
-		#write_sst_summary_log()
+		var datetime = Time.get_datetime_dict_from_system()
+		write_sst_raw_log(datetime)
+		#write_sst_summary_log(datetime)
 	
 	# tick-based scene sequencing
 	match current_state:
@@ -109,6 +112,7 @@ func _process(delta):
 				if is_feeder_left:
 					ball_kicked.emit()
 					is_trial_passed = true
+					go_trials_passed += 1
 					print("go_trial_passed")
 				else:
 					go_trial_failed.emit()
@@ -119,6 +123,7 @@ func _process(delta):
 				if not is_feeder_left: # is feeder right
 					ball_kicked.emit()
 					is_trial_passed = true
+					go_trials_passed += 1
 					print("go_trial_passed")
 				else:
 					go_trial_failed.emit()
@@ -131,6 +136,7 @@ func _process(delta):
 				scene_reset()
 				
 				if is_trial_passed:
+					stop_trials_passed += 1
 					print("stop_trial_passed")
 					append_new_metrics_entry(true, is_trial_passed, 0)
 				
@@ -219,10 +225,8 @@ func scene_trial_start(is_stop_trial: bool):
 func append_new_metrics_entry(stop_signal: bool, correct_response: bool, response_time: int):
 		metrics_array.append([block_counter, trial_counter, is_feeder_left, stop_signal, correct_response, response_time])
 
-func write_sst_raw_log():
-	var datetime_dict = Time.get_datetime_dict_from_system()
-	
-	# raw log
+func write_sst_raw_log(datetime_dict):
+	# open/create file
 	var raw_log_file_path: String = "res://TaskLogs/stop_signal_raw_{year}-{month}-{day}-{hour}-{minute}-{second}.txt".format(datetime_dict)
 	print("raw log created at " + raw_log_file_path)
 	var raw_log_file = FileAccess.open(raw_log_file_path, FileAccess.WRITE)
@@ -246,21 +250,27 @@ func write_sst_raw_log():
 	
 	raw_log_file.close()
 
-func write_sst_summary_log():
-	var datetime_dict = Time.get_datetime_dict_from_system()
-	
-	# summary log
+func write_sst_summary_log(datetime_dict):
+	# open/create file
 	var summary_log_file_path: String = "res://TaskLogs/stop_signal_summary_{year}-{month}-{day}-{hour}-{minute}-{second}.txt".format(datetime_dict)
 	print("summary log created at " + summary_log_file_path)
 	var summary_log_file = FileAccess.open(summary_log_file_path, FileAccess.WRITE)
 	print(FileAccess.get_open_error())
 	
-	var go_successes: int
-	for sub_array in metrics_array:
-		if sub_array[0] == "go":
-			pass
-		elif sub_array[0] == "stop":
-			pass
+	# write date, time, subject, group, format guide
+	summary_log_file.store_line("PsychologyFootball - Stop Signal Task - Summary Data Log")
+	summary_log_file.store_line("date: {year}-{month}-{day}".format(datetime_dict))
+	summary_log_file.store_line("time: {hour}-{minute}-{second}".format(datetime_dict))
+	summary_log_file.store_line("subject: test")
+	summary_log_file.store_line("group: test")
+	
+	# calculate probability of reacting in Stop Signal Trials (prob(response|signal))
+	var p_react_signal = (stop_trial_counter - stop_trials_passed) / stop_trial_counter # fails / total
+	
+	#TODO calculate mean stop signal delays (in ms) in StopSignal trials 
+	
+	# calculate mean reaction time (in ms) in StopSignal trials (response times of incorrectly hitting a response key)
+	
 	
 	summary_log_file.close()
 
