@@ -24,6 +24,7 @@ var stop_trials_passed: int = 0
 
 # metrics
 @onready var metrics_array = Array()
+@onready var start_datetime = Time.get_datetime_dict_from_system()
 
 # states
 enum scene_state {WAIT, READY, GO_TRIAL, STOP_TRIAL}
@@ -61,9 +62,8 @@ func _process(delta):
 	
 	if Input.is_action_just_pressed("save_log"):
 		#scene_trial_start(true)
-		var datetime = Time.get_datetime_dict_from_system()
-		write_sst_raw_log(datetime)
-		write_sst_summary_log(datetime)
+		write_sst_raw_log(start_datetime)
+		write_sst_summary_log(start_datetime)
 	
 	# tick-based scene sequencing
 	match current_state:
@@ -283,8 +283,5 @@ func write_sst_summary_log(datetime_dict):
 	summary_log_file.store_line("sr_rt: " + str(sr_rt))
 	
 	summary_log_file.close()
-
-
-
 
 
