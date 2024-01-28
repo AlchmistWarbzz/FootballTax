@@ -228,7 +228,7 @@ func append_new_metrics_entry(stop_signal: bool, correct_response: bool, respons
 func write_sst_raw_log(datetime_dict):
 	# open/create file
 	var raw_log_file_path: String = "res://TaskLogs/stop_signal_raw_{year}-{month}-{day}-{hour}-{minute}-{second}.txt".format(datetime_dict) # TODO let user choose dir
-	print("raw log created at " + raw_log_file_path)
+	print("raw log file created at " + raw_log_file_path)
 	var raw_log_file = FileAccess.open(raw_log_file_path, FileAccess.WRITE)
 	print("with error code " + str(FileAccess.get_open_error()))
 	
@@ -240,7 +240,7 @@ func write_sst_raw_log(datetime_dict):
 	raw_log_file.store_line("PsychologyFootball - Stop Signal Task - Raw Data Log")
 	raw_log_file.store_line("date: {year}-{month}-{day}".format(datetime_dict))
 	raw_log_file.store_line("time: {hour}-{minute}-{second}".format(datetime_dict))
-	raw_log_file.store_line("subject: test") # TODO let user input subject and group nums
+	raw_log_file.store_line("subject: test") # TODO fill user-input subject and group
 	raw_log_file.store_line("group: test")
 	raw_log_file.store_string("format guide:\n\nblock_counter: int, trial_counter: int, stop signal delay: int (msec), stimulus_side: bool (true = left, false = right), stop_signal_shown: bool, correct_response: bool, response_time: int (msec)\n\n")
 	
@@ -253,7 +253,7 @@ func write_sst_raw_log(datetime_dict):
 func write_sst_summary_log(datetime_dict):
 	# open/create file
 	var summary_log_file_path: String = "res://TaskLogs/stop_signal_summary_{year}-{month}-{day}-{hour}-{minute}-{second}.txt".format(datetime_dict) # TODO let user choose dir
-	print("summary log created at " + summary_log_file_path)
+	print("summary log file created at " + summary_log_file_path)
 	var summary_log_file = FileAccess.open(summary_log_file_path, FileAccess.WRITE)
 	print("with error code " + str(FileAccess.get_open_error()))
 	
@@ -261,16 +261,26 @@ func write_sst_summary_log(datetime_dict):
 	summary_log_file.store_line("PsychologyFootball - Stop Signal Task - Summary Data Log")
 	summary_log_file.store_line("date: {year}-{month}-{day}".format(datetime_dict))
 	summary_log_file.store_line("time: {hour}-{minute}-{second}".format(datetime_dict))
-	summary_log_file.store_line("subject: test") # TODO fill user-input subject
-	summary_log_file.store_line("group: test") # TODO fill user-input group
-	summary_log_file.store_string("\n\n")
+	summary_log_file.store_line("subject: test") # TODO fill user-input subject and group
+	summary_log_file.store_line("group: test")
+	summary_log_file.store_string("\n\n-Final States of Counters-\n")
+	
+	# write counters
+	summary_log_file.store_line("GO_TRIALS_PER_BLOCK (constant): " + str(GO_TRIALS_PER_BLOCK))
+	summary_log_file.store_line("STOP_TRIALS_PER_BLOCK (constant): " + str(STOP_TRIALS_PER_BLOCK))
+	summary_log_file.store_line("block_counter: " + str(block_counter))
+	summary_log_file.store_line("trial_counter: " + str(trial_counter))
+	summary_log_file.store_line("go_trial_counter: " + str(go_trial_counter))
+	summary_log_file.store_line("go_trials_passed: " + str(go_trials_passed))
+	summary_log_file.store_line("stop_trial_counter: " + str(stop_trial_counter))
+	summary_log_file.store_line("stop_trials_passed: " + str(stop_trials_passed))
 	
 	# calculate probability of reacting in Stop Signal Trials (prob(response|signal))
 	var p_rs: float = (stop_trial_counter - stop_trials_passed) / stop_trial_counter # fails / total
 	
-	#TODO calculate mean stop signal delays (in ms) in StopSignal trials 
+	#TODO calculate mean stop signal delays (in ms) in StopSignal trials
 	
-	# calculate mean reaction time (in ms) in StopSignal trials (response times of incorrectly hitting a response key)
+	# calculate mean reaction time (in ms) in Stop Signal trials (response times of incorrectly hitting a response key)
 	var rolling_total_reaction_time: int = 0
 	for sub_array in metrics_array:
 		if sub_array[3]:
@@ -279,8 +289,8 @@ func write_sst_summary_log(datetime_dict):
 	var sr_rt = rolling_total_reaction_time / (stop_trial_counter - stop_trials_passed) # (stops failed)
 	
 	# write summary data
-	summary_log_file.store_line("p_rs: " + str(p_rs))
-	summary_log_file.store_line("sr_rt: " + str(sr_rt))
+	summary_log_file.store_line("\nprobability of reacting in Stop Signal Trials (prob(response|signal)), p_rs: " + str(p_rs))
+	summary_log_file.store_line("mean reaction time (in ms) in Stop Signal trials (response times of incorrectly hitting a response key), sr_rt: " + str(sr_rt))
 	
 	summary_log_file.close()
 
