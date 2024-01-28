@@ -222,15 +222,15 @@ func scene_trial_start(is_stop_trial: bool):
 	#if $PlaceholderFixation.get_child_count() != 0:
 		#$PlaceholderFixation/FixationCone.free()
 
-func append_new_metrics_entry(stop_signal: bool, correct_response: bool, response_time: int):
+func append_new_metrics_entry(stop_signal: bool, correct_response: bool, response_time: int): # TODO add ssd
 		metrics_array.append([block_counter, trial_counter, is_feeder_left, stop_signal, correct_response, response_time])
 
 func write_sst_raw_log(datetime_dict):
 	# open/create file
-	var raw_log_file_path: String = "res://TaskLogs/stop_signal_raw_{year}-{month}-{day}-{hour}-{minute}-{second}.txt".format(datetime_dict)
+	var raw_log_file_path: String = "res://TaskLogs/stop_signal_raw_{year}-{month}-{day}-{hour}-{minute}-{second}.txt".format(datetime_dict) # TODO let user choose dir
 	print("raw log created at " + raw_log_file_path)
 	var raw_log_file = FileAccess.open(raw_log_file_path, FileAccess.WRITE)
-	print(FileAccess.get_open_error())
+	print("with error code " + str(FileAccess.get_open_error()))
 	
 	# format guide
 	# block_counter: int, trial_counter: int, TODO ssd: int (msec), stimulus_left: bool,
@@ -240,7 +240,7 @@ func write_sst_raw_log(datetime_dict):
 	raw_log_file.store_line("PsychologyFootball - Stop Signal Task - Raw Data Log")
 	raw_log_file.store_line("date: {year}-{month}-{day}".format(datetime_dict))
 	raw_log_file.store_line("time: {hour}-{minute}-{second}".format(datetime_dict))
-	raw_log_file.store_line("subject: test")
+	raw_log_file.store_line("subject: test") # TODO let user input subject and group nums
 	raw_log_file.store_line("group: test")
 	raw_log_file.store_string("format guide:\n\nblock_counter: int, trial_counter: int, stop signal delay: int (msec), stimulus_side: bool (true = left, false = right), stop_signal_shown: bool, correct_response: bool, response_time: int (msec)\n\n")
 	
@@ -252,10 +252,10 @@ func write_sst_raw_log(datetime_dict):
 
 func write_sst_summary_log(datetime_dict):
 	# open/create file
-	var summary_log_file_path: String = "res://TaskLogs/stop_signal_summary_{year}-{month}-{day}-{hour}-{minute}-{second}.txt".format(datetime_dict)
+	var summary_log_file_path: String = "res://TaskLogs/stop_signal_summary_{year}-{month}-{day}-{hour}-{minute}-{second}.txt".format(datetime_dict) # TODO let user choose dir
 	print("summary log created at " + summary_log_file_path)
 	var summary_log_file = FileAccess.open(summary_log_file_path, FileAccess.WRITE)
-	print(FileAccess.get_open_error())
+	print("with error code " + str(FileAccess.get_open_error()))
 	
 	# write date, time, subject, group, format guide
 	summary_log_file.store_line("PsychologyFootball - Stop Signal Task - Summary Data Log")
