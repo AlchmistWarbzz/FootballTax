@@ -23,7 +23,7 @@ _data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(0.413793, 1), -0.206553, 0.0, 0,
 point_count = 3
 
 [sub_resource type="AnimationNodeOneShot" id="AnimationNodeOneShot_p5s75"]
-fadein_time = 0.3
+fadein_time = 0.8
 fadeout_time = 0.4
 fadeout_curve = SubResource("Curve_ua0g7")
 autorestart = true
@@ -43,7 +43,7 @@ blend_point_1/pos = 1.0
 
 [resource]
 resource_local_to_scene = true
-graph_offset = Vector2(-347.974, -55.9976)
+graph_offset = Vector2(-563.262, -38.7502)
 nodes/Animation/node = SubResource("AnimationNodeAnimation_rwqv2")
 nodes/Animation/position = Vector2(-340, 20)
 "nodes/Animation 2/node" = SubResource("AnimationNodeAnimation_t35ks")
