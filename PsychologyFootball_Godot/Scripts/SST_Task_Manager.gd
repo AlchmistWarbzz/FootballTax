@@ -12,6 +12,12 @@ const READY_TICKS_MSEC: int = 1000
 const TRIAL_TICKS_MSEC: int = 2000
 @onready var ticks_msec_bookmark: int = 0
 
+# stop signal delay
+const STOP_SIGNAL_DELAY_ADJUST_STEP: int = 50
+const MAX_STOP_SIGNAL_DELAY: int = 1150
+const MIN_STOP_SIGNAL_DELAY: int = STOP_SIGNAL_DELAY_ADJUST_STEP
+var stop_signal_delay: int = 250
+
 # counters
 const PRACTICE_BLOCKS: int = 1
 const TEST_BLOCKS: int = 2
