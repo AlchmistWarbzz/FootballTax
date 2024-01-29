@@ -101,7 +101,7 @@ func _process(delta):
 				elif not is_stop and go_trial_counter < go_trials_per_block:
 					scene_trial_start(is_stop)
 				else:
-					# 100-trial block finished
+					# trial block finished
 					pass
 				
 				if is_stop:
@@ -219,8 +219,9 @@ func scene_trial_start(is_stop_trial: bool):
 	else:
 		go_trial_counter += 1
 	
-	# set flags
+	# set up flags
 	is_trial_passed = is_stop_trial
+	stop_signal_shown = false
 	
 	# remove fixation cone
 	if $PlaceholderFixation.get_child_count() != 0:
@@ -293,7 +294,7 @@ func write_sst_summary_log(datetime_dict):
 	summary_log_file.store_line("stop_trials_passed: " + str(stop_trials_passed))
 	
 	# calculate probability of reacting in Stop Signal Trials (prob(response|signal))
-	var p_rs: float = (stop_trial_counter - stop_trials_passed) / stop_trial_counter # fails / total
+	var p_rs: float = float(stop_trial_counter - stop_trials_passed) / float(stop_trial_counter) # fails / total
 	
 	#TODO calculate mean stop signal delays (in ms) in StopSignal trials
 	
@@ -303,7 +304,7 @@ func write_sst_summary_log(datetime_dict):
 		if sub_array[3]:
 			# if stop signal
 			rolling_total_reaction_time += sub_array[5]
-	var sr_rt = rolling_total_reaction_time / (stop_trial_counter - stop_trials_passed) # (stops failed)
+	var sr_rt = float(rolling_total_reaction_time) / float(stop_trial_counter - stop_trials_passed) # (stops failed)
 	
 	# write summary data
 	summary_log_file.store_line("\nprobability of reacting in Stop Signal Trials (prob(response|signal)), p_rs: " + str(p_rs))
