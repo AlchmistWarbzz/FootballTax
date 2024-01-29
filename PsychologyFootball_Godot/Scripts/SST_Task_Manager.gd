@@ -167,7 +167,7 @@ func _process(delta):
 				
 				stop_signal.emit()
 			
-			elif Input.is_action_just_pressed("kick_left") or Input.is_action_just_pressed("kick_right"):
+			if Input.is_action_just_pressed("kick_left") or Input.is_action_just_pressed("kick_right"):
 				is_trial_passed = false
 				stop_trial_failed.emit()
 				print("stop_trial_failed")
@@ -247,8 +247,8 @@ func scene_trial_start(is_stop_trial: bool):
 	#if $PlaceholderFixation.get_child_count() != 0:
 		#$PlaceholderFixation/FixationCone.free()
 
-func append_new_metrics_entry(stop_signal: bool, correct_response: bool, response_time: int): # TODO add ssd
-		metrics_array.append([block_counter, trial_counter, is_feeder_left, stop_signal, correct_response, response_time])
+func append_new_metrics_entry(stop_trial: bool, correct_response: bool, response_time: int):
+		metrics_array.append([block_counter, trial_counter, is_feeder_left, stop_trial, correct_response, response_time, stop_signal_delay])
 
 func write_sst_raw_log(datetime_dict):
 	# open/create file
@@ -258,8 +258,8 @@ func write_sst_raw_log(datetime_dict):
 	print("with error code " + str(FileAccess.get_open_error()))
 	
 	# format guide
-	# block_counter: int, trial_counter: int, TODO ssd: int (msec), stimulus_left: bool,
-	# stop_signal: bool, correct_response: bool, response_time: int (msec)
+	# block_counter: int, trial_counter: int, stimulus_left: bool, stop_trial: bool,
+	# correct_response: bool, response_time: int (msec), stop_signal_delay: int (msec)
 	
 	# write date, time, subject, group, format guide
 	raw_log_file.store_line("PsychologyFootball - Stop Signal Task - Raw Data Log")
@@ -267,7 +267,7 @@ func write_sst_raw_log(datetime_dict):
 	raw_log_file.store_line("time: {hour}-{minute}-{second}".format(datetime_dict))
 	raw_log_file.store_line("subject: test") # TODO fill user-input subject and group
 	raw_log_file.store_line("group: test")
-	raw_log_file.store_string("format guide:\n\nblock_counter: int, trial_counter: int, stop signal delay: int (msec), stimulus_side: bool (true = left, false = right), stop_signal_shown: bool, correct_response: bool, response_time: int (msec)\n\n")
+	raw_log_file.store_string("format guide:\n\nblock_counter: int, trial_counter: int, stimulus_left: bool (ball feeder side), stop_trial: bool,\ncorrect_response: bool, response_time: int (msec), stop_signal_delay: int (msec)\n\n")
 	
 	for sub_array in metrics_array:
 		var line = "{0}, {1}, {2}, {3}, {4}, {5}"
