@@ -158,7 +158,12 @@ func _process(delta):
 				
 				current_state = scene_state.WAIT
 				ticks_msec_bookmark = Time.get_ticks_msec()
+			
+			elif (Time.get_ticks_msec() - ticks_msec_bookmark) > stop_signal_delay:
+				# time for stop signal
 				
+				stop_signal.emit()
+			
 			elif Input.is_action_just_pressed("kick_left") or Input.is_action_just_pressed("kick_right"):
 				is_trial_passed = false
 				stop_trial_failed.emit()
