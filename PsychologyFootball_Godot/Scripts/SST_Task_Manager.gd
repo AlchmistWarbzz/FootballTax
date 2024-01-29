@@ -7,9 +7,9 @@ var fixation_cone_scene = preload("res://SubScenes/Fixation_Cone.tscn")
 var teammate_scene = preload("res://SubScenes/Teammate.tscn")
 
 # time
-const TICKS_BETWEEN_TRIALS_MSEC: int = 3000
+const TICKS_BETWEEN_TRIALS_MSEC: int = 1000
 const READY_TICKS_MSEC: int = 1000
-const TRIAL_TICKS_MSEC: int = 500
+const TRIAL_TICKS_MSEC: int = 2000
 @onready var ticks_msec_bookmark: int = 0
 
 # counters
