@@ -267,7 +267,8 @@ func write_sst_raw_log(datetime_dict):
 	raw_log_file.store_line("time: {hour}:{minute}:{second}".format(datetime_dict))
 	raw_log_file.store_line("subject: test") # TODO fill user-input subject and group
 	raw_log_file.store_line("group: test")
-	raw_log_file.store_string("format guide:\n\nblock_counter: int, trial_counter: int, stimulus_left: bool (ball feeder side), stop_trial: bool,\ncorrect_response: bool, response_time: int (ms), stop_signal_delay: int (ms)\n\n")
+	raw_log_file.store_string("\n-Format Guide-\n\nblock_counter, trial_counter, stimulus_left (ball feeder side), stop_trial, correct_response, response_time (ms), stop_signal_delay (ms)")
+	raw_log_file.store_string("\n\n-Raw Data-\n\n")
 	
 	for sub_array in metrics_array:
 		var line = "{0}, {1}, {2}, {3}, {4}, {5}, {6}"
@@ -288,12 +289,12 @@ func write_sst_summary_log(datetime_dict):
 	summary_log_file.store_line("time: {hour}:{minute}:{second}".format(datetime_dict))
 	summary_log_file.store_line("subject: test") # TODO fill user-input subject and group
 	summary_log_file.store_line("group: test")
-	summary_log_file.store_string("\n\n-Final States of Counters-\n")
+	summary_log_file.store_string("\n-Final States of Counters-\n\n")
 	
 	# write counters
 	summary_log_file.store_line("is_practice_block: " + str(is_practice_block))
-	summary_log_file.store_line("GO_TRIALS_PER_BLOCK (constant): " + str(go_trials_per_block))
-	summary_log_file.store_line("STOP_TRIALS_PER_BLOCK (constant): " + str(stop_trials_per_block))
+	summary_log_file.store_line("go_trials_per_block: " + str(go_trials_per_block))
+	summary_log_file.store_line("stop_trials_per_block: " + str(stop_trials_per_block))
 	summary_log_file.store_line("block_counter: " + str(block_counter))
 	summary_log_file.store_line("trial_counter: " + str(trial_counter))
 	summary_log_file.store_line("go_trial_counter: " + str(go_trial_counter))
@@ -321,8 +322,9 @@ func write_sst_summary_log(datetime_dict):
 	var sr_rt = float(rolling_total_reaction_time) / float(stop_trial_counter - stop_trials_passed) # (stops failed)
 	
 	# write summary data
-	summary_log_file.store_line("\nprobability of reacting in Stop Signal Trials (prob(response|signal)), p_rs: " + str(p_rs))
-	summary_log_file.store_line("\nmean stop signal delays (in ms) in Stop Signal trials, ssd: " + str(ssd))
+	summary_log_file.store_string("\n-Calculated Summary Values-\n\n")
+	summary_log_file.store_line("probability of reacting in Stop Signal Trials (prob(response|signal)), p_rs: " + str(p_rs))
+	summary_log_file.store_line("mean stop signal delays (in ms) in Stop Signal trials, ssd: " + str(ssd))
 	summary_log_file.store_line("mean reaction time (in ms) in Stop Signal trials (response times of incorrectly hitting a response key), sr_rt: " + str(sr_rt))
 	
 	summary_log_file.close()
