@@ -263,8 +263,8 @@ func write_sst_raw_log(datetime_dict):
 	
 	# write date, time, subject, group, format guide
 	raw_log_file.store_line("PsychologyFootball - Stop Signal Task - Raw Data Log")
-	raw_log_file.store_line("date: {year}-{month}-{day}".format(datetime_dict))
-	raw_log_file.store_line("time: {hour}-{minute}-{second}".format(datetime_dict))
+	raw_log_file.store_line("date: {day}-{month}-{year}".format(datetime_dict))
+	raw_log_file.store_line("time: {hour}:{minute}:{second}".format(datetime_dict))
 	raw_log_file.store_line("subject: test") # TODO fill user-input subject and group
 	raw_log_file.store_line("group: test")
 	raw_log_file.store_string("format guide:\n\nblock_counter: int, trial_counter: int, stimulus_left: bool (ball feeder side), stop_trial: bool,\ncorrect_response: bool, response_time: int (ms), stop_signal_delay: int (ms)\n\n")
@@ -284,8 +284,8 @@ func write_sst_summary_log(datetime_dict):
 	
 	# write date, time, subject, group, format guide
 	summary_log_file.store_line("PsychologyFootball - Stop Signal Task - Summary Data Log")
-	summary_log_file.store_line("date: {year}-{month}-{day}".format(datetime_dict))
-	summary_log_file.store_line("time: {hour}-{minute}-{second}".format(datetime_dict))
+	summary_log_file.store_line("date: {day}-{month}-{year}".format(datetime_dict))
+	summary_log_file.store_line("time: {hour}:{minute}:{second}".format(datetime_dict))
 	summary_log_file.store_line("subject: test") # TODO fill user-input subject and group
 	summary_log_file.store_line("group: test")
 	summary_log_file.store_string("\n\n-Final States of Counters-\n")
