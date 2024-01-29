@@ -1,10 +1,4 @@
-[gd_resource type="AnimationNodeBlendTree" load_steps=11 format=3 uid="uid://mnd3n2powvib"]
-
-[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_t35ks"]
-animation = &"Recevie"
-
-[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_rwqv2"]
-animation = &"Idle2"
+[gd_resource type="AnimationNodeBlendTree" load_steps=9 format=3 uid="uid://mnd3n2powvib"]
 
 [sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_j0s30"]
 animation = &"Idle2"
@@ -43,16 +37,12 @@ blend_point_1/pos = 1.0
 
 [resource]
 resource_local_to_scene = true
-graph_offset = Vector2(-563.262, -38.7502)
-nodes/Animation/node = SubResource("AnimationNodeAnimation_rwqv2")
-nodes/Animation/position = Vector2(-340, 20)
-"nodes/Animation 2/node" = SubResource("AnimationNodeAnimation_t35ks")
-"nodes/Animation 2/position" = Vector2(-260, 160)
+graph_offset = Vector2(-514.535, -6.34097)
 nodes/Idle&Jog/node = SubResource("AnimationNodeBlendSpace1D_vx815")
-nodes/Idle&Jog/position = Vector2(-80, 20)
+nodes/Idle&Jog/position = Vector2(-80, 40)
 nodes/OneShot/node = SubResource("AnimationNodeOneShot_p5s75")
 nodes/OneShot/position = Vector2(160, 80)
 nodes/Recevie&Kick/node = SubResource("AnimationNodeBlendSpace1D_u2iv7")
-nodes/Recevie&Kick/position = Vector2(-80, 200)
+nodes/Recevie&Kick/position = Vector2(-80, 180)
 nodes/output/position = Vector2(540, 100)
 node_connections = [&"OneShot", 0, &"Idle&Jog", &"OneShot", 1, &"Recevie&Kick", &"output", 0, &"OneShot"]
