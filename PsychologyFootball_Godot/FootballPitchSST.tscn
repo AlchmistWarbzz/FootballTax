@@ -1,5 +1,6 @@
-[gd_scene load_steps=36 format=3 uid="uid://rjin0qqtw7jx"]
+[gd_scene load_steps=37 format=3 uid="uid://rjin0qqtw7jx"]
 
+[ext_resource type="Script" path="res://Scripts/level.gd" id="1_7q4w2"]
 [ext_resource type="Material" uid="uid://t05uv2wgginr" path="res://Materials/M_TempHill.tres" id="1_niqus"]
 [ext_resource type="Material" uid="uid://cmggx3m1r0r7k" path="res://Materials/M_TempGrass.tres" id="3_4b7q1"]
 [ext_resource type="ArrayMesh" uid="uid://bstudu2gd55b3" path="res://Assets/Environment/SM_ENV__Dirt MountT2.tres" id="4_0mc3s"]
@@ -57,6 +58,8 @@ albedo_texture = ExtResource("23_me20w")
 data = PackedVector3Array(-50, 0, 34.499, 50, 0, -34.5, -50, 0, -34.5, -50, 0, 34.499, 50, 0, 34.499, 50, 0, -34.5, -50, 1.0577, 34.499, 50, 1.0577, -34.5, 50, 1.0577, 34.499, -50, 1.0577, 34.499, -50, 1.0577, -34.5, 50, 1.0577, -34.5, 50, 0, 34.499, 50, 1.0577, -34.5, 50, 0, -34.5, 50, 0, 34.499, 50, 1.0577, 34.499, 50, 1.0577, -34.5, -50, 0, -34.5, -50, 1.0577, 34.499, -50, 0, 34.499, -50, 0, -34.5, -50, 1.0577, -34.5, -50, 1.0577, 34.499, 50, 0, -34.5, -50, 1.0577, -34.5, -50, 0, -34.5, 50, 0, -34.5, 50, 1.0577, -34.5, -50, 1.0577, -34.5, -50, 0, 34.499, 50, 1.0577, 34.499, 50, 0, 34.499, -50, 0, 34.499, -50, 1.0577, 34.499, 50, 1.0577, 34.499)
 
 [node name="root" type="Node3D"]
+script = ExtResource("1_7q4w2")
+level_id = 1
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = SubResource("Environment_vmebv")
