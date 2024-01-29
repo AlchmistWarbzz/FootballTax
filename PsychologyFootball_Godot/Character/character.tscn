@@ -3,7 +3,7 @@
 [ext_resource type="PackedScene" uid="uid://dcs1xebh4yy7e" path="res://Import GLTF/Character.gltf" id="1_xiwcv"]
 [ext_resource type="AnimationNodeBlendTree" uid="uid://mnd3n2powvib" path="res://Character/Animation/Football_animation_node_blend_tree.tres" id="2_aedpa"]
 
-[sub_resource type="Animation" id="Animation_c5epa"]
+[sub_resource type="Animation" id="Animation_7387o"]
 resource_name = "RunCycle"
 length = 1.36667
 loop_mode = 1
@@ -183,7 +183,7 @@ tracks/24/interp = 1
 tracks/24/loop_wrap = true
 tracks/24/keys = PackedFloat32Array(0, 1, 0.707107, -1.06491e-06, -1.06491e-06, 0.707107)
 
-[sub_resource type="Animation" id="Animation_lmgmd"]
+[sub_resource type="Animation" id="Animation_72q73"]
 resource_name = "Idle2"
 length = 10.5667
 tracks/0/type = "position_3d"
@@ -362,7 +362,7 @@ tracks/24/interp = 1
 tracks/24/loop_wrap = true
 tracks/24/keys = PackedFloat32Array(0, 1, -0.0644764, 5.34241e-13, -1.53727e-08, 0.997919)
 
-[sub_resource type="Animation" id="Animation_fuwe2"]
+[sub_resource type="Animation" id="Animation_kd1bm"]
 resource_name = "GoalKeeper Idle"
 length = 4.63333
 tracks/0/type = "position_3d"
@@ -541,7 +541,7 @@ tracks/24/interp = 1
 tracks/24/loop_wrap = true
 tracks/24/keys = PackedFloat32Array(0, 1, -0.0644764, 5.34241e-13, -1.53727e-08, 0.997919)
 
-[sub_resource type="Animation" id="Animation_ptw0p"]
+[sub_resource type="Animation" id="Animation_3jywg"]
 resource_name = "Idle"
 length = 1.96667
 tracks/0/type = "position_3d"
@@ -720,7 +720,7 @@ tracks/24/interp = 1
 tracks/24/loop_wrap = true
 tracks/24/keys = PackedFloat32Array(0, 1, -0.0644764, 5.34241e-13, -1.53727e-08, 0.997919)
 
-[sub_resource type="Animation" id="Animation_u10yu"]
+[sub_resource type="Animation" id="Animation_0be4d"]
 resource_name = "JogCycle"
 length = 0.833333
 loop_mode = 1
@@ -900,7 +900,7 @@ tracks/24/interp = 1
 tracks/24/loop_wrap = true
 tracks/24/keys = PackedFloat32Array(0, 1, -0.0644764, 5.34241e-13, -1.53727e-08, 0.997919)
 
-[sub_resource type="Animation" id="Animation_60706"]
+[sub_resource type="Animation" id="Animation_2mqkm"]
 resource_name = "Kick"
 length = 1.31667
 tracks/0/type = "position_3d"
@@ -1079,7 +1079,7 @@ tracks/24/interp = 1
 tracks/24/loop_wrap = true
 tracks/24/keys = PackedFloat32Array(0, 1, -0.0644764, 5.34241e-13, -1.53727e-08, 0.997919)
 
-[sub_resource type="Animation" id="Animation_5hkgf"]
+[sub_resource type="Animation" id="Animation_uf6p6"]
 resource_name = "Recevie"
 length = 0.5
 tracks/0/type = "rotation_3d"
@@ -1258,60 +1258,58 @@ tracks/24/interp = 1
 tracks/24/loop_wrap = true
 tracks/24/keys = PackedFloat32Array(0, 1, -0.0644764, 5.34241e-13, -1.53727e-08, 0.997919)
 
-[sub_resource type="AnimationLibrary" id="AnimationLibrary_nj43j"]
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_x0qy5"]
 _data = {
-"GoalKeeper Idle": SubResource("Animation_fuwe2"),
-"Idle": SubResource("Animation_ptw0p"),
-"Idle2": SubResource("Animation_lmgmd"),
-"JogCycle": SubResource("Animation_u10yu"),
-"Kick": SubResource("Animation_60706"),
-"Recevie": SubResource("Animation_5hkgf"),
-"RunCycle": SubResource("Animation_c5epa")
+"GoalKeeper Idle": SubResource("Animation_kd1bm"),
+"Idle": SubResource("Animation_3jywg"),
+"Idle2": SubResource("Animation_72q73"),
+"JogCycle": SubResource("Animation_0be4d"),
+"Kick": SubResource("Animation_2mqkm"),
+"Recevie": SubResource("Animation_uf6p6"),
+"RunCycle": SubResource("Animation_7387o")
 }
 
 [node name="Character" instance=ExtResource("1_xiwcv")]
 
 [node name="Skeleton3D" parent="metarig" index="0"]
-bones/1/position = Vector3(0.00011728, 0.513471, -0.88634)
-bones/1/rotation = Quaternion(-0.584183, -0.0315746, 0.029629, 0.810466)
+bones/1/position = Vector3(-0.005148, 0.536633, -0.957477)
+bones/1/rotation = Quaternion(-0.537538, 0.00917973, -0.0132382, 0.843086)
 bones/2/rotation = Quaternion(-0.0644764, 5.34292e-13, -1.53727e-08, 0.997919)
-bones/3/rotation = Quaternion(-0.0687965, -0.0145327, -0.000488429, 0.997525)
-bones/4/rotation = Quaternion(0.0103256, -0.0144573, -0.00143441, 0.999841)
-bones/5/rotation = Quaternion(0.210823, 0.00573087, 0.00739263, 0.977479)
-bones/6/rotation = Quaternion(-0.00747044, 0.102243, -0.0350528, 0.994114)
+bones/3/rotation = Quaternion(0.0186877, 0.00538134, 0.00250004, 0.999808)
+bones/4/rotation = Quaternion(0.0976746, 0.00559513, 0.00196222, 0.995201)
+bones/5/rotation = Quaternion(0.201737, 4.46766e-09, -6.68638e-09, 0.97944)
+bones/6/rotation = Quaternion(-0.0948567, 1.52335e-09, 6.16956e-09, 0.995491)
 bones/7/rotation = Quaternion(-0.0937122, 1.18684e-07, -1.11715e-08, 0.995599)
-bones/9/rotation = Quaternion(-0.618692, -0.270212, -0.371999, 0.637042)
-bones/10/rotation = Quaternion(-0.000150666, 0.737364, -0.611691, 0.286581)
-bones/11/rotation = Quaternion(0.237071, -0.0793813, 0.0259424, 0.967896)
+bones/9/rotation = Quaternion(-0.668135, -0.221401, -0.392285, 0.592191)
+bones/10/rotation = Quaternion(-0.107885, 0.764668, -0.519121, 0.366275)
+bones/11/rotation = Quaternion(0.565476, -0.0529919, 0.0210664, 0.822791)
 bones/11/scale = Vector3(1, 1, 1)
-bones/12/rotation = Quaternion(0.100024, -0.0197183, -0.00527057, 0.994776)
-bones/12/scale = Vector3(1, 1, 1)
-bones/13/rotation = Quaternion(-0.595111, 0.332571, 0.422711, 0.597122)
-bones/14/rotation = Quaternion(-0.149038, -0.703806, 0.564573, 0.404602)
-bones/15/rotation = Quaternion(0.259659, 0.0778725, -0.0257532, 0.962211)
+bones/12/rotation = Quaternion(0.083691, -0.118625, 0.0020843, 0.989404)
+bones/13/rotation = Quaternion(-0.657633, 0.232977, 0.406947, 0.589606)
+bones/14/rotation = Quaternion(-0.0316709, -0.638447, 0.639067, 0.427757)
+bones/15/rotation = Quaternion(0.53344, 0.0561003, -0.0218025, 0.843694)
 bones/15/scale = Vector3(1, 1, 1)
-bones/16/rotation = Quaternion(0.124416, 0.0229254, 0.111671, 0.98566)
-bones/16/scale = Vector3(1, 1, 1)
+bones/16/rotation = Quaternion(0.0621929, 0.0967769, 0.0195418, 0.993169)
 bones/17/rotation = Quaternion(5.4142e-08, 0.696936, 0.717133, 5.26172e-08)
 bones/18/rotation = Quaternion(5.4142e-08, 0.696936, 0.717133, 5.26172e-08)
-bones/19/rotation = Quaternion(-0.195822, -0.776973, -0.243343, 0.546581)
+bones/19/rotation = Quaternion(-0.164459, -0.795946, -0.245998, 0.528118)
 bones/19/scale = Vector3(1, 1, 1)
 bones/20/rotation = Quaternion(-0.152455, 0.793331, 0.285504, 0.515627)
 bones/20/scale = Vector3(1, 1, 1)
-bones/21/rotation = Quaternion(0.94893, 0.022634, -0.174508, 0.261852)
+bones/21/rotation = Quaternion(0.862548, 0.0153039, 0.0629348, 0.501812)
 bones/21/scale = Vector3(1, 1, 0.999998)
-bones/22/rotation = Quaternion(0.236686, 0.00787721, -0.0073256, 0.971527)
-bones/23/rotation = Quaternion(-0.66728, 0.091191, 0.076252, 0.73526)
+bones/22/rotation = Quaternion(0.732854, -0.0583292, 0.0127118, 0.677762)
+bones/23/rotation = Quaternion(-0.574966, -0.0386953, 0.0700111, 0.814257)
 bones/23/scale = Vector3(1, 1, 1)
-bones/24/rotation = Quaternion(3.35497e-07, 0.981094, -0.19353, 2.27127e-06)
+bones/24/rotation = Quaternion(1.78692e-06, 0.993771, -0.111441, -9.95003e-07)
 bones/25/rotation = Quaternion(0.696363, 0.696363, -0.122793, 0.122794)
 bones/25/scale = Vector3(1, 1, 1)
-bones/26/rotation = Quaternion(0.953836, 0.020335, 0.0318695, 0.297941)
+bones/26/rotation = Quaternion(0.944641, 0.0247508, 0.00386481, 0.327149)
 bones/26/scale = Vector3(1, 1, 0.999998)
-bones/27/rotation = Quaternion(0.277102, 0.0228244, 0.0409795, 0.959695)
-bones/28/rotation = Quaternion(-0.678723, -0.00243255, -0.0101239, 0.734321)
+bones/27/rotation = Quaternion(0.479443, -0.0149085, -0.0837391, 0.873442)
+bones/28/rotation = Quaternion(-0.775691, -0.0167032, 0.109897, 0.621247)
 bones/28/scale = Vector3(1, 1, 1)
-bones/29/rotation = Quaternion(-2.21898e-07, 0.98174, -0.190228, -2.40533e-06)
+bones/29/rotation = Quaternion(0.000476707, 0.95919, -0.282758, -0.00167248)
 bones/30/rotation = Quaternion(0.696363, -0.696363, 0.122793, 0.122794)
 bones/30/scale = Vector3(1, 1, 1)
 
@@ -1320,9 +1318,9 @@ autoplay = "RunCycleTest"
 
 [node name="AnimationTree" type="AnimationTree" parent="." index="2"]
 libraries = {
-"": SubResource("AnimationLibrary_nj43j")
+"": SubResource("AnimationLibrary_x0qy5")
 }
 tree_root = ExtResource("2_aedpa")
 advance_expression_base_node = NodePath("../AnimationPlayer")
 anim_player = NodePath("../AnimationPlayer")
-parameters/Blend2/blend_amount = 0.45
+parameters/Blend2/blend_amount = 1.0
