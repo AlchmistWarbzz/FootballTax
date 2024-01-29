@@ -47,13 +47,15 @@ enum scene_state {WAIT, READY, GO_TRIAL, STOP_TRIAL}
 
 # signals
 signal trial_started
+signal stop_signal
 signal ball_kicked
 signal go_trial_failed
 signal stop_trial_failed
 
 # flags
 var is_feeder_left: bool = false
-var is_trial_passed = false
+var is_trial_passed: bool = false
+var stop_signal_shown: bool = false
 
 func _ready():
 	scene_reset() # ensure scene and scene_state are in agreement
