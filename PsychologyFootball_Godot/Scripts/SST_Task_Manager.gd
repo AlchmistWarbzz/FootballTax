@@ -90,6 +90,7 @@ func _process(delta):
 				current_state = scene_state.READY
 				ticks_msec_bookmark = Time.get_ticks_msec()
 		
+		
 		scene_state.READY:
 			if (Time.get_ticks_msec() - ticks_msec_bookmark) > READY_TICKS_MSEC:
 				# ready time is up
@@ -109,6 +110,7 @@ func _process(delta):
 				else:
 					current_state = scene_state.GO_TRIAL
 				ticks_msec_bookmark = Time.get_ticks_msec()
+		
 		
 		scene_state.GO_TRIAL:
 			if (Time.get_ticks_msec() - ticks_msec_bookmark) > TRIAL_TICKS_MSEC:
@@ -145,6 +147,7 @@ func _process(delta):
 					go_trial_failed.emit()
 					print("go_trial_failed")
 				append_new_metrics_entry(false, is_trial_passed, Time.get_ticks_msec() - ticks_msec_bookmark)
+		
 		
 		scene_state.STOP_TRIAL:
 			if (Time.get_ticks_msec() - ticks_msec_bookmark) > TRIAL_TICKS_MSEC:
@@ -200,15 +203,6 @@ func scene_reset():
 func scene_ready():
 	print("scene_ready")
 	
-	# spawn ball feeder, randomly choosing left or right side
-	var new_ball_feeder = ball_feeder_scene.instantiate()
-	if randf() > 0.5:
-		is_feeder_left = true
-		$PlaceholderBallFeederLeft.add_child(new_ball_feeder)
-	else:
-		is_feeder_left = false
-		$PlaceholderBallFeederRight.add_child(new_ball_feeder)
-	
 	# spawn fixation cone
 	var new_fixation_cone = fixation_cone_scene.instantiate()
 	$PlaceholderFixation.add_child(new_fixation_cone)
@@ -231,6 +225,15 @@ func scene_trial_start(is_stop_trial: bool):
 	# remove fixation cone
 	if $PlaceholderFixation.get_child_count() != 0:
 		$PlaceholderFixation/FixationCone.free()
+	
+	# spawn ball feeder, randomly choosing left or right side
+	var new_ball_feeder = ball_feeder_scene.instantiate()
+	if randf() > 0.5:
+		is_feeder_left = true
+		$PlaceholderBallFeederLeft.add_child(new_ball_feeder)
+	else:
+		is_feeder_left = false
+		$PlaceholderBallFeederRight.add_child(new_ball_feeder)
 	
 	# spawn teammate
 	var new_teammate = teammate_scene.instantiate()
