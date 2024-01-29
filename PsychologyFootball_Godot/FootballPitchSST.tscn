@@ -1,6 +1,5 @@
-[gd_scene load_steps=33 format=3 uid="uid://rjin0qqtw7jx"]
+[gd_scene load_steps=35 format=3 uid="uid://rjin0qqtw7jx"]
 
-[ext_resource type="Material" uid="uid://t05uv2wgginr" path="res://Materials/M_TempHill.tres" id="1_niqus"]
 [ext_resource type="ArrayMesh" uid="uid://bstudu2gd55b3" path="res://Assets/Environment/SM_ENV__Dirt MountT2.tres" id="4_0mc3s"]
 [ext_resource type="ArrayMesh" uid="uid://dh0vvwbbfj12s" path="res://Assets/Environment/SM_ENV__Dirt MountT4.tres" id="5_yrs51"]
 [ext_resource type="ArrayMesh" uid="uid://dvbdty6p3w6n7" path="res://Assets/Environment/SM_ENV__Dirt MountT1.tres" id="6_23pls"]
@@ -39,6 +38,35 @@ background_mode = 2
 sky = SubResource("Sky_52gij")
 tonemap_mode = 2
 glow_enabled = true
+
+[sub_resource type="VisualShaderNodeColorConstant" id="VisualShaderNodeColorConstant_e7ilk"]
+constant = Color(0.489557, 0.324746, 0.18794, 1)
+
+[sub_resource type="VisualShader" id="VisualShader_x4ado"]
+code = "shader_type spatial;
+render_mode blend_mix, depth_draw_opaque, cull_back, diffuse_lambert, specular_schlick_ggx;
+
+
+
+
+void fragment() {
+// ColorConstant:2
+	vec4 n_out2p0 = vec4(0.489557, 0.324746, 0.187940, 1.000000);
+
+
+// Output:0
+	ALBEDO = vec3(n_out2p0.xyz);
+
+
+}
+"
+nodes/fragment/2/node = SubResource("VisualShaderNodeColorConstant_e7ilk")
+nodes/fragment/2/position = Vector2(167, 222)
+nodes/fragment/connections = PackedInt32Array(2, 0, 0, 0)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_wt4a0"]
+render_priority = 0
+shader = SubResource("VisualShader_x4ado")
 
 [sub_resource type="Curve3D" id="Curve3D_gfqk1"]
 _data = {
@@ -101,47 +129,47 @@ size = Vector3(2.4, 0.1, 7.3)
 [node name="Hill1" type="CSGSphere3D" parent="."]
 transform = Transform3D(40, 0, 0, 0, 7, 0, 0, 0, 40, -71.3193, 0, 11.3433)
 visible = false
-material = ExtResource("1_niqus")
+material = SubResource("ShaderMaterial_wt4a0")
 
 [node name="Hill2" type="CSGSphere3D" parent="."]
 transform = Transform3D(50, 0, 0, 0, 12.2754, 0, 0, 0, 50, -113.938, -1.56138, -15.9148)
 visible = false
-material = ExtResource("1_niqus")
+material = SubResource("ShaderMaterial_wt4a0")
 
 [node name="Hill3" type="CSGSphere3D" parent="."]
 transform = Transform3D(100, 0, 0, 0, 25, 0, 0, 0, 100, -175.127, -1.65175, -16.1659)
 visible = false
-material = ExtResource("1_niqus")
+material = SubResource("ShaderMaterial_wt4a0")
 
 [node name="Hill4" type="CSGSphere3D" parent="."]
 transform = Transform3D(100, 0, 0, 0, 25, 0, 0, 0, 100, -138.798, -1.65175, -42.878)
 visible = false
-material = ExtResource("1_niqus")
+material = SubResource("ShaderMaterial_wt4a0")
 
 [node name="Hill5" type="CSGSphere3D" parent="."]
 transform = Transform3D(100, 0, 0, 0, 25, 0, 0, 0, 100, -100.041, -1.78973, -82.9571)
 visible = false
-material = ExtResource("1_niqus")
+material = SubResource("ShaderMaterial_wt4a0")
 
 [node name="Hill6" type="CSGSphere3D" parent="."]
 transform = Transform3D(-12.941, 0, 48.2963, 0, 12.2754, 0, -48.2963, 0, -12.941, -7.49742, -1.56138, 81.5722)
 visible = false
-material = ExtResource("1_niqus")
+material = SubResource("ShaderMaterial_wt4a0")
 
 [node name="Hill7" type="CSGSphere3D" parent="."]
 transform = Transform3D(-25.8819, 0, 96.5926, 0, 25, 0, -96.5926, 0, -25.8819, 8.09691, -1.65175, 140.741)
 visible = false
-material = ExtResource("1_niqus")
+material = SubResource("ShaderMaterial_wt4a0")
 
 [node name="Hill8" type="CSGSphere3D" parent="."]
 transform = Transform3D(-25.8819, 0, 96.5926, 0, 25, 0, -96.5926, 0, -25.8819, -27.1076, -1.65175, 112.564)
 visible = false
-material = ExtResource("1_niqus")
+material = SubResource("ShaderMaterial_wt4a0")
 
 [node name="Hill9" type="CSGSphere3D" parent="."]
 transform = Transform3D(-25.8819, 0, 96.5926, 0, 25, 0, -96.5926, 0, -25.8819, -75.8521, -1.78973, 85.5006)
 visible = false
-material = ExtResource("1_niqus")
+material = SubResource("ShaderMaterial_wt4a0")
 
 [node name="House1" type="CSGBox3D" parent="."]
 transform = Transform3D(0, 0, 10, 0, 10, 0, -20, 0, 0, -177.281, 14.0607, -30.7574)
