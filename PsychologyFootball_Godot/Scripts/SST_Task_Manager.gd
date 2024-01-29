@@ -259,7 +259,7 @@ func write_sst_raw_log(datetime_dict):
 	
 	# format guide
 	# block_counter: int, trial_counter: int, stimulus_left: bool, stop_trial: bool,
-	# correct_response: bool, response_time: int (msec), stop_signal_delay: int (msec)
+	# correct_response: bool, response_time: int (ms), stop_signal_delay: int (ms)
 	
 	# write date, time, subject, group, format guide
 	raw_log_file.store_line("PsychologyFootball - Stop Signal Task - Raw Data Log")
@@ -267,10 +267,10 @@ func write_sst_raw_log(datetime_dict):
 	raw_log_file.store_line("time: {hour}-{minute}-{second}".format(datetime_dict))
 	raw_log_file.store_line("subject: test") # TODO fill user-input subject and group
 	raw_log_file.store_line("group: test")
-	raw_log_file.store_string("format guide:\n\nblock_counter: int, trial_counter: int, stimulus_left: bool (ball feeder side), stop_trial: bool,\ncorrect_response: bool, response_time: int (msec), stop_signal_delay: int (msec)\n\n")
+	raw_log_file.store_string("format guide:\n\nblock_counter: int, trial_counter: int, stimulus_left: bool (ball feeder side), stop_trial: bool,\ncorrect_response: bool, response_time: int (ms), stop_signal_delay: int (ms)\n\n")
 	
 	for sub_array in metrics_array:
-		var line = "{0}, {1}, {2}, {3}, {4}, {5}"
+		var line = "{0}, {1}, {2}, {3}, {4}, {5}, {6}"
 		raw_log_file.store_line(line.format(sub_array))
 	
 	raw_log_file.close()
@@ -304,18 +304,25 @@ func write_sst_summary_log(datetime_dict):
 	# calculate probability of reacting in Stop Signal Trials (prob(response|signal))
 	var p_rs: float = float(stop_trial_counter - stop_trials_passed) / float(stop_trial_counter) # fails / total
 	
-	#TODO calculate mean stop signal delays (in ms) in StopSignal trials
-	
-	# calculate mean reaction time (in ms) in Stop Signal trials (response times of incorrectly hitting a response key)
+	# collect rolling totals for calculating means
+	var rolling_total_stop_signal_delay: int = 0
 	var rolling_total_reaction_time: int = 0
+	
 	for sub_array in metrics_array:
 		if sub_array[3]:
 			# if stop signal
+			rolling_total_stop_signal_delay += sub_array[6]
 			rolling_total_reaction_time += sub_array[5]
+	
+	# calculate mean stop signal delays (in ms) in Stop Signal trials
+	var ssd = float(rolling_total_stop_signal_delay) / float(stop_trial_counter)
+	
+	# calculate mean reaction time (in ms) in Stop Signal trials (response times of incorrectly hitting a response key)
 	var sr_rt = float(rolling_total_reaction_time) / float(stop_trial_counter - stop_trials_passed) # (stops failed)
 	
 	# write summary data
 	summary_log_file.store_line("\nprobability of reacting in Stop Signal Trials (prob(response|signal)), p_rs: " + str(p_rs))
+	summary_log_file.store_line("\nmean stop signal delays (in ms) in Stop Signal trials, ssd: " + str(ssd))
 	summary_log_file.store_line("mean reaction time (in ms) in Stop Signal trials (response times of incorrectly hitting a response key), sr_rt: " + str(sr_rt))
 	
 	summary_log_file.close()
