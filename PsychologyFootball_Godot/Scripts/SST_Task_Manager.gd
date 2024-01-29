@@ -7,14 +7,22 @@ var fixation_cone_scene = preload("res://SubScenes/Fixation_Cone.tscn")
 var teammate_scene = preload("res://SubScenes/Teammate.tscn")
 
 # time
-const TICKS_BETWEEN_TRIALS_MSEC: int = 3000
+const TICKS_BETWEEN_TRIALS_MSEC: int = 1000
 const READY_TICKS_MSEC: int = 1000
-const TRIAL_TICKS_MSEC: int = 500
+const TRIAL_TICKS_MSEC: int = 2000
 @onready var ticks_msec_bookmark: int = 0
 
 # counters
-const GO_TRIALS_PER_BLOCK = 75
-const STOP_TRIALS_PER_BLOCK = 25
+const PRACTICE_BLOCKS: int = 1
+const TEST_BLOCKS: int = 2
+const GO_TRIALS_PER_PRACTICE_BLOCK: int = 30
+const STOP_TRIALS_PER_PRACTICE_BLOCK: int = 10
+const GO_TRIALS_PER_TEST_BLOCK: int = 75
+const STOP_TRIALS_PER_TEST_BLOCK: int = 25
+
+var is_practice_block: bool = true
+var go_trials_per_block: int = GO_TRIALS_PER_PRACTICE_BLOCK
+var stop_trials_per_block: int = STOP_TRIALS_PER_PRACTICE_BLOCK
 var block_counter: int = 0
 var trial_counter: int = 0
 var go_trial_counter: int = 0
@@ -80,9 +88,9 @@ func _process(delta):
 				
 				# determine go or stop trial
 				var is_stop: bool = (randf() < 0.25)
-				if is_stop and stop_trial_counter < STOP_TRIALS_PER_BLOCK:
+				if is_stop and stop_trial_counter < stop_trials_per_block:
 					scene_trial_start(is_stop)
-				elif not is_stop and go_trial_counter < GO_TRIALS_PER_BLOCK:
+				elif not is_stop and go_trial_counter < go_trials_per_block:
 					scene_trial_start(is_stop)
 				else:
 					# 100-trial block finished
@@ -266,8 +274,9 @@ func write_sst_summary_log(datetime_dict):
 	summary_log_file.store_string("\n\n-Final States of Counters-\n")
 	
 	# write counters
-	summary_log_file.store_line("GO_TRIALS_PER_BLOCK (constant): " + str(GO_TRIALS_PER_BLOCK))
-	summary_log_file.store_line("STOP_TRIALS_PER_BLOCK (constant): " + str(STOP_TRIALS_PER_BLOCK))
+	summary_log_file.store_line("is_practice_block: " + str(is_practice_block))
+	summary_log_file.store_line("GO_TRIALS_PER_BLOCK (constant): " + str(go_trials_per_block))
+	summary_log_file.store_line("STOP_TRIALS_PER_BLOCK (constant): " + str(stop_trials_per_block))
 	summary_log_file.store_line("block_counter: " + str(block_counter))
 	summary_log_file.store_line("trial_counter: " + str(trial_counter))
 	summary_log_file.store_line("go_trial_counter: " + str(go_trial_counter))
