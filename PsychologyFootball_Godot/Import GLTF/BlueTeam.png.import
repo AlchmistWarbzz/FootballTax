@@ -3,7 +3,7 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://c8y5371wpyqf4"
-path.s3tc="res://.godot/imported/Untitled.png-c50394378411b68f417b072e9e800848.s3tc.ctex"
+path.s3tc="res://.godot/imported/BlueTeam.png-20f6cc4786fb2e4abc4cfd20bd9ad4aa.s3tc.ctex"
 metadata={
 "imported_formats": ["s3tc_bptc"],
 "vram_texture": true
@@ -11,8 +11,8 @@ metadata={
 
 [deps]
 
-source_file="res://Import GLTF/Untitled.png"
-dest_files=["res://.godot/imported/Untitled.png-c50394378411b68f417b072e9e800848.s3tc.ctex"]
+source_file="res://Import GLTF/BlueTeam.png"
+dest_files=["res://.godot/imported/BlueTeam.png-20f6cc4786fb2e4abc4cfd20bd9ad4aa.s3tc.ctex"]
 
 [params]
 

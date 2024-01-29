@@ -1,19 +1,16 @@
-[gd_scene load_steps=36 format=3 uid="uid://rjin0qqtw7jx"]
+[gd_scene load_steps=33 format=3 uid="uid://rjin0qqtw7jx"]
 
 [ext_resource type="Material" uid="uid://t05uv2wgginr" path="res://Materials/M_TempHill.tres" id="1_niqus"]
-[ext_resource type="Material" uid="uid://cmggx3m1r0r7k" path="res://Materials/M_TempGrass.tres" id="3_4b7q1"]
 [ext_resource type="ArrayMesh" uid="uid://bstudu2gd55b3" path="res://Assets/Environment/SM_ENV__Dirt MountT2.tres" id="4_0mc3s"]
 [ext_resource type="ArrayMesh" uid="uid://dh0vvwbbfj12s" path="res://Assets/Environment/SM_ENV__Dirt MountT4.tres" id="5_yrs51"]
 [ext_resource type="ArrayMesh" uid="uid://dvbdty6p3w6n7" path="res://Assets/Environment/SM_ENV__Dirt MountT1.tres" id="6_23pls"]
 [ext_resource type="ArrayMesh" uid="uid://hn2vnresetex" path="res://Assets/Environment/SM_ENV__Dirt MountT5.tres" id="6_en6n8"]
 [ext_resource type="ArrayMesh" uid="uid://cnt4ta3g8p4rj" path="res://Assets/Environment/SM_ENV__Dirt MountT6.tres" id="7_5dnfl"]
 [ext_resource type="ArrayMesh" uid="uid://budbxnm0c4bf5" path="res://Assets/Environment/SM_ENV__RockT1.tres" id="10_g6yf1"]
-[ext_resource type="Material" uid="uid://x10arfulfx5e" path="res://Materials/M_TempRock.tres" id="10_pnnu1"]
 [ext_resource type="ArrayMesh" uid="uid://i7dx5u6lv88a" path="res://Assets/Environment/SM_ENV__RockT2.tres" id="11_0hsoa"]
 [ext_resource type="ArrayMesh" uid="uid://cabqe0hii580t" path="res://Assets/Environment/SM_ENV__RockT4.tres" id="11_dovv1"]
 [ext_resource type="ArrayMesh" uid="uid://o6yf3p25ipd1" path="res://Assets/Environment/SM_ENV__RockT3.tres" id="13_1od3e"]
 [ext_resource type="ArrayMesh" uid="uid://bsnh4y5v7plvv" path="res://Assets/Environment/SM_ENV__HedgeS.res" id="14_dvcsb"]
-[ext_resource type="Material" uid="uid://dodlmwsjuysu0" path="res://Materials/M_TempHedge.tres" id="15_u8v5q"]
 [ext_resource type="ArrayMesh" uid="uid://elubhltt8das" path="res://Assets/Environment/SM_ENV__HedgeL.res" id="16_x0a63"]
 [ext_resource type="ArrayMesh" uid="uid://bq6qqtmp2xsjc" path="res://Assets/Environment/Landscape/Landscape_Plane_001.res" id="17_gxm08"]
 [ext_resource type="ArrayMesh" uid="uid://d3e6ptcggdtdo" path="res://Assets/Props/Assets_SM_Cone.res" id="18_shci7"]
@@ -189,7 +186,6 @@ curve = SubResource("Curve3D_gfqk1")
 [node name="SmEnvDirtMountT1" type="MeshInstance3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 113.146, 0, -81.9385)
 mesh = ExtResource("6_23pls")
-surface_material_override/0 = ExtResource("3_4b7q1")
 
 [node name="SmEnvDirtMountT2" type="MeshInstance3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -72.1072, 1.87582, 22.8836)
@@ -198,17 +194,14 @@ mesh = ExtResource("4_0mc3s")
 [node name="SmEnvDirtMountT4" type="MeshInstance3D" parent="."]
 transform = Transform3D(-0.208403, 0, 0.974968, 0, 1, 0, -1.04457, 0, -0.194517, -33.2997, 1.28168, 50.9269)
 mesh = ExtResource("4_0mc3s")
-surface_material_override/0 = ExtResource("3_4b7q1")
 
 [node name="SmEnvDirtMountT9" type="MeshInstance3D" parent="."]
 transform = Transform3D(1.01601, 0, 0.29851, 0, 1, 0, -0.31982, 0, 0.94831, -45.1918, 1.83898, 60.9149)
 mesh = ExtResource("4_0mc3s")
-surface_material_override/0 = ExtResource("3_4b7q1")
 
 [node name="SmEnvDirtMountT7" type="MeshInstance3D" parent="."]
 transform = Transform3D(1.03245, 0, -0.70466, 0, 1.25, 0, 0.70466, 0, 1.03245, -100.999, 5.34805, -39.9851)
 mesh = ExtResource("4_0mc3s")
-surface_material_override/0 = ExtResource("3_4b7q1")
 
 [node name="SmEnvDirtMountT3" type="MeshInstance3D" parent="."]
 transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, -3.77506, 0, 61.9202)
@@ -217,17 +210,14 @@ mesh = ExtResource("6_23pls")
 [node name="SmEnvDirtMountT8" type="MeshInstance3D" parent="."]
 transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 18.9977, 0, -106.327)
 mesh = ExtResource("5_yrs51")
-surface_material_override/0 = ExtResource("3_4b7q1")
 
 [node name="SmEnvDirtMountT5" type="MeshInstance3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 159.435, 0, -195.343)
 mesh = ExtResource("6_en6n8")
-surface_material_override/0 = ExtResource("3_4b7q1")
 
 [node name="SmEnvDirtMountT6" type="MeshInstance3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 114.873, 0, -191.452)
 mesh = ExtResource("7_5dnfl")
-surface_material_override/0 = ExtResource("3_4b7q1")
 
 [node name="SmEnvRockT1" type="MeshInstance3D" parent="."]
 transform = Transform3D(0.990166, 0, 0.139899, 0, 1, 0, -0.139899, 0, 0.990166, -66.9442, -0.936373, 15.0619)
@@ -260,7 +250,6 @@ mesh = ExtResource("10_g6yf1")
 [node name="SmEnvRockT4" type="MeshInstance3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 73.9719, -0.599335, -90.0925)
 mesh = ExtResource("11_dovv1")
-surface_material_override/0 = ExtResource("10_pnnu1")
 
 [node name="SmEnvHedgeS" type="MeshInstance3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -48.8103, -1.0501, -40.4351)
@@ -296,87 +285,70 @@ mesh = ExtResource("18_shci7")
 
 [node name="AssetsSmFencing" type="MeshInstance3D" parent="."]
 transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -49.9444, -4.76837e-07, 29.4953)
-material_override = ExtResource("15_u8v5q")
 mesh = ExtResource("20_v74ck")
 
 [node name="AssetsSmFencing2" type="MeshInstance3D" parent="."]
 transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -49.9444, -4.76837e-07, 19.5929)
-material_override = ExtResource("15_u8v5q")
 mesh = ExtResource("20_v74ck")
 
 [node name="AssetsSmFencing3" type="MeshInstance3D" parent="."]
 transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -49.9444, -4.76837e-07, 9.69433)
-material_override = ExtResource("15_u8v5q")
 mesh = ExtResource("20_v74ck")
 
 [node name="AssetsSmFencing4" type="MeshInstance3D" parent="."]
 transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -49.9444, -4.76837e-07, -0.209229)
-material_override = ExtResource("15_u8v5q")
 mesh = ExtResource("20_v74ck")
 
 [node name="AssetsSmFencing5" type="MeshInstance3D" parent="."]
 transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -49.9444, -4.76837e-07, -10.1199)
-material_override = ExtResource("15_u8v5q")
 mesh = ExtResource("20_v74ck")
 
 [node name="AssetsSmFencing6" type="MeshInstance3D" parent="."]
 transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -49.9444, -4.76837e-07, -19.9925)
-material_override = ExtResource("15_u8v5q")
 mesh = ExtResource("20_v74ck")
 
 [node name="AssetsSmFencing7" type="MeshInstance3D" parent="."]
 transform = Transform3D(-4.16022e-08, 0, 1, 0, 1, 0, -0.951747, 0, -4.37114e-08, -49.9444, -4.76837e-07, -29.6486)
-material_override = ExtResource("15_u8v5q")
 mesh = ExtResource("20_v74ck")
 
 [node name="AssetsSmFencing8" type="MeshInstance3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -44.9908, -4.76837e-07, -34.4013)
-material_override = ExtResource("15_u8v5q")
 mesh = ExtResource("20_v74ck")
 
 [node name="AssetsSmFencing9" type="MeshInstance3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -35.0108, -4.76837e-07, -34.4013)
-material_override = ExtResource("15_u8v5q")
 mesh = ExtResource("20_v74ck")
 
 [node name="AssetsSmFencing10" type="MeshInstance3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -25.1055, -4.76837e-07, -34.4013)
-material_override = ExtResource("15_u8v5q")
 mesh = ExtResource("20_v74ck")
 
 [node name="AssetsSmFencing11" type="MeshInstance3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -15.2081, -4.76837e-07, -34.4013)
-material_override = ExtResource("15_u8v5q")
 mesh = ExtResource("20_v74ck")
 
 [node name="AssetsSmFencing12" type="MeshInstance3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5.30282, -4.76837e-07, -34.4013)
-material_override = ExtResource("15_u8v5q")
 mesh = ExtResource("20_v74ck")
 
 [node name="AssetsSmFencing13" type="MeshInstance3D" parent="."]
 transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, -5.25639, -4.76837e-07, 34.4628)
-material_override = ExtResource("15_u8v5q")
 mesh = ExtResource("20_v74ck")
 
 [node name="AssetsSmFencing14" type="MeshInstance3D" parent="."]
 transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, -15.2364, -4.76837e-07, 34.4628)
-material_override = ExtResource("15_u8v5q")
 mesh = ExtResource("20_v74ck")
 
 [node name="AssetsSmFencing15" type="MeshInstance3D" parent="."]
 transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, -25.1418, -4.76837e-07, 34.4628)
-material_override = ExtResource("15_u8v5q")
 mesh = ExtResource("20_v74ck")
 
 [node name="AssetsSmFencing16" type="MeshInstance3D" parent="."]
 transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, -35.0391, -4.76837e-07, 34.4628)
-material_override = ExtResource("15_u8v5q")
 mesh = ExtResource("20_v74ck")
 
 [node name="AssetsSmFencing17" type="MeshInstance3D" parent="."]
 transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, -44.9444, -4.76837e-07, 34.4628)
-material_override = ExtResource("15_u8v5q")
 mesh = ExtResource("20_v74ck")
 
 [node name="AssetsSmFlag" type="MeshInstance3D" parent="."]

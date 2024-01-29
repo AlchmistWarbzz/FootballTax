@@ -37,7 +37,6 @@ blend_point_1/pos = 1.0
 
 [resource]
 resource_local_to_scene = true
-graph_offset = Vector2(-326, -40)
 nodes/Idle&Jog/node = SubResource("AnimationNodeBlendSpace1D_vx815")
 nodes/Idle&Jog/position = Vector2(-80, 40)
 nodes/OneShot/node = SubResource("AnimationNodeOneShot_p5s75")
