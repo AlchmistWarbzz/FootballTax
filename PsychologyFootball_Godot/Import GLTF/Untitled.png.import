@@ -2,8 +2,8 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://dc6toairvq7n0"
-path.s3tc="res://.godot/imported/TownhallAtalsDiffuse.png-bf99a2f5505ecb80500f69f521dd9d2c.s3tc.ctex"
+uid="uid://c8y5371wpyqf4"
+path.s3tc="res://.godot/imported/Untitled.png-c50394378411b68f417b072e9e800848.s3tc.ctex"
 metadata={
 "imported_formats": ["s3tc_bptc"],
 "vram_texture": true
@@ -11,8 +11,8 @@ metadata={
 
 [deps]
 
-source_file="res://Import GLTF/TownhallAtalsDiffuse.png"
-dest_files=["res://.godot/imported/TownhallAtalsDiffuse.png-bf99a2f5505ecb80500f69f521dd9d2c.s3tc.ctex"]
+source_file="res://Import GLTF/Untitled.png"
+dest_files=["res://.godot/imported/Untitled.png-c50394378411b68f417b072e9e800848.s3tc.ctex"]
 
 [params]
 
