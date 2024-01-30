@@ -12,6 +12,12 @@ const READY_TICKS_MSEC: int = 1000
 const TRIAL_TICKS_MSEC: int = 2000
 @onready var ticks_msec_bookmark: int = 0
 
+# stop signal delay
+const STOP_SIGNAL_DELAY_ADJUST_STEP: int = 50
+const MAX_STOP_SIGNAL_DELAY: int = 1150
+const MIN_STOP_SIGNAL_DELAY: int = STOP_SIGNAL_DELAY_ADJUST_STEP
+var stop_signal_delay: int = 250
+
 # counters
 const PRACTICE_BLOCKS: int = 1
 const TEST_BLOCKS: int = 2
@@ -41,13 +47,15 @@ enum scene_state {WAIT, READY, GO_TRIAL, STOP_TRIAL}
 
 # signals
 signal trial_started
+signal stop_signal
 signal ball_kicked
 signal go_trial_failed
 signal stop_trial_failed
 
 # flags
 var is_feeder_left: bool = false
-var is_trial_passed = false
+var is_trial_passed: bool = false
+var stop_signal_shown: bool = false
 
 func _ready():
 	scene_reset() # ensure scene and scene_state are in agreement
@@ -82,6 +90,7 @@ func _process(delta):
 				current_state = scene_state.READY
 				ticks_msec_bookmark = Time.get_ticks_msec()
 		
+		
 		scene_state.READY:
 			if (Time.get_ticks_msec() - ticks_msec_bookmark) > READY_TICKS_MSEC:
 				# ready time is up
@@ -93,14 +102,11 @@ func _process(delta):
 				elif not is_stop and go_trial_counter < go_trials_per_block:
 					scene_trial_start(is_stop)
 				else:
-					# 100-trial block finished
-					pass
+					print("block finished. is_practice_block: " + str(is_practice_block))
+					# TODO trial block finished
 				
-				if is_stop:
-					current_state = scene_state.STOP_TRIAL
-				else:
-					current_state = scene_state.GO_TRIAL
 				ticks_msec_bookmark = Time.get_ticks_msec()
+		
 		
 		scene_state.GO_TRIAL:
 			if (Time.get_ticks_msec() - ticks_msec_bookmark) > TRIAL_TICKS_MSEC:
@@ -138,6 +144,7 @@ func _process(delta):
 					print("go_trial_failed")
 				append_new_metrics_entry(false, is_trial_passed, Time.get_ticks_msec() - ticks_msec_bookmark)
 		
+		
 		scene_state.STOP_TRIAL:
 			if (Time.get_ticks_msec() - ticks_msec_bookmark) > TRIAL_TICKS_MSEC:
 				# trial time is up
@@ -147,15 +154,28 @@ func _process(delta):
 					stop_trials_passed += 1
 					print("stop_trial_passed")
 					append_new_metrics_entry(true, is_trial_passed, 0)
+					
+					if stop_signal_delay <= MAX_STOP_SIGNAL_DELAY - STOP_SIGNAL_DELAY_ADJUST_STEP:
+						stop_signal_delay += STOP_SIGNAL_DELAY_ADJUST_STEP
+						print("ssd adjusted up to " + str(stop_signal_delay))
 				
 				current_state = scene_state.WAIT
 				ticks_msec_bookmark = Time.get_ticks_msec()
+			
+			elif (Time.get_ticks_msec() - ticks_msec_bookmark) > stop_signal_delay:
+				# time for stop signal
 				
-			elif Input.is_action_just_pressed("kick_left") or Input.is_action_just_pressed("kick_right"):
+				stop_signal.emit()
+			
+			if Input.is_action_just_pressed("kick_left") or Input.is_action_just_pressed("kick_right"):
 				is_trial_passed = false
 				stop_trial_failed.emit()
 				print("stop_trial_failed")
 				append_new_metrics_entry(true, is_trial_passed, Time.get_ticks_msec() - ticks_msec_bookmark)
+				
+				if stop_signal_delay >= MIN_STOP_SIGNAL_DELAY + STOP_SIGNAL_DELAY_ADJUST_STEP:
+						stop_signal_delay -= STOP_SIGNAL_DELAY_ADJUST_STEP
+						print("ssd adjusted down to " + str(stop_signal_delay))
 
 func scene_reset():
 	print("scene_reset")
@@ -187,15 +207,6 @@ func scene_reset():
 func scene_ready():
 	print("scene_ready")
 	
-	# spawn ball feeder, randomly choosing left or right side
-	var new_ball_feeder = ball_feeder_scene.instantiate()
-	if randf() > 0.5:
-		is_feeder_left = true
-		$PlaceholderBallFeederLeft.add_child(new_ball_feeder)
-	else:
-		is_feeder_left = false
-		$PlaceholderBallFeederRight.add_child(new_ball_feeder)
-	
 	# spawn fixation cone
 	var new_fixation_cone = fixation_cone_scene.instantiate()
 	$PlaceholderFixation.add_child(new_fixation_cone)
@@ -211,12 +222,26 @@ func scene_trial_start(is_stop_trial: bool):
 	else:
 		go_trial_counter += 1
 	
-	# set flags
+	# set up flags
 	is_trial_passed = is_stop_trial
+	stop_signal_shown = false
+	if is_stop_trial:
+		current_state = scene_state.STOP_TRIAL
+	else:
+		current_state = scene_state.GO_TRIAL
 	
 	# remove fixation cone
 	if $PlaceholderFixation.get_child_count() != 0:
 		$PlaceholderFixation/FixationCone.free()
+	
+	# spawn ball feeder, randomly choosing left or right side
+	var new_ball_feeder = ball_feeder_scene.instantiate()
+	if randf() > 0.5:
+		is_feeder_left = true
+		$PlaceholderBallFeederLeft.add_child(new_ball_feeder)
+	else:
+		is_feeder_left = false
+		$PlaceholderBallFeederRight.add_child(new_ball_feeder)
 	
 	# spawn teammate
 	var new_teammate = teammate_scene.instantiate()
@@ -230,53 +255,54 @@ func scene_trial_start(is_stop_trial: bool):
 	#if $PlaceholderFixation.get_child_count() != 0:
 		#$PlaceholderFixation/FixationCone.free()
 
-func append_new_metrics_entry(stop_signal: bool, correct_response: bool, response_time: int): # TODO add ssd
-		metrics_array.append([block_counter, trial_counter, is_feeder_left, stop_signal, correct_response, response_time])
+func append_new_metrics_entry(stop_trial: bool, correct_response: bool, response_time: int):
+		metrics_array.append([block_counter, trial_counter, is_feeder_left, stop_trial, correct_response, response_time, stop_signal_delay])
 
 func write_sst_raw_log(datetime_dict):
 	# open/create file
-	var raw_log_file_path: String = "res://TaskLogs/stop_signal_raw_{year}-{month}-{day}-{hour}-{minute}-{second}.txt".format(datetime_dict) # TODO let user choose dir
+	var raw_log_file_path: String = "res://TaskLogs/stop_signal_{year}-{month}-{day}-{hour}-{minute}-{second}_raw.txt".format(datetime_dict) # TODO let user choose dir
 	print("raw log file created at " + raw_log_file_path)
 	var raw_log_file = FileAccess.open(raw_log_file_path, FileAccess.WRITE)
 	print("with error code " + str(FileAccess.get_open_error()))
 	
 	# format guide
-	# block_counter: int, trial_counter: int, TODO ssd: int (msec), stimulus_left: bool,
-	# stop_signal: bool, correct_response: bool, response_time: int (msec)
+	# block_counter: int, trial_counter: int, stimulus_left: bool, stop_trial: bool,
+	# correct_response: bool, response_time: int (ms), stop_signal_delay: int (ms)
 	
 	# write date, time, subject, group, format guide
 	raw_log_file.store_line("PsychologyFootball - Stop Signal Task - Raw Data Log")
-	raw_log_file.store_line("date: {year}-{month}-{day}".format(datetime_dict))
-	raw_log_file.store_line("time: {hour}-{minute}-{second}".format(datetime_dict))
+	raw_log_file.store_line("date: {day}-{month}-{year}".format(datetime_dict))
+	raw_log_file.store_line("time: {hour}:{minute}:{second}".format(datetime_dict))
 	raw_log_file.store_line("subject: test") # TODO fill user-input subject and group
 	raw_log_file.store_line("group: test")
-	raw_log_file.store_string("format guide:\n\nblock_counter: int, trial_counter: int, stop signal delay: int (msec), stimulus_side: bool (true = left, false = right), stop_signal_shown: bool, correct_response: bool, response_time: int (msec)\n\n")
+	raw_log_file.store_string("\n-Format Guide-\n\nblock_counter, trial_counter, stimulus_left (ball feeder side), stop_trial, correct_response, response_time (ms), stop_signal_delay (ms)")
+	raw_log_file.store_string("\n\n-Raw Data-\n\n")
 	
 	for sub_array in metrics_array:
-		var line = "{0}, {1}, {2}, {3}, {4}, {5}"
+		var line = "{0}, {1}, {2}, {3}, {4}, {5}, {6}"
 		raw_log_file.store_line(line.format(sub_array))
 	
 	raw_log_file.close()
 
 func write_sst_summary_log(datetime_dict):
 	# open/create file
-	var summary_log_file_path: String = "res://TaskLogs/stop_signal_summary_{year}-{month}-{day}-{hour}-{minute}-{second}.txt".format(datetime_dict) # TODO let user choose dir
+	var summary_log_file_path: String = "res://TaskLogs/stop_signal_{year}-{month}-{day}-{hour}-{minute}-{second}_summary.txt".format(datetime_dict) # TODO let user choose dir
 	print("summary log file created at " + summary_log_file_path)
 	var summary_log_file = FileAccess.open(summary_log_file_path, FileAccess.WRITE)
 	print("with error code " + str(FileAccess.get_open_error()))
 	
 	# write date, time, subject, group, format guide
 	summary_log_file.store_line("PsychologyFootball - Stop Signal Task - Summary Data Log")
-	summary_log_file.store_line("date: {year}-{month}-{day}".format(datetime_dict))
-	summary_log_file.store_line("time: {hour}-{minute}-{second}".format(datetime_dict))
+	summary_log_file.store_line("date: {day}-{month}-{year}".format(datetime_dict))
+	summary_log_file.store_line("time: {hour}:{minute}:{second}".format(datetime_dict))
 	summary_log_file.store_line("subject: test") # TODO fill user-input subject and group
 	summary_log_file.store_line("group: test")
-	summary_log_file.store_string("\n\n-Final States of Counters-\n")
+	summary_log_file.store_string("\n-Final States of Counters-\n\n")
 	
 	# write counters
 	summary_log_file.store_line("is_practice_block: " + str(is_practice_block))
-	summary_log_file.store_line("GO_TRIALS_PER_BLOCK (constant): " + str(go_trials_per_block))
-	summary_log_file.store_line("STOP_TRIALS_PER_BLOCK (constant): " + str(stop_trials_per_block))
+	summary_log_file.store_line("go_trials_per_block: " + str(go_trials_per_block))
+	summary_log_file.store_line("stop_trials_per_block: " + str(stop_trials_per_block))
 	summary_log_file.store_line("block_counter: " + str(block_counter))
 	summary_log_file.store_line("trial_counter: " + str(trial_counter))
 	summary_log_file.store_line("go_trial_counter: " + str(go_trial_counter))
@@ -285,20 +311,28 @@ func write_sst_summary_log(datetime_dict):
 	summary_log_file.store_line("stop_trials_passed: " + str(stop_trials_passed))
 	
 	# calculate probability of reacting in Stop Signal Trials (prob(response|signal))
-	var p_rs: float = (stop_trial_counter - stop_trials_passed) / stop_trial_counter # fails / total
+	var p_rs: float = float(stop_trial_counter - stop_trials_passed) / float(stop_trial_counter) # fails / total
 	
-	#TODO calculate mean stop signal delays (in ms) in StopSignal trials
-	
-	# calculate mean reaction time (in ms) in Stop Signal trials (response times of incorrectly hitting a response key)
+	# collect rolling totals for calculating means
+	var rolling_total_stop_signal_delay: int = 0
 	var rolling_total_reaction_time: int = 0
+	
 	for sub_array in metrics_array:
 		if sub_array[3]:
 			# if stop signal
+			rolling_total_stop_signal_delay += sub_array[6]
 			rolling_total_reaction_time += sub_array[5]
-	var sr_rt = rolling_total_reaction_time / (stop_trial_counter - stop_trials_passed) # (stops failed)
+	
+	# calculate mean stop signal delays (in ms) in Stop Signal trials
+	var ssd = float(rolling_total_stop_signal_delay) / float(stop_trial_counter)
+	
+	# calculate mean reaction time (in ms) in Stop Signal trials (response times of incorrectly hitting a response key)
+	var sr_rt = float(rolling_total_reaction_time) / float(stop_trial_counter - stop_trials_passed) # (stops failed)
 	
 	# write summary data
-	summary_log_file.store_line("\nprobability of reacting in Stop Signal Trials (prob(response|signal)), p_rs: " + str(p_rs))
+	summary_log_file.store_string("\n-Calculated Summary Values-\n\n")
+	summary_log_file.store_line("probability of reacting in Stop Signal Trials (prob(response|signal)), p_rs: " + str(p_rs))
+	summary_log_file.store_line("mean stop signal delays (in ms) in Stop Signal trials, ssd: " + str(ssd))
 	summary_log_file.store_line("mean reaction time (in ms) in Stop Signal trials (response times of incorrectly hitting a response key), sr_rt: " + str(sr_rt))
 	
 	summary_log_file.close()

@@ -18,11 +18,14 @@ func _ready():
 	
 	if task_manager_node != null:
 		if task_manager_node.name == "SST_Task_Manager":
-			task_manager_node.trial_started.connect(_on_task_manager_trial_started)
+			task_manager_node.stop_signal.connect(_on_task_manager_stop_signal)
 
-func _on_task_manager_trial_started(is_stop_trial: bool):
-	if is_stop_trial:
-		moveTriggerFlag = true
+#func _on_task_manager_trial_started(is_stop_trial: bool):
+	#if is_stop_trial:
+		#moveTriggerFlag = true
+
+func _on_task_manager_stop_signal():
+	moveTriggerFlag = true
 
 func _physics_process(delta):
 	# Add the gravity.
