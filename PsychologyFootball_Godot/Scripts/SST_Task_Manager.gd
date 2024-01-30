@@ -102,13 +102,9 @@ func _process(delta):
 				elif not is_stop and go_trial_counter < go_trials_per_block:
 					scene_trial_start(is_stop)
 				else:
-					# trial block finished
-					pass
+					print("block finished. is_practice_block: " + str(is_practice_block))
+					# TODO trial block finished
 				
-				if is_stop:
-					current_state = scene_state.STOP_TRIAL
-				else:
-					current_state = scene_state.GO_TRIAL
 				ticks_msec_bookmark = Time.get_ticks_msec()
 		
 		
@@ -158,6 +154,10 @@ func _process(delta):
 					stop_trials_passed += 1
 					print("stop_trial_passed")
 					append_new_metrics_entry(true, is_trial_passed, 0)
+					
+					if stop_signal_delay <= MAX_STOP_SIGNAL_DELAY - STOP_SIGNAL_DELAY_ADJUST_STEP:
+						stop_signal_delay += STOP_SIGNAL_DELAY_ADJUST_STEP
+						print("ssd adjusted up to " + str(stop_signal_delay))
 				
 				current_state = scene_state.WAIT
 				ticks_msec_bookmark = Time.get_ticks_msec()
@@ -172,6 +172,10 @@ func _process(delta):
 				stop_trial_failed.emit()
 				print("stop_trial_failed")
 				append_new_metrics_entry(true, is_trial_passed, Time.get_ticks_msec() - ticks_msec_bookmark)
+				
+				if stop_signal_delay >= MIN_STOP_SIGNAL_DELAY + STOP_SIGNAL_DELAY_ADJUST_STEP:
+						stop_signal_delay -= STOP_SIGNAL_DELAY_ADJUST_STEP
+						print("ssd adjusted down to " + str(stop_signal_delay))
 
 func scene_reset():
 	print("scene_reset")
@@ -221,6 +225,10 @@ func scene_trial_start(is_stop_trial: bool):
 	# set up flags
 	is_trial_passed = is_stop_trial
 	stop_signal_shown = false
+	if is_stop_trial:
+		current_state = scene_state.STOP_TRIAL
+	else:
+		current_state = scene_state.GO_TRIAL
 	
 	# remove fixation cone
 	if $PlaceholderFixation.get_child_count() != 0:
