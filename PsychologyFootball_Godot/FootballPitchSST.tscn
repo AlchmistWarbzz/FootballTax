@@ -19,10 +19,10 @@
 [ext_resource type="ArrayMesh" uid="uid://d3loukadqx6do" path="res://Assets/Props/Assets_SM_Football.res" id="23_h3jml"]
 [ext_resource type="Texture2D" uid="uid://dut41g42uglgf" path="res://Import GLTF/M_PitchDiffuse.png" id="23_me20w"]
 [ext_resource type="ArrayMesh" uid="uid://d0h82vnms1pg5" path="res://Assets/Props/Assets_SM_GoalPost.res" id="24_hyqpp"]
+[ext_resource type="PackedScene" uid="uid://r7q3ytv4m16w" path="res://Import GLTF/Townhall.gltf" id="25_3lksr"]
 [ext_resource type="PackedScene" uid="uid://dfwgvi5kn4ifi" path="res://SubScenes/SST_Task_Manager.tscn" id="25_xenpo"]
 [ext_resource type="ArrayMesh" uid="uid://bonv8lx6wjpvj" path="res://Assets/Environment/SM_ENV__TreeT1.res" id="26_lwsue"]
 [ext_resource type="ArrayMesh" uid="uid://byv3khafxpxdn" path="res://Assets/Pitch_SM_Pitch.res" id="26_o844s"]
-[ext_resource type="PackedScene" uid="uid://b5cl7abstipgf" path="res://Import GLTF/TownhallTemp.gltf" id="26_xfsus"]
 [ext_resource type="ArrayMesh" uid="uid://cxyqct7m8eupo" path="res://Assets/Environment/SM_ENV__TreeT2.res" id="27_sssm6"]
 [ext_resource type="PackedScene" uid="uid://diy4oxifvl3ya" path="res://Character/character.tscn" id="28_0rfv3"]
 
@@ -427,9 +427,6 @@ shadow_enabled = true
 
 [node name="SST_Task_Manager" parent="." instance=ExtResource("25_xenpo")]
 
-[node name="TownhallTemp" parent="." instance=ExtResource("26_xfsus")]
-transform = Transform3D(-0.33836, 0, 0.941016, 0, 1, 0, -0.941016, 0, -0.33836, -227.738, 4.78075, 64.4687)
-
 [node name="SmEnvTreeT1" type="MeshInstance3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -56.1433, -0.0535842, 19.3311)
 mesh = ExtResource("26_lwsue")
@@ -617,3 +614,6 @@ mesh = ExtResource("26_lwsue")
 [node name="Character" parent="." instance=ExtResource("28_0rfv3")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.6938, 0.0141597, -0.302888)
 visible = false
+
+[node name="Townhall" parent="." instance=ExtResource("25_3lksr")]
+transform = Transform3D(-0.246119, 0, 0.96924, 0, 1, 0, -0.96924, 0, -0.246119, -209.58, 3.73191, 58.4472)
