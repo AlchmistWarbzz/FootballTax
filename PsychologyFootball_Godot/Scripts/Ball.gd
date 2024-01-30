@@ -15,7 +15,7 @@ func _ready():
 		task_manager_node.ball_kicked.connect(_on_task_manager_ball_kicked)
 	
 	# ball feeder launch
-	apply_central_impulse(get_global_transform().basis.z * 20)
+	apply_central_impulse(get_global_transform().basis.z * 10)
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -29,4 +29,4 @@ func _on_task_manager_ball_kicked():
 
 func kick():
 	set_linear_velocity(Vector3.ZERO)
-	apply_central_impulse(Vector3.LEFT * 8)
+	apply_central_impulse(Vector3.LEFT * 5)

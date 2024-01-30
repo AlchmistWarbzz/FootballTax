@@ -15,6 +15,10 @@ run/main_scene="res://FootballPitchSST.tscn"
 config/features=PackedStringArray("4.2", "Forward Plus")
 config/icon="res://icon.svg"
 
+[autoload]
+
+LevelManager="*res://Scripts/LevelManager.gd"
+
 [dotnet]
 
 project/assembly_name="PsychologyFootball"

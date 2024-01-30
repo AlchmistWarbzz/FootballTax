@@ -1,5 +1,4 @@
 [gd_scene load_steps=35 format=3 uid="uid://rjin0qqtw7jx"]
-
 [ext_resource type="ArrayMesh" uid="uid://bstudu2gd55b3" path="res://Assets/Environment/SM_ENV__Dirt MountT2.tres" id="4_0mc3s"]
 [ext_resource type="ArrayMesh" uid="uid://dh0vvwbbfj12s" path="res://Assets/Environment/SM_ENV__Dirt MountT4.tres" id="5_yrs51"]
 [ext_resource type="ArrayMesh" uid="uid://dvbdty6p3w6n7" path="res://Assets/Environment/SM_ENV__Dirt MountT1.tres" id="6_23pls"]
@@ -82,6 +81,8 @@ albedo_texture = ExtResource("23_me20w")
 data = PackedVector3Array(-50, 0, 34.499, 50, 0, -34.5, -50, 0, -34.5, -50, 0, 34.499, 50, 0, 34.499, 50, 0, -34.5, -50, 1.0577, 34.499, 50, 1.0577, -34.5, 50, 1.0577, 34.499, -50, 1.0577, 34.499, -50, 1.0577, -34.5, 50, 1.0577, -34.5, 50, 0, 34.499, 50, 1.0577, -34.5, 50, 0, -34.5, 50, 0, 34.499, 50, 1.0577, 34.499, 50, 1.0577, -34.5, -50, 0, -34.5, -50, 1.0577, 34.499, -50, 0, 34.499, -50, 0, -34.5, -50, 1.0577, -34.5, -50, 1.0577, 34.499, 50, 0, -34.5, -50, 1.0577, -34.5, -50, 0, -34.5, 50, 0, -34.5, 50, 1.0577, -34.5, -50, 1.0577, -34.5, -50, 0, 34.499, 50, 1.0577, 34.499, 50, 0, 34.499, -50, 0, 34.499, -50, 1.0577, 34.499, 50, 1.0577, 34.499)
 
 [node name="root" type="Node3D"]
+script = ExtResource("1_7q4w2")
+level_id = 1
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = SubResource("Environment_vmebv")
