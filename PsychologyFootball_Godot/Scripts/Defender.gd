@@ -26,6 +26,11 @@ func _ready():
 
 func _on_task_manager_stop_signal():
 	moveTriggerFlag = true
+	
+	# change to run animation
+	#$Character/AnimationPlayer.set_current_animation("RunCycle")
+	#$Character/AnimationPlayer.play("RunCycle")
+	$Character/AnimationTree.set("parameters/Idle&Jog/blend_position", 1)
 
 func _physics_process(delta):
 	# Add the gravity.

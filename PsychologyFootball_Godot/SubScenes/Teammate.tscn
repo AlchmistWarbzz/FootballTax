@@ -5,3 +5,4 @@
 [node name="Teammate" type="Node3D"]
 
 [node name="Character" parent="." instance=ExtResource("1_njiwk")]
+is_friendly = true

@@ -1,6 +1,7 @@
-[gd_scene load_steps=5 format=3 uid="uid://dfwgvi5kn4ifi"]
+[gd_scene load_steps=6 format=3 uid="uid://dfwgvi5kn4ifi"]
 
 [ext_resource type="Script" path="res://Scripts/SST_Task_Manager.gd" id="1_hrvas"]
+[ext_resource type="PackedScene" uid="uid://n7shkduekcq2" path="res://SubScenes/Player.tscn" id="2_a7xoq"]
 [ext_resource type="PackedScene" uid="uid://cdt6315of2aeu" path="res://SubScenes/Ball_Feeder.tscn" id="2_rgtr6"]
 [ext_resource type="PackedScene" uid="uid://ca41om8xqbbts" path="res://SubScenes/Defender.tscn" id="3_t0scl"]
 [ext_resource type="PackedScene" uid="uid://cm3ee373qph5v" path="res://SubScenes/Teammate.tscn" id="4_pxf4c"]
@@ -8,9 +9,8 @@
 [node name="SST_Task_Manager" type="Node3D"]
 script = ExtResource("1_hrvas")
 
-[node name="Camera3D" type="Camera3D" parent="."]
-transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0, 1.8, 0)
-current = true
+[node name="Player" parent="." instance=ExtResource("2_a7xoq")]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 0, 0, 0)
 
 [node name="PlaceholderBallFeederLeft" type="Node3D" parent="."]
 transform = Transform3D(-0.630744, 0, 0.775991, 0, 1, 0, -0.775991, 0, -0.630744, -8.0147, 0, 5.53492)
@@ -21,12 +21,12 @@ transform = Transform3D(-0.630744, 0, 0.775991, 0, 1, 0, -0.775991, 0, -0.630744
 transform = Transform3D(0.644257, 0, 0.764809, 0, 1, 0, -0.764809, 0, 0.644257, -8.015, 0, -5.535)
 
 [node name="PlaceholderDefenderLeft" type="Node3D" parent="."]
-transform = Transform3D(-0.693791, 0, 0.720176, 0, 1, 0, -0.720176, 0, -0.693791, -10.88, 0, 4)
+transform = Transform3D(-0.721953, 0, 0.691942, 0, 1, 0, -0.691942, 0, -0.721953, -10.88, 0, 4)
 
 [node name="Defender" parent="PlaceholderDefenderLeft" instance=ExtResource("3_t0scl")]
 
 [node name="PlaceholderDefenderRight" type="Node3D" parent="."]
-transform = Transform3D(0.456368, 0, 0.889791, 0, 1, 0, -0.889791, 0, 0.456368, -10.88, 0, -4)
+transform = Transform3D(0.53227, 0, 0.846574, 0, 1, 0, -0.846574, 0, 0.53227, -10.88, 0, -4)
 
 [node name="Defender" parent="PlaceholderDefenderRight" instance=ExtResource("3_t0scl")]
 
