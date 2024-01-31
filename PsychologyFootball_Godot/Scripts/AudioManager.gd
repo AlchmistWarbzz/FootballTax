@@ -1,5 +1,8 @@
 extends Node
 
+@onready var ambience_sfx = $Ambience_SFX
+@onready var football_kick_sfx = $Football_Kick_SFX
+
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
