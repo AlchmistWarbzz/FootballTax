@@ -21,12 +21,12 @@ transform = Transform3D(-0.630744, 0, 0.775991, 0, 1, 0, -0.775991, 0, -0.630744
 transform = Transform3D(0.644257, 0, 0.764809, 0, 1, 0, -0.764809, 0, 0.644257, -8.015, 0, -5.535)
 
 [node name="PlaceholderDefenderLeft" type="Node3D" parent="."]
-transform = Transform3D(-0.693791, 0, 0.720176, 0, 1, 0, -0.720176, 0, -0.693791, -10.88, 0, 4)
+transform = Transform3D(-0.721953, 0, 0.691942, 0, 1, 0, -0.691942, 0, -0.721953, -10.88, 0, 4)
 
 [node name="Defender" parent="PlaceholderDefenderLeft" instance=ExtResource("3_t0scl")]
 
 [node name="PlaceholderDefenderRight" type="Node3D" parent="."]
-transform = Transform3D(0.456368, 0, 0.889791, 0, 1, 0, -0.889791, 0, 0.456368, -10.88, 0, -4)
+transform = Transform3D(0.53227, 0, 0.846574, 0, 1, 0, -0.846574, 0, 0.53227, -10.88, 0, -4)
 
 [node name="Defender" parent="PlaceholderDefenderRight" instance=ExtResource("3_t0scl")]
 
