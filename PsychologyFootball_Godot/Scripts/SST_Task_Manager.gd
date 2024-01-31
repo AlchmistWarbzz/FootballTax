@@ -58,6 +58,8 @@ var is_trial_passed: bool = false
 var stop_signal_shown: bool = false
 
 func _ready():
+	AudioManager.ambience_sfx.play()
+	
 	scene_reset() # ensure scene and scene_state are in agreement
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
