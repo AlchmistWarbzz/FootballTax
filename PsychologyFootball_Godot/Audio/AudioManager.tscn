@@ -10,6 +10,5 @@ script = ExtResource("1_rqxqj")
 [node name="Ambience_SFX" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("2_8ja0w")
 
-[node name="Football_Kick_SFX" type="AudioStreamPlayer3D" parent="."]
+[node name="Football_Kick_SFX" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("3_uam6y")
-attenuation_model = 1
