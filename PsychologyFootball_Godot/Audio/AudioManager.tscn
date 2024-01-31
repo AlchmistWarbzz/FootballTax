@@ -1,6 +1,10 @@
-[gd_scene load_steps=2 format=3 uid="uid://6kcvycobwuri"]
+[gd_scene load_steps=3 format=3 uid="uid://6kcvycobwuri"]
 
 [ext_resource type="Script" path="res://Scripts/AudioManager.gd" id="1_rqxqj"]
+[ext_resource type="AudioStream" uid="uid://y65sgs65btbp" path="res://Audio/Ambience.mp3" id="2_8ja0w"]
 
 [node name="AudioManager" type="Node"]
 script = ExtResource("1_rqxqj")
+
+[node name="Ambience" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("2_8ja0w")
