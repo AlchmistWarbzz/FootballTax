@@ -1,8 +1,9 @@
-[gd_scene load_steps=4 format=3 uid="uid://6kcvycobwuri"]
+[gd_scene load_steps=5 format=3 uid="uid://6kcvycobwuri"]
 
 [ext_resource type="Script" path="res://Scripts/AudioManager.gd" id="1_rqxqj"]
 [ext_resource type="AudioStream" uid="uid://y65sgs65btbp" path="res://Audio/Ambience.mp3" id="2_8ja0w"]
 [ext_resource type="AudioStream" uid="uid://bm4fuiu4lmx3h" path="res://Audio/Football_Kick.mp3" id="3_uam6y"]
+[ext_resource type="AudioStream" uid="uid://gwnefpw3ek3i" path="res://Audio/Football_Touch.mp3" id="4_ifhti"]
 
 [node name="AudioManager" type="Node"]
 script = ExtResource("1_rqxqj")
@@ -12,3 +13,6 @@ stream = ExtResource("2_8ja0w")
 
 [node name="Football_Kick_SFX" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("3_uam6y")
+
+[node name="Football_Touch_SFX" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("4_ifhti")
