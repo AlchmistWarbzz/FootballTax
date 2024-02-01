@@ -12,10 +12,11 @@ script = ExtResource("1_rqxqj")
 
 [node name="Ambience_SFX" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("2_8ja0w")
-volume_db = -6.0
+volume_db = -9.0
 
 [node name="Football_Kick_SFX" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("3_uam6y")
+volume_db = -3.0
 
 [node name="Football_Touch_SFX" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("4_ifhti")
@@ -25,3 +26,4 @@ stream = ExtResource("5_uigtx")
 
 [node name="Ball_Feeder_Launch_SFX" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("6_0utql")
+volume_db = 12.0
