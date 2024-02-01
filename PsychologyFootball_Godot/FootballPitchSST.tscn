@@ -1,7 +1,8 @@
-[gd_scene load_steps=34 format=3 uid="uid://rjin0qqtw7jx"]
+[gd_scene load_steps=35 format=3 uid="uid://rjin0qqtw7jx"]
 
 [ext_resource type="Script" path="res://Scripts/level.gd" id="1_7q4w2"]
 [ext_resource type="Material" uid="uid://t05uv2wgginr" path="res://Materials/M_TempHill.tres" id="1_niqus"]
+[ext_resource type="Texture2D" uid="uid://ktpdy26lgr2o" path="res://Materials/HDR/kloofendal_48d_partly_cloudy_puresky_4k.hdr" id="2_w40gw"]
 [ext_resource type="ArrayMesh" uid="uid://bstudu2gd55b3" path="res://Assets/Environment/SM_ENV__Dirt MountT2.tres" id="4_0mc3s"]
 [ext_resource type="ArrayMesh" uid="uid://dh0vvwbbfj12s" path="res://Assets/Environment/SM_ENV__Dirt MountT4.tres" id="5_yrs51"]
 [ext_resource type="ArrayMesh" uid="uid://dvbdty6p3w6n7" path="res://Assets/Environment/SM_ENV__Dirt MountT1.tres" id="6_23pls"]
@@ -28,18 +29,23 @@
 [ext_resource type="ArrayMesh" uid="uid://cxyqct7m8eupo" path="res://Assets/Environment/SM_ENV__TreeT2.res" id="27_sssm6"]
 [ext_resource type="PackedScene" uid="uid://diy4oxifvl3ya" path="res://Character/character.tscn" id="28_0rfv3"]
 
-[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_1r10j"]
-sky_horizon_color = Color(0.64625, 0.65575, 0.67075, 1)
-ground_horizon_color = Color(0.64625, 0.65575, 0.67075, 1)
+[sub_resource type="PanoramaSkyMaterial" id="PanoramaSkyMaterial_3ul1s"]
+panorama = ExtResource("2_w40gw")
 
 [sub_resource type="Sky" id="Sky_52gij"]
-sky_material = SubResource("ProceduralSkyMaterial_1r10j")
+sky_material = SubResource("PanoramaSkyMaterial_3ul1s")
 
 [sub_resource type="Environment" id="Environment_vmebv"]
 background_mode = 2
 sky = SubResource("Sky_52gij")
-tonemap_mode = 2
+sky_rotation = Vector3(0, -0.228638, 0)
+sdfgi_enabled = true
+sdfgi_use_occlusion = true
+sdfgi_min_cell_size = 2.89
 glow_enabled = true
+volumetric_fog_enabled = true
+volumetric_fog_density = 0.01
+volumetric_fog_emission = Color(0.658824, 0.811765, 1, 1)
 
 [sub_resource type="Curve3D" id="Curve3D_gfqk1"]
 _data = {
@@ -397,7 +403,9 @@ mesh = ExtResource("26_o844s")
 shape = SubResource("ConcavePolygonShape3D_mk57i")
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
-transform = Transform3D(0.838052, 0, 0.54559, -0.158577, 0.956829, 0.243582, -0.522036, -0.290652, 0.801872, 0, 5.89974, 0)
+transform = Transform3D(0.502263, 0.463869, -0.729766, -0.256719, 0.885878, 0.386413, 0.825729, -0.00673568, 0.564027, 0, 5.89974, 0)
+light_color = Color(1, 0.866667, 0.560784, 1)
+light_angular_distance = 3.15
 shadow_enabled = true
 
 [node name="SST_Task_Manager" parent="." instance=ExtResource("25_xenpo")]
