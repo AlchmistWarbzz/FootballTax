@@ -22,6 +22,8 @@ func _process(delta):
 
 func _on_task_manager_trial_started(is_stop_trial: bool):
 	instantiate_ball()
+	AudioManager.ball_feeder_launch_sfx.set_pitch_scale(1.0 - (randf() / 10.0))
+	AudioManager.ball_feeder_launch_sfx.play()
 
 func instantiate_ball():
 	var instance = ball_scene.instantiate()

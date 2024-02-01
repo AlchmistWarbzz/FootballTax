@@ -27,8 +27,10 @@ func _on_task_manager_ball_kicked():
 	kick()
 
 
-func kick():
+func kick() -> void:
 	set_linear_velocity(Vector3.ZERO)
 	set_angular_velocity(Vector3.ZERO)
 	apply_central_impulse(Vector3.LEFT * 5)
 	
+	AudioManager.football_kick_sfx.set_pitch_scale(1.0 + (randf() / 20.0))
+	AudioManager.football_kick_sfx.play()
