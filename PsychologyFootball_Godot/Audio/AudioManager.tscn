@@ -23,6 +23,7 @@ stream = ExtResource("4_ifhti")
 
 [node name="Footsteps_SFX" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("5_uigtx")
+max_polyphony = 2
 
 [node name="Ball_Feeder_Launch_SFX" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("6_0utql")
