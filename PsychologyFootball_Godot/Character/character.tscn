@@ -12,7 +12,7 @@
 [ext_resource type="Animation" uid="uid://b3mno20u4y6bx" path="res://Character/Animation/Kick.res" id="7_ive08"]
 [ext_resource type="Animation" uid="uid://blhrsokplv10m" path="res://Character/Animation/Recevie.res" id="8_x7dwe"]
 
-[sub_resource type="AnimationLibrary" id="AnimationLibrary_hn43l"]
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_kgbnu"]
 _data = {
 "GoalKeeper Idle": ExtResource("4_iqveh"),
 "Idle": ExtResource("5_prd62"),
@@ -79,7 +79,7 @@ autoplay = "Idle2"
 
 [node name="AnimationTree" type="AnimationTree" parent="." index="2"]
 libraries = {
-"": SubResource("AnimationLibrary_hn43l")
+"": SubResource("AnimationLibrary_kgbnu")
 }
 tree_root = ExtResource("2_aedpa")
 advance_expression_base_node = NodePath("../AnimationPlayer")
