@@ -164,10 +164,12 @@ func _process(delta):
 				current_state = scene_state.WAIT
 				ticks_msec_bookmark = Time.get_ticks_msec()
 			
-			elif (Time.get_ticks_msec() - ticks_msec_bookmark) > stop_signal_delay:
+			elif (Time.get_ticks_msec() - ticks_msec_bookmark) > stop_signal_delay and not stop_signal_shown:
 				# time for stop signal
+				stop_signal_shown = true
 				
 				stop_signal.emit()
+				AudioManager.footsteps_sfx.play()
 			
 			if Input.is_action_just_pressed("kick_left") or Input.is_action_just_pressed("kick_right"):
 				is_trial_passed = false
@@ -182,6 +184,8 @@ func _process(delta):
 
 func scene_reset():
 	print("scene_reset")
+	
+	AudioManager.footsteps_sfx.stop()
 	
 	# remove left ball feeder
 	if $PlaceholderBallFeederLeft.get_child_count() != 0:
