@@ -1,4 +1,4 @@
-[gd_scene load_steps=35 format=3 uid="uid://rjin0qqtw7jx"]
+[gd_scene load_steps=37 format=3 uid="uid://rjin0qqtw7jx"]
 
 [ext_resource type="Script" path="res://Scripts/level.gd" id="1_7q4w2"]
 [ext_resource type="Material" uid="uid://t05uv2wgginr" path="res://Materials/M_TempHill.tres" id="1_niqus"]
@@ -28,6 +28,8 @@
 [ext_resource type="PackedScene" uid="uid://diitrg1h4hthl" path="res://Import GLTF/Townhall.gltf" id="27_lw8c4"]
 [ext_resource type="ArrayMesh" uid="uid://cxyqct7m8eupo" path="res://Assets/Environment/SM_ENV__TreeT2.res" id="27_sssm6"]
 [ext_resource type="PackedScene" uid="uid://diy4oxifvl3ya" path="res://Character/character.tscn" id="28_0rfv3"]
+[ext_resource type="PackedScene" uid="uid://dfi240ptdepwf" path="res://go_trial_Rules.tscn" id="29_sloev"]
+[ext_resource type="Script" path="res://go_trial_Rules.gd" id="30_4achb"]
 
 [sub_resource type="PanoramaSkyMaterial" id="PanoramaSkyMaterial_3ul1s"]
 panorama = ExtResource("2_w40gw")
@@ -361,11 +363,11 @@ transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, -44.94
 mesh = ExtResource("20_v74ck")
 
 [node name="AssetsSmFlag" type="MeshInstance3D" parent="."]
-transform = Transform3D(0.349553, 0, 0.936916, 0, 1, 0, -0.936916, 0, 0.349553, -47.5779, 0, -31.5763)
+transform = Transform3D(0.349553, 0, 0.936916, 0, 1, 0, -0.936916, 0, 0.349553, -48.4461, 0, -33.4258)
 mesh = ExtResource("21_scumy")
 
 [node name="AssetsSmFlag2" type="MeshInstance3D" parent="."]
-transform = Transform3D(0.349553, 0, 0.936916, 0, 1, 0, -0.936916, 0, 0.349553, -47.5779, 0, 32.5136)
+transform = Transform3D(-0.065351, 0, 0.997862, 0, 1, 0, -0.997862, 0, -0.065351, -48.3719, 0, 32.9045)
 mesh = ExtResource("21_scumy")
 
 [node name="AssetsSmFloodLight" type="MeshInstance3D" parent="."]
@@ -385,7 +387,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 12.6604, 0.154907, -49.3522)
 mesh = ExtResource("23_h3jml")
 
 [node name="AssetsSmGoalPost" type="MeshInstance3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -48.6939, 0, -0.00961637)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -49.3938, 0, -0.00961637)
 mesh = ExtResource("24_hyqpp")
 
 [node name="AssetsSmGoalPost2" type="MeshInstance3D" parent="."]
@@ -599,4 +601,9 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.6938, 0.0141597, -0.302888
 visible = false
 
 [node name="Townhall" parent="." instance=ExtResource("27_lw8c4")]
-transform = Transform3D(-0.364015, 0, 0.931393, 0, 1, 0, -0.931393, 0, -0.364015, -171.581, 4.13132, 65.4106)
+transform = Transform3D(-0.364015, 0, 0.931393, 0, 1, 0, -0.931393, 0, -0.364015, -171.581, -1.29854, 54.0868)
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="GoTrial" parent="CanvasLayer" instance=ExtResource("29_sloev")]
+script = ExtResource("30_4achb")
