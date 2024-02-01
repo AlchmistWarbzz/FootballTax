@@ -169,7 +169,8 @@ func _process(delta):
 				stop_signal_shown = true
 				
 				stop_signal.emit()
-				AudioManager.footsteps_sfx.play()
+				AudioManager.footsteps_sfx.play(0.0)
+				AudioManager.footsteps_sfx.play(0.05)
 			
 			if Input.is_action_just_pressed("kick_left") or Input.is_action_just_pressed("kick_right"):
 				is_trial_passed = false
