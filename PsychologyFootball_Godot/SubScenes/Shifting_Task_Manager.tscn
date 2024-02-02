@@ -1,6 +1,10 @@
-[gd_scene load_steps=2 format=3 uid="uid://c4c0f5n421dap"]
+[gd_scene load_steps=3 format=3 uid="uid://c4c0f5n421dap"]
 
 [ext_resource type="Script" path="res://Scripts/Shifting_Task_Manager.gd" id="1_84der"]
+[ext_resource type="PackedScene" uid="uid://n7shkduekcq2" path="res://SubScenes/Player.tscn" id="2_bpif1"]
 
 [node name="Shifting_Task_Manager" type="Node3D"]
 script = ExtResource("1_84der")
+
+[node name="Player" parent="." instance=ExtResource("2_bpif1")]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 0, 0, 0)
