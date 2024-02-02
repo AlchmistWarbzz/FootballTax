@@ -88,6 +88,7 @@ mesh = ExtResource("26_o844s")
 shape = SubResource("ConcavePolygonShape3D_mk57i")
 
 [node name="SST_Task_Manager" parent="." instance=ExtResource("25_xenpo")]
+visible = false
 
 [node name="Shifting_Task_Manager" parent="." instance=ExtResource("6_dvais")]
 
