@@ -1,4 +1,4 @@
-[gd_scene load_steps=37 format=3 uid="uid://rjin0qqtw7jx"]
+[gd_scene load_steps=40 format=3 uid="uid://rjin0qqtw7jx"]
 
 [ext_resource type="Script" path="res://Scripts/level.gd" id="1_7q4w2"]
 [ext_resource type="Material" uid="uid://t05uv2wgginr" path="res://Materials/M_TempHill.tres" id="1_niqus"]
@@ -30,6 +30,9 @@
 [ext_resource type="PackedScene" uid="uid://diy4oxifvl3ya" path="res://Character/character.tscn" id="28_0rfv3"]
 [ext_resource type="PackedScene" uid="uid://dfi240ptdepwf" path="res://go_trial_Rules.tscn" id="29_sloev"]
 [ext_resource type="Script" path="res://go_trial_Rules.gd" id="30_4achb"]
+[ext_resource type="ArrayMesh" uid="uid://f42g0unsqh3d" path="res://Assets/Building/SM__House1.res" id="31_acq1m"]
+[ext_resource type="ArrayMesh" uid="uid://kcwdwepxtdty" path="res://Assets/Building/SM__House2.res" id="32_v5off"]
+[ext_resource type="ArrayMesh" uid="uid://b86o0ugylg3i0" path="res://Assets/Building/SM__House4.res" id="33_cmdr1"]
 
 [sub_resource type="PanoramaSkyMaterial" id="PanoramaSkyMaterial_3ul1s"]
 panorama = ExtResource("2_w40gw")
@@ -173,42 +176,6 @@ transform = Transform3D(-25.8819, 0, 96.5926, 0, 25, 0, -96.5926, 0, -25.8819, -
 visible = false
 material = ExtResource("1_niqus")
 
-[node name="House1" type="CSGBox3D" parent="."]
-transform = Transform3D(0, 0, 10, 0, 10, 0, -20, 0, 0, -177.281, 14.0607, -30.7574)
-
-[node name="House2" type="CSGBox3D" parent="."]
-transform = Transform3D(-5.17638, 0, 9.65926, 0, 10, 0, -19.3185, 0, -2.58819, -177.281, 14.5368, -5.19977)
-
-[node name="House3" type="CSGBox3D" parent="."]
-transform = Transform3D(-5.17638, 0, 9.65926, 0, 10, 0, -19.3185, 0, -2.58819, -213.576, 15.8683, -23.6205)
-
-[node name="House4" type="CSGBox3D" parent="."]
-transform = Transform3D(5.17638, 0, 9.65926, 0, 10, 0, -19.3185, 0, 2.58819, -239.131, 10.1967, -2.91284)
-
-[node name="House5" type="CSGBox3D" parent="."]
-transform = Transform3D(14.1421, 0, 7.07107, 0, 10, 0, -14.1421, 0, 7.07107, -129.679, 13.2746, -58.8251)
-
-[node name="House6" type="CSGBox3D" parent="."]
-transform = Transform3D(10, 0, 8.66025, 0, 10, 0, -17.3205, 0, 5, -147.751, 13.7507, -40.7532)
-
-[node name="House7" type="CSGBox3D" parent="."]
-transform = Transform3D(5.17638, 0, 9.65926, 0, 10, 0, -19.3185, 0, 2.58819, -111.681, 11.4611, -40.5318)
-
-[node name="House8" type="CSGBox3D" parent="."]
-transform = Transform3D(20, 0, -4.76837e-07, 0, 10, 0, 9.53674e-07, 0, 10, -129.753, 12.0803, -22.4599)
-
-[node name="House9" type="CSGBox3D" parent="."]
-transform = Transform3D(10, 0, 8.66025, 0, 10, 0, -17.3205, 0, 5, -93.9101, 13.2746, -100.144)
-
-[node name="House10" type="CSGBox3D" parent="."]
-transform = Transform3D(14.1421, 0, 7.07107, 0, 10, 0, -14.1421, 0, 7.07107, -111.982, 13.7507, -82.0721)
-
-[node name="House11" type="CSGBox3D" parent="."]
-transform = Transform3D(0, 0, 10, 0, 10, 0, -20, 0, 0, -75.9121, 11.4611, -81.8507)
-
-[node name="House12" type="CSGBox3D" parent="."]
-transform = Transform3D(14.1421, 0, 7.07107, 0, 10, 0, -14.1421, 0, 7.07107, -93.984, 12.0803, -63.7787)
-
 [node name="Path3D" type="Path3D" parent="."]
 transform = Transform3D(100, 0, 0, 0, 25, 0, 0, 0, 100, 106.682, 21.8467, -29.7021)
 curve = SubResource("Curve3D_gfqk1")
@@ -230,7 +197,7 @@ transform = Transform3D(1.01601, 0, 0.29851, 0, 1, 0, -0.31982, 0, 0.94831, -45.
 mesh = ExtResource("4_0mc3s")
 
 [node name="SmEnvDirtMountT7" type="MeshInstance3D" parent="."]
-transform = Transform3D(1.03245, 0, -0.70466, 0, 1.25, 0, 0.70466, 0, 1.03245, -100.999, 5.34805, -39.9851)
+transform = Transform3D(1.03245, 0, -0.70466, 0, 1.25, 0, 0.70466, 0, 1.03245, -99.0044, 3.25236, -39.9851)
 mesh = ExtResource("4_0mc3s")
 
 [node name="SmEnvDirtMountT3" type="MeshInstance3D" parent="."]
@@ -533,6 +500,14 @@ mesh = ExtResource("26_lwsue")
 transform = Transform3D(0.94919, 0, 0.314705, 0, 1, 0, -0.314705, 0, 0.94919, -85.8983, 12.9066, 88.2024)
 mesh = ExtResource("26_lwsue")
 
+[node name="SmEnvTreeT48" type="MeshInstance3D" parent="."]
+transform = Transform3D(0.94919, 0, 0.314705, 0, 1, 0, -0.314705, 0, 0.94919, -60.3279, 7.54944, 81.873)
+mesh = ExtResource("26_lwsue")
+
+[node name="SmEnvTreeT49" type="MeshInstance3D" parent="."]
+transform = Transform3D(0.94919, 0, 0.314705, 0, 1, 0, -0.314705, 0, 0.94919, -58.1279, 5.79176, 71.8443)
+mesh = ExtResource("26_lwsue")
+
 [node name="SmEnvTreeT31" type="MeshInstance3D" parent="."]
 transform = Transform3D(0.94919, 0, 0.314705, 0, 1, 0, -0.314705, 0, 0.94919, -44.4102, 3.43469, 43.7566)
 mesh = ExtResource("26_lwsue")
@@ -597,6 +572,10 @@ mesh = ExtResource("26_lwsue")
 transform = Transform3D(0.471366, 0, 0.881938, 0, 1, 0, -0.881938, 0, 0.471366, -54.5003, 4.41704, -57.1868)
 mesh = ExtResource("26_lwsue")
 
+[node name="SmEnvTreeT47" type="MeshInstance3D" parent="."]
+transform = Transform3D(0.471366, 0, 0.881938, 0, 1, 0, -0.881938, 0, 0.471366, -56.6632, 4.41704, -71.6493)
+mesh = ExtResource("26_lwsue")
+
 [node name="Character" parent="." instance=ExtResource("28_0rfv3")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.6938, 0.0141597, -0.302888)
 visible = false
@@ -608,3 +587,27 @@ transform = Transform3D(-0.364015, 0, 0.931393, 0, 1, 0, -0.931393, 0, -0.364015
 
 [node name="GoTrial" parent="CanvasLayer" instance=ExtResource("29_sloev")]
 script = ExtResource("30_4achb")
+
+[node name="SmHouse1" type="MeshInstance3D" parent="."]
+transform = Transform3D(0.967086, 0, -0.25445, 0, 1, 0, 0.25445, 0, 0.967086, -109.009, 7.45555, -41.9473)
+mesh = ExtResource("31_acq1m")
+
+[node name="SmHouse6" type="MeshInstance3D" parent="."]
+transform = Transform3D(0.577843, 0, -0.816148, 0, 1, 0, 0.816148, 0, 0.577843, -74.403, 7.08218, -86.5669)
+mesh = ExtResource("31_acq1m")
+
+[node name="SmHouse2" type="MeshInstance3D" parent="."]
+transform = Transform3D(0.891703, 0, -0.452621, 0, 1, 0, 0.452621, 0, 0.891703, -121.324, 7.12721, -26.7925)
+mesh = ExtResource("32_v5off")
+
+[node name="SmHouse3" type="MeshInstance3D" parent="."]
+transform = Transform3D(0.714863, 0, -0.699264, 0, 1, 0, 0.699264, 0, 0.714863, -98.967, 7.12721, -56.8853)
+mesh = ExtResource("32_v5off")
+
+[node name="SmHouse5" type="MeshInstance3D" parent="."]
+transform = Transform3D(0.984337, 0, -0.176295, 0, 1, 0, 0.176295, 0, 0.984337, -96.9367, 7.12721, -79.8966)
+mesh = ExtResource("32_v5off")
+
+[node name="SmHouse4" type="MeshInstance3D" parent="."]
+transform = Transform3D(0.99911, 0, 0.0421722, 0, 1, 0, -0.0421722, 0, 0.99911, -126.474, 3.18999, -3.18064)
+mesh = ExtResource("33_cmdr1")
