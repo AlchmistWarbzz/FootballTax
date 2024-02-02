@@ -1,4 +1,4 @@
-[gd_scene load_steps=37 format=3 uid="uid://rjin0qqtw7jx"]
+[gd_scene load_steps=38 format=3 uid="uid://rjin0qqtw7jx"]
 
 [ext_resource type="Script" path="res://Scripts/level.gd" id="1_7q4w2"]
 [ext_resource type="Material" uid="uid://t05uv2wgginr" path="res://Materials/M_TempHill.tres" id="1_niqus"]
@@ -6,6 +6,7 @@
 [ext_resource type="ArrayMesh" uid="uid://bstudu2gd55b3" path="res://Assets/Environment/SM_ENV__Dirt MountT2.tres" id="4_0mc3s"]
 [ext_resource type="ArrayMesh" uid="uid://dh0vvwbbfj12s" path="res://Assets/Environment/SM_ENV__Dirt MountT4.tres" id="5_yrs51"]
 [ext_resource type="ArrayMesh" uid="uid://dvbdty6p3w6n7" path="res://Assets/Environment/SM_ENV__Dirt MountT1.tres" id="6_23pls"]
+[ext_resource type="PackedScene" uid="uid://c4c0f5n421dap" path="res://SubScenes/Shifting_Task_Manager.tscn" id="6_dvais"]
 [ext_resource type="ArrayMesh" uid="uid://hn2vnresetex" path="res://Assets/Environment/SM_ENV__Dirt MountT5.tres" id="6_en6n8"]
 [ext_resource type="ArrayMesh" uid="uid://cnt4ta3g8p4rj" path="res://Assets/Environment/SM_ENV__Dirt MountT6.tres" id="7_5dnfl"]
 [ext_resource type="ArrayMesh" uid="uid://budbxnm0c4bf5" path="res://Assets/Environment/SM_ENV__RockT1.tres" id="10_g6yf1"]
@@ -87,6 +88,8 @@ mesh = ExtResource("26_o844s")
 shape = SubResource("ConcavePolygonShape3D_mk57i")
 
 [node name="SST_Task_Manager" parent="." instance=ExtResource("25_xenpo")]
+
+[node name="Shifting_Task_Manager" parent="." instance=ExtResource("6_dvais")]
 
 [node name="CarPark1" type="CSGBox3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 25.0154, 0, -49.4456)
