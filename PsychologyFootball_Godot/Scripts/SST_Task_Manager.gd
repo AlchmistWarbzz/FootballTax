@@ -269,9 +269,8 @@ func append_new_metrics_entry(stop_trial: bool, correct_response: bool, response
 func write_sst_raw_log(datetime_dict):
 	# open/create file
 	var raw_log_file_path: String = "res://TaskLogs/stop_signal_{year}-{month}-{day}-{hour}-{minute}-{second}_raw.txt".format(datetime_dict) # TODO let user choose dir
-	print("raw log file created at " + raw_log_file_path)
 	var raw_log_file = FileAccess.open(raw_log_file_path, FileAccess.WRITE)
-	print("with error code " + str(FileAccess.get_open_error()))
+	print("raw log file created at " + raw_log_file_path + " with error code " + str(FileAccess.get_open_error()))
 	
 	# format guide
 	# block_counter: int, trial_counter: int, stimulus_left: bool, stop_trial: bool,
@@ -295,9 +294,8 @@ func write_sst_raw_log(datetime_dict):
 func write_sst_summary_log(datetime_dict):
 	# open/create file
 	var summary_log_file_path: String = "res://TaskLogs/stop_signal_{year}-{month}-{day}-{hour}-{minute}-{second}_summary.txt".format(datetime_dict) # TODO let user choose dir
-	print("summary log file created at " + summary_log_file_path)
 	var summary_log_file = FileAccess.open(summary_log_file_path, FileAccess.WRITE)
-	print("with error code " + str(FileAccess.get_open_error()))
+	print("summary log file created at " + summary_log_file_path + " with error code " + str(FileAccess.get_open_error()))
 	
 	if summary_log_file:
 		# write date, time, subject, group, format guide
