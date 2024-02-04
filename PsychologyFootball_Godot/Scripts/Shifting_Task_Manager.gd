@@ -32,7 +32,7 @@ var non_shift_trials_passed: int = 0
 @onready var start_datetime = Time.get_datetime_dict_from_system()
 
 # states
-enum scene_state {WAIT, READY, SHIFT_TRIAL, NON_SHIFT_TRIAL}
+enum scene_state {WAIT, READY, TRIAL}
 # TODO create dict of states and corresponding func callables for defensive prog.
 @onready var current_state = scene_state.WAIT
 
@@ -44,6 +44,7 @@ signal ball_kicked
 var is_feeder_left: bool = false
 var is_trial_passed: bool = false
 var is_blue_ball: bool = false
+var is_shift_trial: bool = false
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
@@ -73,20 +74,30 @@ func _process(delta: float) -> void:
 			if (Time.get_ticks_msec() - ticks_msec_bookmark) > READY_TICKS_MSEC:
 				# ready time is up
 				
-				# determine go or stop trial
-				var is_shift: bool = (randf() < 0.25)
-				if is_shift and shift_trial_counter < shift_trials_per_block:
-					scene_trial_start(is_shift)
-				elif not is_shift and non_shift_trial_counter < non_shift_trials_per_block:
-					scene_trial_start(is_shift)
+				# determine shift or non shift trial
+				var rand_is_shift_trial = (randf() < 0.25)
+				if rand_is_shift_trial and shift_trial_counter < shift_trials_per_block:
+					# shift is rand selected and shifts remain
+					is_shift_trial = true
+				elif non_shift_trial_counter < non_shift_trials_per_block:
+					# out of shifts but non-shifts remain, force non-shift
+					is_shift_trial = false
+				elif not rand_is_shift_trial and non_shift_trial_counter < non_shift_trials_per_block:
+					# non-shift is rand selected and non-shifts remain
+					is_shift_trial = false
+				elif shift_trial_counter < shift_trials_per_block:
+					# out of non-shifts but shifts remain, force shift
+					is_shift_trial = true
 				else:
 					print("block finished. is_practice_block: " + str(is_practice_block))
-					# TODO trial block finished
+					# TODO block finished, load next block
 				
+				scene_trial_start()
+				current_state = scene_state.TRIAL
 				ticks_msec_bookmark = Time.get_ticks_msec()
 		
 		
-		scene_state.NON_SHIFT_TRIAL:
+		scene_state.TRIAL:
 			if (Time.get_ticks_msec() - ticks_msec_bookmark) > TRIAL_TICKS_MSEC:
 				# trial time is up
 				
@@ -121,28 +132,6 @@ func _process(delta: float) -> void:
 					#go_trial_failed.emit()
 					print("non_shift_trial_failed")
 				append_new_metrics_entry(false, is_trial_passed, Time.get_ticks_msec() - ticks_msec_bookmark)
-		
-		
-		#scene_state.SHIFT_TRIAL:
-			#if (Time.get_ticks_msec() - ticks_msec_bookmark) > TRIAL_TICKS_MSEC:
-				## trial time is up
-				#scene_reset()
-				#
-				#if is_trial_passed:
-					#shift_trials_passed += 1
-					#print("shift_trial_passed")
-					#append_new_metrics_entry(true, is_trial_passed, 0)
-				#
-				#current_state = scene_state.WAIT
-				#ticks_msec_bookmark = Time.get_ticks_msec()
-			#
-			#if Input.is_action_just_pressed("kick_left") or Input.is_action_just_pressed("kick_right"):
-				#is_trial_passed = false
-				##ball_kicked.emit()
-				#stop_trial_failed.emit()
-				#print("stop_trial_failed")
-				#append_new_metrics_entry(true, is_trial_passed, Time.get_ticks_msec() - ticks_msec_bookmark)
-				#
 
 func scene_reset():
 	print("scene_reset")
@@ -157,9 +146,8 @@ func scene_reset():
 
 func scene_ready():
 	print("scene_ready")
-	
 
-func scene_trial_start(is_shift_trial: bool):
+func scene_trial_start():
 	var bool_string = "shift" if is_shift_trial else "non_shift"
 	print("scene_trial_start " + bool_string)
 	
@@ -172,10 +160,6 @@ func scene_trial_start(is_shift_trial: bool):
 	
 	# set up flags
 	is_trial_passed = false
-	if is_shift_trial:
-		current_state = scene_state.SHIFT_TRIAL
-	else:
-		current_state = scene_state.NON_SHIFT_TRIAL
 	
 	# spawn ball feeder, randomly choosing left or right side
 	var new_ball_feeder = BALL_FEEDER_SCENE.instantiate()
