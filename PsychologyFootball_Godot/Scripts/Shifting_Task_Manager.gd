@@ -104,7 +104,7 @@ func _process(delta: float) -> void:
 				if not is_trial_passed:
 					#go_trial_failed.emit()
 					print("non_shift_trial_failed")
-					append_new_metrics_entry(false, is_trial_passed, 0)
+					append_new_metrics_entry(0)
 				
 				scene_reset()
 				
@@ -112,7 +112,7 @@ func _process(delta: float) -> void:
 				ticks_msec_bookmark = Time.get_ticks_msec()
 			
 			elif Input.is_action_just_pressed("kick_left") and not is_trial_passed:
-				if is_feeder_left:
+				if check_correct_kick(true): # is kick left
 					ball_kicked.emit($GoalPostLeft.global_position)
 					is_trial_passed = true
 					non_shift_trials_passed += 1
@@ -120,10 +120,10 @@ func _process(delta: float) -> void:
 				else:
 					#go_trial_failed.emit()
 					print("non_shift_trial_failed")
-				append_new_metrics_entry(false, is_trial_passed, Time.get_ticks_msec() - ticks_msec_bookmark)
+				append_new_metrics_entry(Time.get_ticks_msec() - ticks_msec_bookmark)
 			
 			elif Input.is_action_just_pressed("kick_right") and not is_trial_passed:
-				if not is_feeder_left: # is feeder right
+				if check_correct_kick(false): # is kick right
 					ball_kicked.emit($GoalPostRight.global_position)
 					is_trial_passed = true
 					non_shift_trials_passed += 1
@@ -131,7 +131,7 @@ func _process(delta: float) -> void:
 				else:
 					#go_trial_failed.emit()
 					print("non_shift_trial_failed")
-				append_new_metrics_entry(false, is_trial_passed, Time.get_ticks_msec() - ticks_msec_bookmark)
+				append_new_metrics_entry(Time.get_ticks_msec() - ticks_msec_bookmark)
 
 func scene_reset():
 	print("scene_reset")
@@ -185,8 +185,8 @@ func check_correct_kick(is_kick_left: bool) -> bool:
 		else:
 			return not is_blue_ball
 
-func append_new_metrics_entry(is_shift_trial: bool, correct_response: bool, response_time: int):
-	metrics_array.append([block_counter, trial_counter, is_feeder_left, is_blue_ball, is_shift_trial, correct_response, response_time])
+func append_new_metrics_entry(response_time: int):
+	metrics_array.append([block_counter, trial_counter, is_feeder_left, is_blue_ball, is_shift_trial, is_trial_passed, response_time])
 
 func write_sst_raw_log(datetime_dict):
 	# open/create file
