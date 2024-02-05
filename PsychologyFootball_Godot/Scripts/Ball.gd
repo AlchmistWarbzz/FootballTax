@@ -15,7 +15,7 @@ func _ready():
 		task_manager_node.ball_kicked.connect(_on_task_manager_ball_kicked)
 	
 	# ball feeder launch
-	apply_central_impulse(get_global_transform().basis.z * 18)
+	apply_central_impulse(get_global_transform().basis.z * 16)
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
