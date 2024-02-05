@@ -15,7 +15,7 @@ func _ready():
 		task_manager_node.ball_kicked.connect(_on_task_manager_ball_kicked)
 	
 	# ball feeder launch
-	apply_central_impulse(get_global_transform().basis.z * 18)
+	apply_central_impulse(get_global_transform().basis.z * 16)
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -23,14 +23,16 @@ func _process(delta):
 	pass
 
 
-func _on_task_manager_ball_kicked():
-	kick()
+func _on_task_manager_ball_kicked(target: Vector3):
+	kick(target)
 
 
-func kick() -> void:
+func kick(target: Vector3) -> void:
 	set_linear_velocity(Vector3.ZERO)
 	set_angular_velocity(Vector3.ZERO)
-	apply_central_impulse(Vector3.LEFT * 5)
+	look_at(target)
+	
+	apply_central_impulse(get_global_transform().basis.z * -5)
 	
 	AudioManager.football_kick_sfx.set_pitch_scale(1.0 + (randf() / 20.0))
 	AudioManager.football_kick_sfx.play()
