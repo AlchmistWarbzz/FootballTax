@@ -170,6 +170,10 @@ func scene_trial_start():
 		is_feeder_left = false
 		$PlaceholderBallFeederRight.add_child(new_ball_feeder)
 	
+	# determine ball colour
+	if is_shift_trial:
+		is_blue_ball = not is_blue_ball
+	
 	# emit signal for ball feeder
 	trial_started.emit(is_blue_ball)
 
