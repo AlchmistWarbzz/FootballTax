@@ -13,7 +13,7 @@ func _ready() -> void:
 	level_data = LevelManager.get_level_data_by_id(level_id)
 	
 	# temp task manager selection
-	var instance = SST_TASK_MANAGER.instantiate()
+	var instance = SHIFTING_TASK_MANAGER.instantiate()
 	add_child(instance)
 
 
