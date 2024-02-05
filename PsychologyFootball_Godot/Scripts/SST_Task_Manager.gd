@@ -126,7 +126,7 @@ func _process(delta):
 			
 			elif Input.is_action_just_pressed("kick_left") and not is_trial_passed:
 				if is_feeder_left:
-					ball_kicked.emit()
+					ball_kicked.emit($PlaceholderFixation.global_position)
 					is_trial_passed = true
 					go_trials_passed += 1
 					print("go_trial_passed")
@@ -137,7 +137,7 @@ func _process(delta):
 			
 			elif Input.is_action_just_pressed("kick_right") and not is_trial_passed:
 				if not is_feeder_left: # is feeder right
-					ball_kicked.emit()
+					ball_kicked.emit($PlaceholderFixation.global_position)
 					is_trial_passed = true
 					go_trials_passed += 1
 					print("go_trial_passed")
