@@ -113,7 +113,7 @@ func _process(delta: float) -> void:
 			
 			elif Input.is_action_just_pressed("kick_left") and not is_trial_passed:
 				if is_feeder_left:
-					ball_kicked.emit()
+					ball_kicked.emit($GoalPostLeft.global_position)
 					is_trial_passed = true
 					non_shift_trials_passed += 1
 					print("non_shift_trial_passed")
@@ -124,7 +124,7 @@ func _process(delta: float) -> void:
 			
 			elif Input.is_action_just_pressed("kick_right") and not is_trial_passed:
 				if not is_feeder_left: # is feeder right
-					ball_kicked.emit()
+					ball_kicked.emit($GoalPostRight.global_position)
 					is_trial_passed = true
 					non_shift_trials_passed += 1
 					print("non_shift_trial_passed")
