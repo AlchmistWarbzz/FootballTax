@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" path="res://Scripts/level.gd" id="1_7q4w2"]
 [ext_resource type="Material" uid="uid://t05uv2wgginr" path="res://Materials/M_TempHill.tres" id="1_niqus"]
-[ext_resource type="Texture2D" uid="uid://ktpdy26lgr2o" path="res://Materials/HDR/kloofendal_48d_partly_cloudy_puresky_4k.hdr" id="2_w40gw"]
+[ext_resource type="Texture2D" uid="uid://5j7jnmub332o" path="res://Materials/HDR/kloofendal_48d_partly_cloudy_puresky_1k.hdr" id="2_l2183"]
 [ext_resource type="ArrayMesh" uid="uid://bstudu2gd55b3" path="res://Assets/Environment/SM_ENV__Dirt MountT2.tres" id="4_0mc3s"]
 [ext_resource type="ArrayMesh" uid="uid://dh0vvwbbfj12s" path="res://Assets/Environment/SM_ENV__Dirt MountT4.tres" id="5_yrs51"]
 [ext_resource type="ArrayMesh" uid="uid://dvbdty6p3w6n7" path="res://Assets/Environment/SM_ENV__Dirt MountT1.tres" id="6_23pls"]
@@ -34,7 +34,7 @@
 [ext_resource type="ArrayMesh" uid="uid://b86o0ugylg3i0" path="res://Assets/Building/SM__House4.res" id="33_cmdr1"]
 
 [sub_resource type="PanoramaSkyMaterial" id="PanoramaSkyMaterial_3ul1s"]
-panorama = ExtResource("2_w40gw")
+panorama = ExtResource("2_l2183")
 
 [sub_resource type="Sky" id="Sky_52gij"]
 sky_material = SubResource("PanoramaSkyMaterial_3ul1s")
