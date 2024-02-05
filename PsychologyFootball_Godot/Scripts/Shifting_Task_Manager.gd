@@ -171,7 +171,7 @@ func scene_trial_start():
 		$PlaceholderBallFeederRight.add_child(new_ball_feeder)
 	
 	# emit signal for ball feeder
-	trial_started.emit(is_shift_trial)
+	trial_started.emit(is_blue_ball)
 
 func check_correct_kick(is_kick_left: bool) -> bool:
 	if is_kick_left:

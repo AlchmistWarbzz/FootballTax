@@ -1,6 +1,7 @@
 extends Node3D
 
-var ball_scene = preload("res://SubScenes/Ball.tscn")
+const RED_BALL = preload("res://SubScenes/RedBall.tscn")
+const BLUE_BALL = preload("res://SubScenes/BlueBall.tscn")
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -20,12 +21,16 @@ func _process(delta):
 		#instantiate_ball()
 	pass
 
-func _on_task_manager_trial_started(is_stop_trial: bool):
-	instantiate_ball()
+func _on_task_manager_trial_started(is_blue_ball: bool):
+	instantiate_ball(is_blue_ball)
 	AudioManager.ball_feeder_launch_sfx.set_pitch_scale(1.0 - (randf() / 10.0))
 	AudioManager.ball_feeder_launch_sfx.play()
 
-func instantiate_ball():
-	var instance = ball_scene.instantiate()
+func instantiate_ball(is_blue_ball: bool):
+	var instance
+	if is_blue_ball:
+		instance = BLUE_BALL.instantiate()
+	else:
+		instance = RED_BALL.instantiate()
 	$BallSpawnPoint.add_child(instance)
 	return instance

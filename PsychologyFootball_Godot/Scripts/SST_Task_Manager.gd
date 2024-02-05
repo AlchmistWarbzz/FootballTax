@@ -255,8 +255,8 @@ func scene_trial_start(is_stop_trial: bool):
 	var new_teammate = teammate_scene.instantiate()
 	$PlaceholderFixation.add_child(new_teammate)
 	
-	# emit signal for ball feeder and defenders
-	trial_started.emit(is_stop_trial)
+	# emit signal for ball feeder
+	trial_started.emit(true)
 
 #func stop_trial_start():
 	## remove fixation cone
