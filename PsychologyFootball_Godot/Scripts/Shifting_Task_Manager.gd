@@ -115,8 +115,13 @@ func _process(delta: float) -> void:
 				if check_correct_kick(true): # is kick left
 					ball_kicked.emit($GoalPostLeft.global_position)
 					is_trial_passed = true
-					non_shift_trials_passed += 1
-					print("non_shift_trial_passed")
+					
+					if is_shift_trial:
+						shift_trials_passed += 1
+						print("shift_trial_passed")
+					else:
+						non_shift_trials_passed += 1
+						print("non_shift_trial_passed")
 				else:
 					#go_trial_failed.emit()
 					print("non_shift_trial_failed")
@@ -126,11 +131,19 @@ func _process(delta: float) -> void:
 				if check_correct_kick(false): # is kick right
 					ball_kicked.emit($GoalPostRight.global_position)
 					is_trial_passed = true
-					non_shift_trials_passed += 1
-					print("non_shift_trial_passed")
+					
+					if is_shift_trial:
+						shift_trials_passed += 1
+						print("shift_trial_passed")
+					else:
+						non_shift_trials_passed += 1
+						print("non_shift_trial_passed")
 				else:
 					#go_trial_failed.emit()
-					print("non_shift_trial_failed")
+					if is_shift_trial:
+						print("shift_trial_failed")
+					else:
+						print("non_shift_trial_failed")
 				append_new_metrics_entry(Time.get_ticks_msec() - ticks_msec_bookmark)
 
 func scene_reset():
@@ -243,30 +256,24 @@ func write_sst_summary_log(datetime_dict):
 		summary_log_file.store_line("shift_trial_counter: " + str(shift_trial_counter))
 		summary_log_file.store_line("shift_trials_passed: " + str(shift_trials_passed))
 		
-		# calculate probability of reacting in Stop Signal Trials (prob(response|signal))
-		#var p_rs: float = float(stop_trial_counter - stop_trials_passed) / float(stop_trial_counter) # fails / total
+		# calculate probability of passing Shift Trials
+		var p_rs: float = float(shift_trials_passed) / float(shift_trial_counter) # successes / total
 		
 		# collect rolling totals for calculating means
-		var rolling_total_stop_signal_delay: int = 0
 		var rolling_total_reaction_time: int = 0
 		
 		for sub_array in metrics_array:
-			if sub_array[3]:
-				# if stop signal
-				rolling_total_stop_signal_delay += sub_array[6]
-				rolling_total_reaction_time += sub_array[5]
+			if sub_array[4] and sub_array[5]:
+				# if shift trial passed
+				rolling_total_reaction_time += sub_array[6]
 		
-		# calculate mean stop signal delays (in ms) in Stop Signal trials
-		#var ssd = float(rolling_total_stop_signal_delay) / float(stop_trial_counter)
-		
-		# calculate mean reaction time (in ms) in Stop Signal trials (response times of incorrectly hitting a response key)
-		#var sr_rt = float(rolling_total_reaction_time) / float(stop_trial_counter - stop_trials_passed) # (stops failed)
+		# calculate mean reaction time (in ms) in Shift trials that were passed
+		var sr_rt = float(rolling_total_reaction_time) / float(shift_trials_passed)
 		
 		# write summary data
 		summary_log_file.store_string("\n-Calculated Summary Values-\n\n")
-		#summary_log_file.store_line("probability of reacting in Stop Signal Trials (prob(response|signal)), p_rs: " + str(p_rs))
-		#summary_log_file.store_line("mean stop signal delays (in ms) in Stop Signal trials, ssd: " + str(ssd))
-		#summary_log_file.store_line("mean reaction time (in ms) in Stop Signal trials (response times of incorrectly hitting a response key), sr_rt: " + str(sr_rt))
+		summary_log_file.store_line("probability of passing Shift Trials: " + str(p_rs))
+		summary_log_file.store_line("mean reaction time (in ms) in Shift trials that were passed: " + str(sr_rt))
 		
 		summary_log_file.close()
 
