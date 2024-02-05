@@ -260,20 +260,28 @@ func write_sst_summary_log(datetime_dict):
 		var p_rs: float = float(shift_trials_passed) / float(shift_trial_counter) # successes / total
 		
 		# collect rolling totals for calculating means
-		var rolling_total_reaction_time: int = 0
+		var rolling_total_shift_reaction_time: int = 0
+		var rolling_total_non_shift_reaction_time: int = 0
 		
 		for sub_array in metrics_array:
 			if sub_array[4] and sub_array[5]:
 				# if shift trial passed
-				rolling_total_reaction_time += sub_array[6]
+				rolling_total_shift_reaction_time += sub_array[6]
+			if not sub_array[4] and sub_array[5]:
+				# if non shift trial passed
+				rolling_total_non_shift_reaction_time += sub_array[6]
 		
 		# calculate mean reaction time (in ms) in Shift trials that were passed
-		var sr_rt = float(rolling_total_reaction_time) / float(shift_trials_passed)
+		var sr_rt = float(rolling_total_shift_reaction_time) / float(shift_trials_passed)
+		
+		# calculate mean reaction time (in ms) in Non Shift trials that were passed
+		var nsr_rt = float(rolling_total_non_shift_reaction_time) / float(non_shift_trials_passed)
 		
 		# write summary data
 		summary_log_file.store_string("\n-Calculated Summary Values-\n\n")
 		summary_log_file.store_line("probability of passing Shift Trials: " + str(p_rs))
 		summary_log_file.store_line("mean reaction time (in ms) in Shift trials that were passed: " + str(sr_rt))
+		summary_log_file.store_line("mean reaction time (in ms) in Non Shift trials that were passed: " + str(nsr_rt))
 		
 		summary_log_file.close()
 
