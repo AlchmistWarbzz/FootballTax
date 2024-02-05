@@ -6,13 +6,14 @@ class_name Level
 var level_data : LevelData
 
 const SHIFTING_TASK_MANAGER = preload("res://SubScenes/Shifting_Task_Manager.tscn")
+const SST_TASK_MANAGER = preload("res://SubScenes/SST_Task_Manager.tscn")
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	level_data = LevelManager.get_level_data_by_id(level_id)
 	
 	# temp task manager selection
-	var instance = SHIFTING_TASK_MANAGER.instantiate()
+	var instance = SST_TASK_MANAGER.instantiate()
 	add_child(instance)
 
 
