@@ -3,6 +3,7 @@ extends Node3D
 # spawnables
 const BALL_FEEDER_SCENE = preload("res://SubScenes/Ball_Feeder.tscn")
 const FIXATION_CONE = preload("res://SubScenes/Fixation_Cone.tscn")
+const M_TEMP_GOAL = preload("res://Materials/M_TempGoal.tres")
 
 # time
 const TICKS_BETWEEN_TRIALS_MSEC: int = 3000
@@ -50,15 +51,18 @@ var is_blue_ball: bool = false
 var is_shift_trial: bool = false
 
 # spans
+@onready var targets = [$"0/MeshInstance3D", $"1/MeshInstance3D", $"2/MeshInstance3D", $"3/MeshInstance3D", $"4/MeshInstance3D", $"5/MeshInstance3D", $"6/MeshInstance3D"]
 @onready var random_span = Array()
-@onready var random_span_backward = Array()
 @onready var player_input_span = Array()
 
 # span pointers
-var next_target_to_show_index: int = 0
+var current_target_show_index: int = -1
+#var next_target_show_index: int = current_target_show_index + 1
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
+	
+	
 	AudioManager.ambience_sfx.play()
 	
 	scene_reset() # ensure scene and scene_state are in agreement
@@ -85,18 +89,24 @@ func _process(delta: float) -> void:
 			if (Time.get_ticks_msec() - ticks_msec_bookmark) > READY_TICKS_MSEC:
 				# ready time is up
 				
-				scene_show_target()
-				current_state = scene_state.SHOW_TARGET
-				ticks_msec_bookmark = Time.get_ticks_msec()
+				if current_target_show_index < span_length:
+					scene_show_target()
+					current_state = scene_state.SHOW_TARGET
+					ticks_msec_bookmark = Time.get_ticks_msec()
+				else:
+					scene_trial_start()
+					current_state = scene_state.TRIAL
+					ticks_msec_bookmark = Time.get_ticks_msec()
 		
 		
 		scene_state.SHOW_TARGET:
 			if (Time.get_ticks_msec() - ticks_msec_bookmark) > TARGET_SHOW_TICKS_MSEC:
 				# show time is up
-				
-				scene_trial_start()
-				current_state = scene_state.TRIAL
+				scene_hide_target()
+				scene_ready()
+				current_state = scene_state.READY
 				ticks_msec_bookmark = Time.get_ticks_msec()
+				
 		
 		scene_state.TRIAL:
 			if (Time.get_ticks_msec() - ticks_msec_bookmark) > TRIAL_TICKS_MSEC:
@@ -104,7 +114,7 @@ func _process(delta: float) -> void:
 				
 				if not is_trial_passed:
 					#go_trial_failed.emit()
-					print("trial_failed")
+					print("trial_failed timeout")
 					append_new_metrics_entry(0)
 				
 				scene_reset()
@@ -123,7 +133,16 @@ func _process(delta: float) -> void:
 				var result = space_state.intersect_ray(params)
 				if result:
 					print("mouse ray hit target " + result.collider.name)
+					player_input_span.append(result.collider.name)
+				
+				if player_input_span.size() >= random_span.size():
+					print("trial_passed entries given")
+					append_new_metrics_entry(Time.get_ticks_msec() - ticks_msec_bookmark)
 					
+					scene_reset()
+					
+					current_state = scene_state.WAIT
+					ticks_msec_bookmark = Time.get_ticks_msec()
 			
 			#elif Input.is_action_just_pressed("kick_left") and not is_trial_passed:
 				#if check_correct_kick(true): # is kick left
@@ -167,6 +186,15 @@ func scene_reset():
 	#if $PlaceholderBallFeederLeft.get_child_count() != 0:
 		#$PlaceholderBallFeederLeft/BallFeeder.free()
 	
+	# reset span stuff
+	current_target_show_index = -1
+	player_input_span = Array()
+	
+	# calculate new span stuff
+	var new_span = targets.duplicate(true)
+	new_span.shuffle()
+	random_span = new_span.slice(0, span_length, 1)
+	
 	# spawn fixation cone
 	var new_fixation_cone = FIXATION_CONE.instantiate()
 	$PlaceholderFixation.add_child(new_fixation_cone)
@@ -174,16 +202,22 @@ func scene_reset():
 func scene_ready():
 	print("scene_ready")
 	
+	current_target_show_index += 1
+	
 	# spawn fixation cone
 	var new_fixation_cone = FIXATION_CONE.instantiate()
 	$PlaceholderFixation.add_child(new_fixation_cone)
 
 func scene_show_target():
-	pass
+	#random_span[next_target_to_show_index].set_surface_override_material(0, M_TEMP_GOAL)
+	random_span[current_target_show_index].set_surface_override_material(0, M_TEMP_GOAL)
+
+func scene_hide_target():
+	random_span[current_target_show_index].set_surface_override_material(0, null)
 
 func scene_trial_start():
 	var bool_string = "shift" if is_shift_trial else "non_shift"
-	print("scene_trial_start " + bool_string)
+	print("scene_trial_start")
 	
 	# remove fixation cone
 	if $PlaceholderFixation.get_child_count() != 0:
@@ -214,7 +248,7 @@ func scene_trial_start():
 		is_blue_ball = not is_blue_ball
 	
 	# emit signal for ball feeder
-	trial_started.emit(is_blue_ball)
+	#trial_started.emit(is_blue_ball)
 
 func check_correct_kick(is_kick_left: bool) -> bool:
 	if is_kick_left:
@@ -233,7 +267,7 @@ func append_new_metrics_entry(response_time: int):
 
 func write_sst_raw_log(datetime_dict):
 	# open/create file
-	var raw_log_file_path: String = "shifting_{year}-{month}-{day}-{hour}-{minute}-{second}_raw.txt".format(datetime_dict) # TODO let user choose dir
+	var raw_log_file_path: String = "bds_{year}-{month}-{day}-{hour}-{minute}-{second}_raw.txt".format(datetime_dict) # TODO let user choose dir
 	var raw_log_file = FileAccess.open(raw_log_file_path, FileAccess.WRITE)
 	print("raw log file created at " + raw_log_file_path + " with error code " + str(FileAccess.get_open_error()))
 	
@@ -242,7 +276,7 @@ func write_sst_raw_log(datetime_dict):
 	# correct_response: bool, response_time: int (ms), stop_signal_delay: int (ms)
 	if raw_log_file:
 		# write date, time, subject, group, format guide
-		raw_log_file.store_line("PsychologyFootball - Shifting Task - Raw Data Log")
+		raw_log_file.store_line("PsychologyFootball - BDS Task - Raw Data Log")
 		raw_log_file.store_line("date: {day}-{month}-{year}".format(datetime_dict))
 		raw_log_file.store_line("time: {hour}:{minute}:{second}".format(datetime_dict))
 		raw_log_file.store_line("subject: test") # TODO fill user-input subject and group
@@ -258,13 +292,13 @@ func write_sst_raw_log(datetime_dict):
 
 func write_sst_summary_log(datetime_dict):
 	# open/create file
-	var summary_log_file_path: String = "shifting_{year}-{month}-{day}-{hour}-{minute}-{second}_summary.txt".format(datetime_dict) # TODO let user choose dir
+	var summary_log_file_path: String = "bds_{year}-{month}-{day}-{hour}-{minute}-{second}_summary.txt".format(datetime_dict) # TODO let user choose dir
 	var summary_log_file = FileAccess.open(summary_log_file_path, FileAccess.WRITE)
 	print("summary log file created at " + summary_log_file_path + " with error code " + str(FileAccess.get_open_error()))
 	
 	if summary_log_file:
 		# write date, time, subject, group, format guide
-		summary_log_file.store_line("PsychologyFootball - Shifting Task - Summary Data Log")
+		summary_log_file.store_line("PsychologyFootball - BDS Task - Summary Data Log")
 		summary_log_file.store_line("date: {day}-{month}-{year}".format(datetime_dict))
 		summary_log_file.store_line("time: {hour}:{minute}:{second}".format(datetime_dict))
 		summary_log_file.store_line("subject: test") # TODO fill user-input subject and group
