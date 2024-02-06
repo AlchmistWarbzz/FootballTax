@@ -207,7 +207,7 @@ func append_new_metrics_entry(response_time: int):
 
 func write_sst_raw_log(datetime_dict):
 	# open/create file
-	var raw_log_file_path: String = "res://TaskLogs/shifting_{year}-{month}-{day}-{hour}-{minute}-{second}_raw.txt".format(datetime_dict) # TODO let user choose dir
+	var raw_log_file_path: String = "shifting_{year}-{month}-{day}-{hour}-{minute}-{second}_raw.txt".format(datetime_dict) # TODO let user choose dir
 	var raw_log_file = FileAccess.open(raw_log_file_path, FileAccess.WRITE)
 	print("raw log file created at " + raw_log_file_path + " with error code " + str(FileAccess.get_open_error()))
 	
@@ -232,7 +232,7 @@ func write_sst_raw_log(datetime_dict):
 
 func write_sst_summary_log(datetime_dict):
 	# open/create file
-	var summary_log_file_path: String = "res://TaskLogs/shifting_{year}-{month}-{day}-{hour}-{minute}-{second}_summary.txt".format(datetime_dict) # TODO let user choose dir
+	var summary_log_file_path: String = "shifting_{year}-{month}-{day}-{hour}-{minute}-{second}_summary.txt".format(datetime_dict) # TODO let user choose dir
 	var summary_log_file = FileAccess.open(summary_log_file_path, FileAccess.WRITE)
 	print("summary log file created at " + summary_log_file_path + " with error code " + str(FileAccess.get_open_error()))
 	
