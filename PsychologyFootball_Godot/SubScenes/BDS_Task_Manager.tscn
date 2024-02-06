@@ -12,15 +12,12 @@ script = ExtResource("1_5jgw8")
 transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 0, 0, 0)
 
 [node name="PlaceholderBallFeederLeft" type="Node3D" parent="."]
-transform = Transform3D(-0.580859, 0, 0.814004, 0, 1, 0, -0.814004, 0, -0.580859, -8, 0, 5)
+transform = Transform3D(-0.743775, 0, 0.66843, 0, 1, 0, -0.66843, 0, -0.743775, -7, 0, 7)
 
 [node name="BallFeeder" parent="PlaceholderBallFeederLeft" instance=ExtResource("3_pm1bf")]
 
-[node name="PlaceholderBallFeederRight" type="Node3D" parent="."]
-transform = Transform3D(0.600671, 0, 0.799496, 0, 1, 0, -0.799496, 0, 0.600671, -8, 0, -5)
-
 [node name="PlaceholderFixation" type="Node3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -8, 0, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6, 0, 0)
 
 [node name="GoalPostLeft" type="MeshInstance3D" parent="."]
 transform = Transform3D(0.965926, 0, 0.258819, 0, 1, 0, -0.258819, 0, 0.965926, -10.5, 0, 2)
