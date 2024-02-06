@@ -5,9 +5,10 @@ const BALL_FEEDER_SCENE = preload("res://SubScenes/Ball_Feeder.tscn")
 const FIXATION_CONE = preload("res://SubScenes/Fixation_Cone.tscn")
 
 # time
-const TICKS_BETWEEN_TRIALS_MSEC: int = 1000
-const READY_TICKS_MSEC: int = 1000
-const TRIAL_TICKS_MSEC: int = 2000
+const TICKS_BETWEEN_TRIALS_MSEC: int = 3000
+const READY_TICKS_MSEC: int = 250
+const TARGET_SHOW_TICKS_MSEC: int = 400
+const TRIAL_TICKS_MSEC: int = 50000
 @onready var ticks_msec_bookmark: int = 0
 
 # counters
@@ -23,6 +24,7 @@ var shift_trials_per_block: int = SHIFT_TRIALS_PER_PRACTICE_BLOCK
 var non_shift_trials_per_block: int = NON_SHIFT_TRIALS_PER_PRACTICE_BLOCK
 var block_counter: int = 0
 var trial_counter: int = 0
+var span_length: int = 3
 var shift_trial_counter: int = 0
 var shift_trials_passed: int = 0
 var non_shift_trial_counter: int = 0
@@ -33,7 +35,7 @@ var non_shift_trials_passed: int = 0
 @onready var start_datetime = Time.get_datetime_dict_from_system()
 
 # states
-enum scene_state {WAIT, READY, TRIAL}
+enum scene_state {WAIT, READY, SHOW_TARGET, TRIAL}
 # TODO create dict of states and corresponding func callables for defensive prog.
 @onready var current_state = scene_state.WAIT
 
@@ -46,6 +48,14 @@ var is_feeder_left: bool = false
 var is_trial_passed: bool = false
 var is_blue_ball: bool = false
 var is_shift_trial: bool = false
+
+# spans
+@onready var random_span = Array()
+@onready var random_span_backward = Array()
+@onready var player_input_span = Array()
+
+# span pointers
+var next_target_to_show_index: int = 0
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
@@ -75,28 +85,18 @@ func _process(delta: float) -> void:
 			if (Time.get_ticks_msec() - ticks_msec_bookmark) > READY_TICKS_MSEC:
 				# ready time is up
 				
-				# determine shift or non shift trial
-				var rand_is_shift_trial = (randf() < 0.25)
-				if rand_is_shift_trial and shift_trial_counter < shift_trials_per_block:
-					# shift is rand selected and shifts remain
-					is_shift_trial = true
-				elif non_shift_trial_counter < non_shift_trials_per_block:
-					# out of shifts but non-shifts remain, force non-shift
-					is_shift_trial = false
-				elif not rand_is_shift_trial and non_shift_trial_counter < non_shift_trials_per_block:
-					# non-shift is rand selected and non-shifts remain
-					is_shift_trial = false
-				elif shift_trial_counter < shift_trials_per_block:
-					# out of non-shifts but shifts remain, force shift
-					is_shift_trial = true
-				else:
-					print("block finished. is_practice_block: " + str(is_practice_block))
-					# TODO block finished, load next block
+				scene_show_target()
+				current_state = scene_state.SHOW_TARGET
+				ticks_msec_bookmark = Time.get_ticks_msec()
+		
+		
+		scene_state.SHOW_TARGET:
+			if (Time.get_ticks_msec() - ticks_msec_bookmark) > TARGET_SHOW_TICKS_MSEC:
+				# show time is up
 				
 				scene_trial_start()
 				current_state = scene_state.TRIAL
 				ticks_msec_bookmark = Time.get_ticks_msec()
-		
 		
 		scene_state.TRIAL:
 			if (Time.get_ticks_msec() - ticks_msec_bookmark) > TRIAL_TICKS_MSEC:
@@ -104,7 +104,7 @@ func _process(delta: float) -> void:
 				
 				if not is_trial_passed:
 					#go_trial_failed.emit()
-					print("non_shift_trial_failed")
+					print("trial_failed")
 					append_new_metrics_entry(0)
 				
 				scene_reset()
@@ -112,51 +112,64 @@ func _process(delta: float) -> void:
 				current_state = scene_state.WAIT
 				ticks_msec_bookmark = Time.get_ticks_msec()
 			
-			elif Input.is_action_just_pressed("kick_left") and not is_trial_passed:
-				if check_correct_kick(true): # is kick left
-					ball_kicked.emit($GoalPostLeft.global_position)
-					is_trial_passed = true
+			if Input.is_action_just_pressed("select"):
+				var raycast_length = 1000
+				var space_state = get_world_3d().get_direct_space_state()
+				var mouse_position = get_viewport().get_mouse_position()
+				var params = PhysicsRayQueryParameters3D.new()
+				params.from = get_viewport().get_camera_3d().project_ray_origin(mouse_position)
+				params.to = params.from + get_viewport().get_camera_3d().project_ray_normal(mouse_position) * raycast_length
+				params.collision_mask = 2
+				var result = space_state.intersect_ray(params)
+				if result:
+					print("mouse ray hit target " + result.collider.name)
 					
-					if is_shift_trial:
-						shift_trials_passed += 1
-						print("shift_trial_passed")
-					else:
-						non_shift_trials_passed += 1
-						print("non_shift_trial_passed")
-				else:
-					#go_trial_failed.emit()
-					print("non_shift_trial_failed")
-				append_new_metrics_entry(Time.get_ticks_msec() - ticks_msec_bookmark)
 			
-			elif Input.is_action_just_pressed("kick_right") and not is_trial_passed:
-				if check_correct_kick(false): # is kick right
-					ball_kicked.emit($GoalPostRight.global_position)
-					is_trial_passed = true
-					
-					if is_shift_trial:
-						shift_trials_passed += 1
-						print("shift_trial_passed")
-					else:
-						non_shift_trials_passed += 1
-						print("non_shift_trial_passed")
-				else:
-					#go_trial_failed.emit()
-					if is_shift_trial:
-						print("shift_trial_failed")
-					else:
-						print("non_shift_trial_failed")
-				append_new_metrics_entry(Time.get_ticks_msec() - ticks_msec_bookmark)
+			#elif Input.is_action_just_pressed("kick_left") and not is_trial_passed:
+				#if check_correct_kick(true): # is kick left
+					#ball_kicked.emit($GoalPostLeft.global_position)
+					#is_trial_passed = true
+					#
+					#if is_shift_trial:
+						#shift_trials_passed += 1
+						#print("shift_trial_passed")
+					#else:
+						#non_shift_trials_passed += 1
+						#print("non_shift_trial_passed")
+				#else:
+					##go_trial_failed.emit()
+					#print("non_shift_trial_failed")
+				#append_new_metrics_entry(Time.get_ticks_msec() - ticks_msec_bookmark)
+			
+			#elif Input.is_action_just_pressed("kick_right") and not is_trial_passed:
+				#if check_correct_kick(false): # is kick right
+					#ball_kicked.emit($GoalPostRight.global_position)
+					#is_trial_passed = true
+					#
+					#if is_shift_trial:
+						#shift_trials_passed += 1
+						#print("shift_trial_passed")
+					#else:
+						#non_shift_trials_passed += 1
+						#print("non_shift_trial_passed")
+				#else:
+					##go_trial_failed.emit()
+					#if is_shift_trial:
+						#print("shift_trial_failed")
+					#else:
+						#print("non_shift_trial_failed")
+				#append_new_metrics_entry(Time.get_ticks_msec() - ticks_msec_bookmark)
 
 func scene_reset():
 	print("scene_reset")
 	
-	# remove left ball feeder
-	if $PlaceholderBallFeederLeft.get_child_count() != 0:
-		$PlaceholderBallFeederLeft/BallFeeder.free()
+	## remove left ball feeder
+	#if $PlaceholderBallFeederLeft.get_child_count() != 0:
+		#$PlaceholderBallFeederLeft/BallFeeder.free()
 	
-	# remove right ball feeder
-	if $PlaceholderBallFeederRight.get_child_count() != 0:
-		$PlaceholderBallFeederRight/BallFeeder.free()
+	# spawn fixation cone
+	var new_fixation_cone = FIXATION_CONE.instantiate()
+	$PlaceholderFixation.add_child(new_fixation_cone)
 
 func scene_ready():
 	print("scene_ready")
@@ -164,6 +177,9 @@ func scene_ready():
 	# spawn fixation cone
 	var new_fixation_cone = FIXATION_CONE.instantiate()
 	$PlaceholderFixation.add_child(new_fixation_cone)
+
+func scene_show_target():
+	pass
 
 func scene_trial_start():
 	var bool_string = "shift" if is_shift_trial else "non_shift"
@@ -185,12 +201,13 @@ func scene_trial_start():
 	
 	# spawn ball feeder, randomly choosing left or right side
 	var new_ball_feeder = BALL_FEEDER_SCENE.instantiate()
-	if randf() > 0.5:
-		is_feeder_left = true
-		$PlaceholderBallFeederLeft.add_child(new_ball_feeder)
-	else:
-		is_feeder_left = false
-		$PlaceholderBallFeederRight.add_child(new_ball_feeder)
+	$PlaceholderBallFeederLeft.add_child(new_ball_feeder)
+	#if randf() > 0.5:
+		#is_feeder_left = true
+		#$PlaceholderBallFeederLeft.add_child(new_ball_feeder)
+	#else:
+		#is_feeder_left = false
+		#$PlaceholderBallFeederRight.add_child(new_ball_feeder)
 	
 	# determine ball colour
 	if is_shift_trial:
