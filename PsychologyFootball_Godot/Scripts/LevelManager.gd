@@ -4,6 +4,7 @@ var Levels : Array[LevelData]
 
 var main_scene : Node3D = null
 var loaded_level : Level = null
+var task_to_load_UI
 
 func unload_level() -> void:
 	if is_instance_valid(loaded_level):
@@ -28,6 +29,7 @@ func load_level(level_id : int, task_to_load) -> void:
 		
 		main_scene.add_child(loaded_level)
 		
+		task_to_load_UI = task_to_load
 		match task_to_load:
 			1:
 				loaded_level.task_to_load = loaded_level.SST_TASK_MANAGER
