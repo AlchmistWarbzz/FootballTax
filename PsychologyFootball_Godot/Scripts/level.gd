@@ -7,6 +7,7 @@ var level_data : LevelData
 
 const SHIFTING_TASK_MANAGER = preload("res://SubScenes/Shifting_Task_Manager.tscn")
 const SST_TASK_MANAGER = preload("res://SubScenes/SST_Task_Manager.tscn")
+var task_to_load
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
@@ -15,7 +16,7 @@ func _ready() -> void:
 	await get_tree().create_timer(5.0).timeout
 	
 	# temp task manager selection
-	var instance = SHIFTING_TASK_MANAGER.instantiate()
+	var instance = task_to_load.instantiate()
 	add_child(instance)
 
 
