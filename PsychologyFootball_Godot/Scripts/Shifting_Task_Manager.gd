@@ -2,6 +2,7 @@ extends Node3D
 
 # spawnables
 const BALL_FEEDER_SCENE = preload("res://SubScenes/Ball_Feeder.tscn")
+const FIXATION_CONE = preload("res://SubScenes/Fixation_Cone.tscn")
 
 # time
 const TICKS_BETWEEN_TRIALS_MSEC: int = 1000
