@@ -14,10 +14,16 @@ func _process(delta):
 
 
 func _on_button_pressed():
-	LevelManager.load_level(1)
+	LevelManager.load_level(1, 1)
 	deactivate()
 
+func _on_button_2_pressed() -> void:
+	LevelManager.load_level(1, 2)
+	deactivate()
 
+func _on_button_3_pressed() -> void:
+	LevelManager.load_level(1, 2)
+	deactivate()
 
 func deactivate() -> void:
 	hide()
@@ -25,6 +31,9 @@ func deactivate() -> void:
 	set_process_input(false)
 	set_physics_process(false)
 	set_process(false)
+
+
+
 
 
 
