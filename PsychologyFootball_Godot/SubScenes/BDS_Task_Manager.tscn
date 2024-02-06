@@ -3,7 +3,7 @@
 [ext_resource type="Script" path="res://Scripts/BDS_Task_Manager.gd" id="1_5jgw8"]
 [ext_resource type="PackedScene" uid="uid://n7shkduekcq2" path="res://SubScenes/Player.tscn" id="2_uoig7"]
 [ext_resource type="PackedScene" uid="uid://cdt6315of2aeu" path="res://SubScenes/Ball_Feeder.tscn" id="3_pm1bf"]
-[ext_resource type="ArrayMesh" uid="uid://bis5nw018x4an" path="res://Assets/Props/Assets_SM_SGoalPost.res" id="4_0pseo"]
+[ext_resource type="ArrayMesh" uid="uid://ds6nfyb0la4uu" path="res://Assets/Props/Assets_SM_Target.res" id="4_s7jg4"]
 
 [node name="BDS_Task_Manager" type="Node3D"]
 script = ExtResource("1_5jgw8")
@@ -12,17 +12,37 @@ script = ExtResource("1_5jgw8")
 transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 0, 0, 0)
 
 [node name="PlaceholderBallFeederLeft" type="Node3D" parent="."]
-transform = Transform3D(-0.743775, 0, 0.66843, 0, 1, 0, -0.66843, 0, -0.743775, -7, 0, 7)
+transform = Transform3D(-0.767165, 0, 0.64145, 0, 1, 0, -0.64145, 0, -0.767165, -8, 0, 8)
 
 [node name="BallFeeder" parent="PlaceholderBallFeederLeft" instance=ExtResource("3_pm1bf")]
 
 [node name="PlaceholderFixation" type="Node3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6, 0, 0)
 
-[node name="GoalPostLeft" type="MeshInstance3D" parent="."]
-transform = Transform3D(0.965926, 0, 0.258819, 0, 1, 0, -0.258819, 0, 0.965926, -10.5, 0, 2)
-mesh = ExtResource("4_0pseo")
+[node name="Target" type="MeshInstance3D" parent="."]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -12, 0, 0)
+mesh = ExtResource("4_s7jg4")
 
-[node name="GoalPostRight" type="MeshInstance3D" parent="."]
-transform = Transform3D(0.965926, 0, -0.258819, 0, 1, 0, 0.258819, 0, 0.965926, -10.5, 0, -2)
-mesh = ExtResource("4_0pseo")
+[node name="Target2" type="MeshInstance3D" parent="."]
+transform = Transform3D(-0.19509, 0, 0.980785, 0, 1, 0, -0.980785, 0, -0.19509, -15, 0, 3)
+mesh = ExtResource("4_s7jg4")
+
+[node name="Target7" type="MeshInstance3D" parent="."]
+transform = Transform3D(0.19509, 0, 0.980785, 0, 1, 0, -0.980785, 0, 0.19509, -15, 0, -3)
+mesh = ExtResource("4_s7jg4")
+
+[node name="Target3" type="MeshInstance3D" parent="."]
+transform = Transform3D(-0.399101, 0, 0.916907, 0, 1, 0, -0.916907, 0, -0.399101, -12, 0, 5)
+mesh = ExtResource("4_s7jg4")
+
+[node name="Target6" type="MeshInstance3D" parent="."]
+transform = Transform3D(0.399101, 0, 0.916907, 0, 1, 0, -0.916907, 0, 0.399101, -12, 0, -5)
+mesh = ExtResource("4_s7jg4")
+
+[node name="Target4" type="MeshInstance3D" parent="."]
+transform = Transform3D(-0.570312, 0, 0.821428, 0, 1, 0, -0.821428, 0, -0.570312, -9, 0, 6)
+mesh = ExtResource("4_s7jg4")
+
+[node name="Target5" type="MeshInstance3D" parent="."]
+transform = Transform3D(0.584873, 0, 0.811125, 0, 1, 0, -0.811125, 0, 0.584873, -9, 0, -6)
+mesh = ExtResource("4_s7jg4")
