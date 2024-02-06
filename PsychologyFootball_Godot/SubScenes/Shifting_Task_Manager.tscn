@@ -19,6 +19,9 @@ transform = Transform3D(-0.580859, 0, 0.814004, 0, 1, 0, -0.814004, 0, -0.580859
 [node name="PlaceholderBallFeederRight" type="Node3D" parent="."]
 transform = Transform3D(0.600671, 0, 0.799496, 0, 1, 0, -0.799496, 0, 0.600671, -8, 0, -5)
 
+[node name="PlaceholderFixation" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -8, 0, 0)
+
 [node name="GoalPostLeft" type="MeshInstance3D" parent="."]
 transform = Transform3D(0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, -10, 0, 2)
 mesh = ExtResource("4_jv5ky")
