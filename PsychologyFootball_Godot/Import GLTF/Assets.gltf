@@ -15,7 +15,8 @@
 				4,
 				5,
 				6,
-				7
+				7,
+				8
 			]
 		}
 	],
@@ -51,6 +52,10 @@
 		{
 			"mesh":7,
 			"name":"SM_Cone"
+		},
+		{
+			"mesh":8,
+			"name":"SM_SGoalPost"
 		}
 	],
 	"materials":[
@@ -188,6 +193,21 @@
 					},
 					"indices":32,
 					"material":1
+				}
+			]
+		},
+		{
+			"name":"SM_SGoalPost",
+			"primitives":[
+				{
+					"attributes":{
+						"COLOR_0":33,
+						"POSITION":34,
+						"NORMAL":35,
+						"TEXCOORD_0":36
+					},
+					"indices":37,
+					"material":0
 				}
 			]
 		}
@@ -488,6 +508,47 @@
 			"componentType":5123,
 			"count":2772,
 			"type":"SCALAR"
+		},
+		{
+			"bufferView":33,
+			"componentType":5123,
+			"count":894,
+			"normalized":true,
+			"type":"VEC4"
+		},
+		{
+			"bufferView":34,
+			"componentType":5126,
+			"count":894,
+			"max":[
+				1.2847141027450562,
+				1.7071564197540283,
+				1.1592882871627808
+			],
+			"min":[
+				-0.5680776834487915,
+				-0.15659642219543457,
+				-1.1592882871627808
+			],
+			"type":"VEC3"
+		},
+		{
+			"bufferView":35,
+			"componentType":5126,
+			"count":894,
+			"type":"VEC3"
+		},
+		{
+			"bufferView":36,
+			"componentType":5126,
+			"count":894,
+			"type":"VEC2"
+		},
+		{
+			"bufferView":37,
+			"componentType":5123,
+			"count":2244,
+			"type":"SCALAR"
 		}
 	],
 	"bufferViews":[
@@ -688,6 +749,36 @@
 			"byteLength":5544,
 			"byteOffset":450308,
 			"target":34963
+		},
+		{
+			"buffer":0,
+			"byteLength":7152,
+			"byteOffset":455852,
+			"target":34962
+		},
+		{
+			"buffer":0,
+			"byteLength":10728,
+			"byteOffset":463004,
+			"target":34962
+		},
+		{
+			"buffer":0,
+			"byteLength":10728,
+			"byteOffset":473732,
+			"target":34962
+		},
+		{
+			"buffer":0,
+			"byteLength":7152,
+			"byteOffset":484460,
+			"target":34962
+		},
+		{
+			"buffer":0,
+			"byteLength":4488,
+			"byteOffset":491612,
+			"target":34963
 		}
 	],
 	"samplers":[
@@ -698,7 +789,7 @@
 	],
 	"buffers":[
 		{
-			"byteLength":455852,
+			"byteLength":496100,
 			"uri":"Assets.bin"
 		}
 	]
