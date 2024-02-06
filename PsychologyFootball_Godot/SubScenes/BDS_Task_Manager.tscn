@@ -1,0 +1,31 @@
+[gd_scene load_steps=5 format=3 uid="uid://djhbuwvyk2pkx"]
+
+[ext_resource type="Script" path="res://Scripts/BDS_Task_Manager.gd" id="1_5jgw8"]
+[ext_resource type="PackedScene" uid="uid://n7shkduekcq2" path="res://SubScenes/Player.tscn" id="2_uoig7"]
+[ext_resource type="PackedScene" uid="uid://cdt6315of2aeu" path="res://SubScenes/Ball_Feeder.tscn" id="3_pm1bf"]
+[ext_resource type="ArrayMesh" uid="uid://bis5nw018x4an" path="res://Assets/Props/Assets_SM_SGoalPost.res" id="4_0pseo"]
+
+[node name="BDS_Task_Manager" type="Node3D"]
+script = ExtResource("1_5jgw8")
+
+[node name="Player" parent="." instance=ExtResource("2_uoig7")]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 0, 0, 0)
+
+[node name="PlaceholderBallFeederLeft" type="Node3D" parent="."]
+transform = Transform3D(-0.580859, 0, 0.814004, 0, 1, 0, -0.814004, 0, -0.580859, -8, 0, 5)
+
+[node name="BallFeeder" parent="PlaceholderBallFeederLeft" instance=ExtResource("3_pm1bf")]
+
+[node name="PlaceholderBallFeederRight" type="Node3D" parent="."]
+transform = Transform3D(0.600671, 0, 0.799496, 0, 1, 0, -0.799496, 0, 0.600671, -8, 0, -5)
+
+[node name="PlaceholderFixation" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -8, 0, 0)
+
+[node name="GoalPostLeft" type="MeshInstance3D" parent="."]
+transform = Transform3D(0.965926, 0, 0.258819, 0, 1, 0, -0.258819, 0, 0.965926, -10.5, 0, 2)
+mesh = ExtResource("4_0pseo")
+
+[node name="GoalPostRight" type="MeshInstance3D" parent="."]
+transform = Transform3D(0.965926, 0, -0.258819, 0, 1, 0, 0.258819, 0, 0.965926, -10.5, 0, -2)
+mesh = ExtResource("4_0pseo")
