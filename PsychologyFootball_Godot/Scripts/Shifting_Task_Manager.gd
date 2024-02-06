@@ -2,6 +2,7 @@ extends Node3D
 
 # spawnables
 const BALL_FEEDER_SCENE = preload("res://SubScenes/Ball_Feeder.tscn")
+const FIXATION_CONE = preload("res://SubScenes/Fixation_Cone.tscn")
 
 # time
 const TICKS_BETWEEN_TRIALS_MSEC: int = 1000
@@ -159,10 +160,18 @@ func scene_reset():
 
 func scene_ready():
 	print("scene_ready")
+	
+	# spawn fixation cone
+	var new_fixation_cone = FIXATION_CONE.instantiate()
+	$PlaceholderFixation.add_child(new_fixation_cone)
 
 func scene_trial_start():
 	var bool_string = "shift" if is_shift_trial else "non_shift"
 	print("scene_trial_start " + bool_string)
+	
+	# remove fixation cone
+	if $PlaceholderFixation.get_child_count() != 0:
+		$PlaceholderFixation/FixationCone.free()
 	
 	# update trial counters
 	trial_counter += 1
