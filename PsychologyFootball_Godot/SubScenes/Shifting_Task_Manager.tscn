@@ -3,7 +3,7 @@
 [ext_resource type="Script" path="res://Scripts/Shifting_Task_Manager.gd" id="1_84der"]
 [ext_resource type="PackedScene" uid="uid://n7shkduekcq2" path="res://SubScenes/Player.tscn" id="2_bpif1"]
 [ext_resource type="PackedScene" uid="uid://cdt6315of2aeu" path="res://SubScenes/Ball_Feeder.tscn" id="3_gkwkt"]
-[ext_resource type="ArrayMesh" uid="uid://d0h82vnms1pg5" path="res://Assets/Props/Assets_SM_GoalPost.res" id="4_jv5ky"]
+[ext_resource type="ArrayMesh" uid="uid://bis5nw018x4an" path="res://Assets/Props/Assets_SM_SGoalPost.res" id="4_54406"]
 
 [node name="Shifting_Task_Manager" type="Node3D"]
 script = ExtResource("1_84der")
@@ -23,9 +23,9 @@ transform = Transform3D(0.600671, 0, 0.799496, 0, 1, 0, -0.799496, 0, 0.600671, 
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -8, 0, 0)
 
 [node name="GoalPostLeft" type="MeshInstance3D" parent="."]
-transform = Transform3D(0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, -10, 0, 2)
-mesh = ExtResource("4_jv5ky")
+transform = Transform3D(0.965926, 0, 0.258819, 0, 1, 0, -0.258819, 0, 0.965926, -10.5, 0, 2)
+mesh = ExtResource("4_54406")
 
 [node name="GoalPostRight" type="MeshInstance3D" parent="."]
-transform = Transform3D(0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, -10, 0, -2)
-mesh = ExtResource("4_jv5ky")
+transform = Transform3D(0.965926, 0, -0.258819, 0, 1, 0, 0.258819, 0, 0.965926, -10.5, 0, -2)
+mesh = ExtResource("4_54406")
