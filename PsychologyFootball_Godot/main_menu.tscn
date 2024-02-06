@@ -20,6 +20,7 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 texture = ExtResource("2_mg6lu")
+stretch_mode = 6
 
 [node name="Button" type="Button" parent="TextureRect"]
 layout_mode = 1
@@ -31,7 +32,7 @@ offset_top = -686.0
 offset_right = 677.0
 offset_bottom = -65.0
 grow_vertical = 0
-flat = true
+toggle_mode = true
 
 [node name="Button2" type="Button" parent="TextureRect"]
 layout_mode = 1
@@ -43,7 +44,6 @@ offset_top = -686.0
 offset_right = 1196.0
 offset_bottom = -65.0
 grow_vertical = 0
-flat = true
 
 [node name="Button3" type="Button" parent="TextureRect"]
 layout_mode = 1
@@ -55,7 +55,6 @@ offset_top = -686.0
 offset_right = 1709.0
 offset_bottom = -65.0
 grow_vertical = 0
-flat = true
 
 [connection signal="pressed" from="TextureRect/Button" to="." method="_on_button_pressed"]
 [connection signal="pressed" from="TextureRect/Button2" to="." method="_on_button_2_pressed"]
