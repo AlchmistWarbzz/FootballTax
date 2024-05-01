@@ -22,7 +22,7 @@ func _on_button_2_pressed() -> void:
 	deactivate()
 
 func _on_button_3_pressed() -> void:
-	LevelManager.load_level(1, 2)
+	LevelManager.load_level(1, 3)
 	deactivate()
 
 func deactivate() -> void:

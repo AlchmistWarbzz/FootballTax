@@ -35,8 +35,8 @@ func load_level(level_id : int, task_to_load) -> void:
 				loaded_level.task_to_load = loaded_level.SST_TASK_MANAGER
 			2:
 				loaded_level.task_to_load = loaded_level.SHIFTING_TASK_MANAGER
-			#3:
-				#loaded_level.task_to_load = loaded_level.
+			3:
+				loaded_level.task_to_load = loaded_level.BDS_TASK_MANAGER
 	else:
 		print ("Level does not exist")
 	
