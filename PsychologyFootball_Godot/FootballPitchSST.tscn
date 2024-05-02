@@ -1,4 +1,4 @@
-[gd_scene load_steps=39 format=3 uid="uid://rjin0qqtw7jx"]
+[gd_scene load_steps=40 format=3 uid="uid://rjin0qqtw7jx"]
 
 [ext_resource type="Script" path="res://Scripts/level.gd" id="1_7q4w2"]
 [ext_resource type="Material" uid="uid://t05uv2wgginr" path="res://Materials/M_TempHill.tres" id="1_niqus"]
@@ -32,6 +32,7 @@
 [ext_resource type="ArrayMesh" uid="uid://f42g0unsqh3d" path="res://Assets/Building/SM__House1.res" id="31_acq1m"]
 [ext_resource type="ArrayMesh" uid="uid://kcwdwepxtdty" path="res://Assets/Building/SM__House2.res" id="32_v5off"]
 [ext_resource type="ArrayMesh" uid="uid://b86o0ugylg3i0" path="res://Assets/Building/SM__House4.res" id="33_cmdr1"]
+[ext_resource type="PackedScene" uid="uid://bpsyghfjl8hq" path="res://Return_main_menu.tscn" id="33_h0l5p"]
 
 [sub_resource type="PanoramaSkyMaterial" id="PanoramaSkyMaterial_3ul1s"]
 panorama = ExtResource("2_l2183")
@@ -608,3 +609,5 @@ mesh = ExtResource("32_v5off")
 [node name="SmHouse4" type="MeshInstance3D" parent="."]
 transform = Transform3D(0.99911, 0, 0.0421722, 0, 1, 0, -0.0421722, 0, 0.99911, -126.474, 3.18999, -3.18064)
 mesh = ExtResource("33_cmdr1")
+
+[node name="returnMainMenu" parent="." instance=ExtResource("33_h0l5p")]
