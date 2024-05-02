@@ -1,0 +1,27 @@
+[gd_scene load_steps=2 format=3 uid="uid://bpsyghfjl8hq"]
+
+[ext_resource type="Script" path="res://Return to Main menu.gd" id="1_eivqs"]
+
+[node name="Return_main_menu" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_eivqs")
+
+[node name="Button" type="Button" parent="."]
+layout_mode = 1
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_left = 10.0
+offset_top = -639.0
+offset_right = 124.0
+offset_bottom = -600.0
+grow_vertical = 0
+toggle_mode = true
+text = "Test Select"
+
+[connection signal="pressed" from="Button" to="." method="_on_button_pressed"]

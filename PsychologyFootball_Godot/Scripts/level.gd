@@ -8,6 +8,7 @@ var level_data : LevelData
 const BDS_TASK_MANAGER = preload("res://SubScenes/BDS_Task_Manager.tscn")
 const SHIFTING_TASK_MANAGER = preload("res://SubScenes/Shifting_Task_Manager.tscn")
 const SST_TASK_MANAGER = preload("res://SubScenes/SST_Task_Manager.tscn")
+
 var task_to_load
 
 # Called when the node enters the scene tree for the first time.
@@ -23,5 +24,5 @@ func _ready() -> void:
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta):
+func _process(_delta):
 	pass

@@ -15,7 +15,7 @@ func _ready():
 		task_manager_node.trial_started.connect(_on_task_manager_trial_started)
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta):
+func _process(_delta):
 	# manual keypress sequencing
 	#if Input.is_action_just_pressed("g") or Input.is_action_just_pressed("s"):
 		#instantiate_ball()

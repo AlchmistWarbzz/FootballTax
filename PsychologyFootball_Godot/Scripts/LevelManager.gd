@@ -3,7 +3,7 @@ extends Node
 var Levels : Array[LevelData]
 
 var main_scene : Node3D = null
-var loaded_level : Level = null
+var loaded_level : Level = null 
 var task_to_load_UI
 
 func unload_level() -> void:
@@ -37,6 +37,7 @@ func load_level(level_id : int, task_to_load) -> void:
 				loaded_level.task_to_load = loaded_level.SHIFTING_TASK_MANAGER
 			3:
 				loaded_level.task_to_load = loaded_level.BDS_TASK_MANAGER
+			
 	else:
 		print ("Level does not exist")
 	
@@ -54,6 +55,6 @@ func _ready():
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta):
+func _process(_delta):
 	pass
 

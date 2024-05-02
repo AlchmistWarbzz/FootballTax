@@ -63,7 +63,7 @@ func _ready():
 	scene_reset() # ensure scene and scene_state are in agreement
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta):
+func _process(_delta):
 	#if trial_counter > 9:
 		#var file = FileAccess.open("/sst_log.txt", FileAccess.WRITE)
 		#file.store_var(metrics_array)
