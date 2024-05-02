@@ -152,6 +152,7 @@ func _process(_delta: float) -> void:
 				for n in random_span:
 					var n_stringname = str(targets.find(n))
 					random_span_numbers.append(StringName(n_stringname))
+				random_span_numbers.reverse() # ensure backward digits
 				
 				if player_input_span == random_span_numbers:
 					# trial passed
