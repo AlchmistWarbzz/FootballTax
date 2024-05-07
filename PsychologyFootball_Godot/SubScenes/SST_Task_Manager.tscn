@@ -8,6 +8,7 @@
 
 [node name="SST_Task_Manager" type="Node3D"]
 script = ExtResource("1_hrvas")
+blocks = Array[int]([1, 0, 0])
 
 [node name="Player" parent="." instance=ExtResource("2_a7xoq")]
 transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 0, 0, 0)
@@ -16,9 +17,12 @@ transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 0, 0, 
 transform = Transform3D(-0.630744, 0, 0.775991, 0, 1, 0, -0.775991, 0, -0.630744, -8.0147, 0, 5.53492)
 
 [node name="BallFeeder" parent="PlaceholderBallFeederLeft" instance=ExtResource("2_rgtr6")]
+_left_feeder = true
 
 [node name="PlaceholderBallFeederRight" type="Node3D" parent="."]
 transform = Transform3D(0.644257, 0, 0.764809, 0, 1, 0, -0.764809, 0, 0.644257, -8.015, 0, -5.535)
+
+[node name="BallFeeder" parent="PlaceholderBallFeederRight" instance=ExtResource("2_rgtr6")]
 
 [node name="PlaceholderDefenderLeft" type="Node3D" parent="."]
 transform = Transform3D(-0.721953, 0, 0.691942, 0, 1, 0, -0.691942, 0, -0.721953, -10.88, 0, 4)

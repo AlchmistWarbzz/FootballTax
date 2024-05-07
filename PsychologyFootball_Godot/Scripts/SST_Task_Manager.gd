@@ -18,15 +18,19 @@ const MAX_STOP_SIGNAL_DELAY: int = 1150
 const MIN_STOP_SIGNAL_DELAY: int = STOP_SIGNAL_DELAY_ADJUST_STEP
 var stop_signal_delay: int = 250
 
+# blocks
+enum block_type {TEST, PRACTICE}
+## Array determines the order and type of blocks in the test.
+@export var blocks: Array[block_type] = []
+var blocks_index: int = 0
+
 # counters
-const PRACTICE_BLOCKS: int = 1
-const TEST_BLOCKS: int = 2
-const GO_TRIALS_PER_PRACTICE_BLOCK: int = 30
-const STOP_TRIALS_PER_PRACTICE_BLOCK: int = 10
+const GO_TRIALS_PER_PRACTICE_BLOCK: int = 3
+const STOP_TRIALS_PER_PRACTICE_BLOCK: int = 1
 const GO_TRIALS_PER_TEST_BLOCK: int = 75
 const STOP_TRIALS_PER_TEST_BLOCK: int = 25
 
-var is_practice_block: bool = true
+#var is_practice_block: bool = true
 var go_trials_per_block: int = GO_TRIALS_PER_PRACTICE_BLOCK
 var stop_trials_per_block: int = STOP_TRIALS_PER_PRACTICE_BLOCK
 var block_counter: int = 0
@@ -47,6 +51,7 @@ enum scene_state {WAIT, READY, GO_TRIAL, STOP_TRIAL}
 
 # signals
 signal trial_started
+signal trial_ended
 signal stop_signal
 signal ball_kicked
 signal go_trial_failed
@@ -60,37 +65,38 @@ var stop_signal_shown: bool = false
 func _ready():
 	AudioManager.ambience_sfx.play()
 	
+	reset_counters()
+	
 	scene_reset() # ensure scene and scene_state are in agreement
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(_delta):
-	#if trial_counter > 9:
-		#var file = FileAccess.open("/sst_log.txt", FileAccess.WRITE)
-		#file.store_var(metrics_array)
-	
-	# Manual Keypress Sequencing
-	#if Input.is_action_just_pressed("r"):
-		#scene_reset()
-	#
-	#if Input.is_action_just_pressed("t"):
-		#scene_ready()
-	#
-	#if Input.is_action_just_pressed("g"):
-		#scene_trial_start(false)
-	
 	if Input.is_action_just_pressed("save_log"):
 		#scene_trial_start(true)
-		write_sst_raw_log(start_datetime)
-		write_sst_summary_log(start_datetime)
+		write_sst_raw_log(Time.get_datetime_dict_from_system())
+		write_sst_summary_log(Time.get_datetime_dict_from_system())
 	
 	# tick-based scene sequencing
 	match current_state:
 		scene_state.WAIT:
 			if (Time.get_ticks_msec() - ticks_msec_bookmark) > TICKS_BETWEEN_TRIALS_MSEC:
-				# wait time is up
-				scene_ready()
-				current_state = scene_state.READY
-				ticks_msec_bookmark = Time.get_ticks_msec()
+				# wait time between trials is up, prepare next state
+				
+				# check block finished
+				if stop_trial_counter >= stop_trials_per_block and go_trial_counter >= go_trials_per_block:
+					print("block finished.")
+					# trial block finished
+					write_sst_raw_log(Time.get_datetime_dict_from_system())
+					write_sst_summary_log(Time.get_datetime_dict_from_system())
+					
+					# set up next block
+					blocks_index += 1
+					reset_counters() # reset counters now their data has been saved
+					# TODO new block transition
+					
+					scene_reset()
+				else:
+					scene_ready()
 		
 		
 		scene_state.READY:
@@ -101,13 +107,8 @@ func _process(_delta):
 				var is_stop: bool = (randf() < 0.25)
 				if is_stop and stop_trial_counter < stop_trials_per_block:
 					scene_trial_start(is_stop)
-				elif not is_stop and go_trial_counter < go_trials_per_block:
+				elif (not is_stop) and go_trial_counter < go_trials_per_block:
 					scene_trial_start(is_stop)
-				else:
-					print("block finished. is_practice_block: " + str(is_practice_block))
-					# TODO trial block finished
-				
-				ticks_msec_bookmark = Time.get_ticks_msec()
 		
 		
 		scene_state.GO_TRIAL:
@@ -120,9 +121,6 @@ func _process(_delta):
 					append_new_metrics_entry(false, is_trial_passed, 0)
 				
 				scene_reset()
-				
-				current_state = scene_state.WAIT
-				ticks_msec_bookmark = Time.get_ticks_msec()
 			
 			elif Input.is_action_just_pressed("kick_left") and not is_trial_passed:
 				if is_feeder_left:
@@ -150,7 +148,6 @@ func _process(_delta):
 		scene_state.STOP_TRIAL:
 			if (Time.get_ticks_msec() - ticks_msec_bookmark) > TRIAL_TICKS_MSEC:
 				# trial time is up
-				scene_reset()
 				
 				if is_trial_passed:
 					stop_trials_passed += 1
@@ -161,8 +158,7 @@ func _process(_delta):
 						stop_signal_delay += STOP_SIGNAL_DELAY_ADJUST_STEP
 						print("ssd adjusted up to " + str(stop_signal_delay))
 				
-				current_state = scene_state.WAIT
-				ticks_msec_bookmark = Time.get_ticks_msec()
+				scene_reset()
 			
 			elif (Time.get_ticks_msec() - ticks_msec_bookmark) > stop_signal_delay and not stop_signal_shown:
 				# time for stop signal
@@ -180,21 +176,29 @@ func _process(_delta):
 				append_new_metrics_entry(true, is_trial_passed, Time.get_ticks_msec() - ticks_msec_bookmark)
 				
 				if stop_signal_delay >= MIN_STOP_SIGNAL_DELAY + STOP_SIGNAL_DELAY_ADJUST_STEP:
-						stop_signal_delay -= STOP_SIGNAL_DELAY_ADJUST_STEP
-						print("ssd adjusted down to " + str(stop_signal_delay))
+					stop_signal_delay -= STOP_SIGNAL_DELAY_ADJUST_STEP
+					print("ssd adjusted down to " + str(stop_signal_delay))
 
 func scene_reset():
 	print("scene_reset")
 	
 	AudioManager.footsteps_sfx.stop()
 	
-	# remove left ball feeder
-	if $PlaceholderBallFeederLeft.get_child_count() != 0:
-		$PlaceholderBallFeederLeft/BallFeeder.free()
+	# enable ball feeders
+	#$PlaceholderBallFeederLeft/BallFeeder.process_mode = Node.PROCESS_MODE_ALWAYS
+	#$PlaceholderBallFeederRight/BallFeeder.process_mode = Node.PROCESS_MODE_ALWAYS
 	
-	# remove right ball feeder
-	if $PlaceholderBallFeederRight.get_child_count() != 0:
-		$PlaceholderBallFeederRight/BallFeeder.free()
+	## remove left ball feeder ball
+	#var left_ball = $PlaceholderBallFeederLeft/BallFeeder/BlueBall
+	#if left_ball != null:
+		#left_ball.free()
+	#
+	## remove right ball feeder ball
+	#var right_ball = $PlaceholderBallFeederRight/BallFeeder/BlueBall
+	#if right_ball != null:
+		#right_ball.free()
+	
+	trial_ended.emit()
 	
 	# remove teammate
 	if $PlaceholderFixation.get_child_count() != 0:
@@ -211,6 +215,9 @@ func scene_reset():
 		$PlaceholderDefenderRight/Defender.free()
 		var new_defender_right = defender_scene.instantiate()
 		$PlaceholderDefenderRight.add_child(new_defender_right)
+	
+	current_state = scene_state.WAIT
+	ticks_msec_bookmark = Time.get_ticks_msec()
 
 func scene_ready():
 	print("scene_ready")
@@ -218,17 +225,19 @@ func scene_ready():
 	# spawn fixation cone
 	var new_fixation_cone = fixation_cone_scene.instantiate()
 	$PlaceholderFixation.add_child(new_fixation_cone)
+	
+	current_state = scene_state.READY
+	ticks_msec_bookmark = Time.get_ticks_msec()
 
 func scene_trial_start(is_stop_trial: bool):
-	var bool_string = "stop" if is_stop_trial else "go"
-	print("scene_trial_start " + bool_string)
-	
 	# update trial counters
 	trial_counter += 1
 	if is_stop_trial:
 		stop_trial_counter += 1
 	else:
 		go_trial_counter += 1
+	
+	print("scene_trial_start " + str(trial_counter) + ", is_stop_trial: " + str(is_stop_trial))
 	
 	# set up flags
 	is_trial_passed = is_stop_trial
@@ -243,25 +252,43 @@ func scene_trial_start(is_stop_trial: bool):
 		$PlaceholderFixation/FixationCone.free()
 	
 	# spawn ball feeder, randomly choosing left or right side
-	var new_ball_feeder = ball_feeder_scene.instantiate()
+	#var new_ball_feeder = ball_feeder_scene.instantiate()
 	if randf() > 0.5:
 		is_feeder_left = true
-		$PlaceholderBallFeederLeft.add_child(new_ball_feeder)
+		#$PlaceholderBallFeederRight/BallFeeder.process_mode = Node.PROCESS_MODE_DISABLED
 	else:
 		is_feeder_left = false
-		$PlaceholderBallFeederRight.add_child(new_ball_feeder)
+		#$PlaceholderBallFeederLeft/BallFeeder.process_mode = Node.PROCESS_MODE_DISABLED
 	
 	# spawn teammate
 	var new_teammate = teammate_scene.instantiate()
 	$PlaceholderFixation.add_child(new_teammate)
 	
 	# emit signal for ball feeder
-	trial_started.emit(true)
+	trial_started.emit(true, is_feeder_left)
+	
+	ticks_msec_bookmark = Time.get_ticks_msec()
 
 #func stop_trial_start():
 	## remove fixation cone
 	#if $PlaceholderFixation.get_child_count() != 0:
 		#$PlaceholderFixation/FixationCone.free()
+
+func reset_counters():
+	print("new block. is_practice_block: " + str(blocks[blocks_index] == block_type.PRACTICE))
+	
+	if blocks[blocks_index] == block_type.PRACTICE:
+		go_trials_per_block = GO_TRIALS_PER_PRACTICE_BLOCK
+		stop_trials_per_block = STOP_TRIALS_PER_PRACTICE_BLOCK
+	else:
+		go_trials_per_block = GO_TRIALS_PER_TEST_BLOCK
+		stop_trials_per_block = STOP_TRIALS_PER_TEST_BLOCK
+	block_counter = 0
+	trial_counter = 0
+	go_trial_counter = 0
+	go_trials_passed = 0
+	stop_trial_counter = 0
+	stop_trials_passed = 0
 
 func append_new_metrics_entry(stop_trial: bool, correct_response: bool, response_time: int):
 		metrics_array.append([block_counter, trial_counter, is_feeder_left, stop_trial, correct_response, response_time, stop_signal_delay])
@@ -307,7 +334,7 @@ func write_sst_summary_log(datetime_dict):
 		summary_log_file.store_string("\n-Final States of Counters-\n\n")
 		
 		# write counters
-		summary_log_file.store_line("is_practice_block: " + str(is_practice_block))
+		summary_log_file.store_line("is_practice_block: " + str(blocks[blocks_index] == block_type.PRACTICE))
 		summary_log_file.store_line("go_trials_per_block: " + str(go_trials_per_block))
 		summary_log_file.store_line("stop_trials_per_block: " + str(stop_trials_per_block))
 		summary_log_file.store_line("block_counter: " + str(block_counter))
