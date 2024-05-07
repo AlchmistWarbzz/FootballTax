@@ -80,26 +80,11 @@ func _process(_delta):
 	match current_state:
 		scene_state.WAIT:
 			if (Time.get_ticks_msec() - ticks_msec_bookmark) > TICKS_BETWEEN_TRIALS_MSEC:
-				# wait time is up
+				# wait time between trials is up, prepare next state
 				
-				
-				scene_ready()
-		
-		
-		scene_state.READY:
-			if (Time.get_ticks_msec() - ticks_msec_bookmark) > READY_TICKS_MSEC:
-				# ready time is up
-				
-				# a scene changing method must be called now...
-				
-				# determine go or stop trial, or start new block
-				var is_stop: bool = (randf() < 0.25)
-				if is_stop and stop_trial_counter < stop_trials_per_block:
-					scene_trial_start(is_stop)
-				elif (not is_stop) and go_trial_counter < go_trials_per_block:
-					scene_trial_start(is_stop)
-				else:
-					print("block finished. is_practice_block: " + str(blocks[blocks_index]))
+				# check block finished
+				if stop_trial_counter >= stop_trials_per_block and go_trial_counter >= go_trials_per_block:
+					print("block finished.")
 					# trial block finished
 					write_sst_raw_log(Time.get_datetime_dict_from_system())
 					write_sst_summary_log(Time.get_datetime_dict_from_system())
@@ -109,7 +94,21 @@ func _process(_delta):
 					reset_counters() # reset counters now their data has been saved
 					# TODO new block transition
 					
+					scene_reset()
+				else:
 					scene_ready()
+		
+		
+		scene_state.READY:
+			if (Time.get_ticks_msec() - ticks_msec_bookmark) > READY_TICKS_MSEC:
+				# ready time is up
+				
+				# determine go or stop trial
+				var is_stop: bool = (randf() < 0.25)
+				if is_stop and stop_trial_counter < stop_trials_per_block:
+					scene_trial_start(is_stop)
+				elif (not is_stop) and go_trial_counter < go_trials_per_block:
+					scene_trial_start(is_stop)
 		
 		
 		scene_state.GO_TRIAL:
@@ -276,6 +275,8 @@ func scene_trial_start(is_stop_trial: bool):
 		#$PlaceholderFixation/FixationCone.free()
 
 func reset_counters():
+	print("new block. is_practice_block: " + str(blocks[blocks_index] == block_type.PRACTICE))
+	
 	if blocks[blocks_index] == block_type.PRACTICE:
 		go_trials_per_block = GO_TRIALS_PER_PRACTICE_BLOCK
 		stop_trials_per_block = STOP_TRIALS_PER_PRACTICE_BLOCK
