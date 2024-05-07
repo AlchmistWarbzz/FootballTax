@@ -19,10 +19,8 @@ const MIN_STOP_SIGNAL_DELAY: int = STOP_SIGNAL_DELAY_ADJUST_STEP
 var stop_signal_delay: int = 250
 
 # counters
-const PRACTICE_BLOCKS: int = 1
-const TEST_BLOCKS: int = 2
-const GO_TRIALS_PER_PRACTICE_BLOCK: int = 30
-const STOP_TRIALS_PER_PRACTICE_BLOCK: int = 10
+const GO_TRIALS_PER_PRACTICE_BLOCK: int = 3
+const STOP_TRIALS_PER_PRACTICE_BLOCK: int = 1
 const GO_TRIALS_PER_TEST_BLOCK: int = 75
 const STOP_TRIALS_PER_TEST_BLOCK: int = 25
 
@@ -47,6 +45,7 @@ enum scene_state {WAIT, READY, GO_TRIAL, STOP_TRIAL}
 
 # signals
 signal trial_started
+signal trial_ended
 signal stop_signal
 signal ball_kicked
 signal go_trial_failed
@@ -64,24 +63,10 @@ func _ready():
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(_delta):
-	#if trial_counter > 9:
-		#var file = FileAccess.open("/sst_log.txt", FileAccess.WRITE)
-		#file.store_var(metrics_array)
-	
-	# Manual Keypress Sequencing
-	#if Input.is_action_just_pressed("r"):
-		#scene_reset()
-	#
-	#if Input.is_action_just_pressed("t"):
-		#scene_ready()
-	#
-	#if Input.is_action_just_pressed("g"):
-		#scene_trial_start(false)
-	
 	if Input.is_action_just_pressed("save_log"):
 		#scene_trial_start(true)
-		write_sst_raw_log(start_datetime)
-		write_sst_summary_log(start_datetime)
+		write_sst_raw_log(Time.get_datetime_dict_from_system())
+		write_sst_summary_log(Time.get_datetime_dict_from_system())
 	
 	# tick-based scene sequencing
 	match current_state:
@@ -101,11 +86,18 @@ func _process(_delta):
 				var is_stop: bool = (randf() < 0.25)
 				if is_stop and stop_trial_counter < stop_trials_per_block:
 					scene_trial_start(is_stop)
-				elif not is_stop and go_trial_counter < go_trials_per_block:
+				elif (not is_stop) and go_trial_counter < go_trials_per_block:
 					scene_trial_start(is_stop)
 				else:
 					print("block finished. is_practice_block: " + str(is_practice_block))
-					# TODO trial block finished
+					# trial block finished
+					write_sst_raw_log(Time.get_datetime_dict_from_system())
+					write_sst_summary_log(Time.get_datetime_dict_from_system())
+					
+					# set up next block
+					
+					
+					scene_reset()
 				
 				ticks_msec_bookmark = Time.get_ticks_msec()
 		
@@ -188,13 +180,21 @@ func scene_reset():
 	
 	AudioManager.footsteps_sfx.stop()
 	
-	# remove left ball feeder
-	if $PlaceholderBallFeederLeft.get_child_count() != 0:
-		$PlaceholderBallFeederLeft/BallFeeder.free()
+	# enable ball feeders
+	#$PlaceholderBallFeederLeft/BallFeeder.process_mode = Node.PROCESS_MODE_ALWAYS
+	#$PlaceholderBallFeederRight/BallFeeder.process_mode = Node.PROCESS_MODE_ALWAYS
 	
-	# remove right ball feeder
-	if $PlaceholderBallFeederRight.get_child_count() != 0:
-		$PlaceholderBallFeederRight/BallFeeder.free()
+	## remove left ball feeder ball
+	#var left_ball = $PlaceholderBallFeederLeft/BallFeeder/BlueBall
+	#if left_ball != null:
+		#left_ball.free()
+	#
+	## remove right ball feeder ball
+	#var right_ball = $PlaceholderBallFeederRight/BallFeeder/BlueBall
+	#if right_ball != null:
+		#right_ball.free()
+	
+	trial_ended.emit()
 	
 	# remove teammate
 	if $PlaceholderFixation.get_child_count() != 0:
@@ -220,15 +220,15 @@ func scene_ready():
 	$PlaceholderFixation.add_child(new_fixation_cone)
 
 func scene_trial_start(is_stop_trial: bool):
-	var bool_string = "stop" if is_stop_trial else "go"
-	print("scene_trial_start " + bool_string)
-	
 	# update trial counters
 	trial_counter += 1
 	if is_stop_trial:
 		stop_trial_counter += 1
 	else:
 		go_trial_counter += 1
+	
+	var bool_string = "stop" if is_stop_trial else "go"
+	print("scene_trial_start " + str(trial_counter) + " " + bool_string)
 	
 	# set up flags
 	is_trial_passed = is_stop_trial
@@ -243,20 +243,20 @@ func scene_trial_start(is_stop_trial: bool):
 		$PlaceholderFixation/FixationCone.free()
 	
 	# spawn ball feeder, randomly choosing left or right side
-	var new_ball_feeder = ball_feeder_scene.instantiate()
+	#var new_ball_feeder = ball_feeder_scene.instantiate()
 	if randf() > 0.5:
 		is_feeder_left = true
-		$PlaceholderBallFeederLeft.add_child(new_ball_feeder)
+		#$PlaceholderBallFeederRight/BallFeeder.process_mode = Node.PROCESS_MODE_DISABLED
 	else:
 		is_feeder_left = false
-		$PlaceholderBallFeederRight.add_child(new_ball_feeder)
+		#$PlaceholderBallFeederLeft/BallFeeder.process_mode = Node.PROCESS_MODE_DISABLED
 	
 	# spawn teammate
 	var new_teammate = teammate_scene.instantiate()
 	$PlaceholderFixation.add_child(new_teammate)
 	
 	# emit signal for ball feeder
-	trial_started.emit(true)
+	trial_started.emit(true, is_feeder_left)
 
 #func stop_trial_start():
 	## remove fixation cone
