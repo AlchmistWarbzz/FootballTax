@@ -17,7 +17,7 @@ func _ready():
 	body_entered.connect(_on_collision)
 	
 	# ball feeder launch
-	apply_central_impulse(get_global_transform().basis.z * 16)
+	apply_central_impulse(get_global_transform().basis.z * 18)
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -28,7 +28,7 @@ func _on_collision(body: Node):
 	if body.name == "Teammate":
 		set_linear_velocity(Vector3.ZERO)
 		set_angular_velocity(Vector3.ZERO)
-		print("hit Teammate")
+		print("ball hit Teammate. kill velocity")
 
 
 func _on_task_manager_ball_kicked(target: Vector3):
@@ -40,7 +40,7 @@ func kick(target: Vector3) -> void:
 	set_angular_velocity(Vector3.ZERO)
 	look_at(target)
 	
-	apply_central_impulse(get_global_transform().basis.z * -5)
+	apply_central_impulse(get_global_transform().basis.z * -7)
 	
 	AudioManager.football_kick_sfx.set_pitch_scale(1.0 + (randf() / 20.0))
 	AudioManager.football_kick_sfx.play()
