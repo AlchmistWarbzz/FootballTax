@@ -1,8 +1,7 @@
-[gd_scene load_steps=12 format=3 uid="uid://djhbuwvyk2pkx"]
+[gd_scene load_steps=11 format=3 uid="uid://djhbuwvyk2pkx"]
 
 [ext_resource type="Script" path="res://Scripts/BDS_Task_Manager.gd" id="1_5jgw8"]
 [ext_resource type="PackedScene" uid="uid://n7shkduekcq2" path="res://SubScenes/Player.tscn" id="2_uoig7"]
-[ext_resource type="PackedScene" uid="uid://cdt6315of2aeu" path="res://SubScenes/Ball_Feeder.tscn" id="3_pm1bf"]
 [ext_resource type="ArrayMesh" uid="uid://ds6nfyb0la4uu" path="res://Assets/Props/Assets_SM_Target.res" id="4_s7jg4"]
 
 [sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_xabmy"]
@@ -35,13 +34,9 @@ transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 0, 0, 
 [node name="PlaceholderBall" type="Node3D" parent="Player"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5, 0)
 
-[node name="Child" type="Node3D" parent="Player/PlaceholderBall"]
-
 [node name="PlaceholderBallFeederLeft" type="Node3D" parent="."]
 transform = Transform3D(-0.767165, 0, 0.64145, 0, 1, 0, -0.64145, 0, -0.767165, -8, 0, 8)
 visible = false
-
-[node name="BallFeeder" parent="PlaceholderBallFeederLeft" instance=ExtResource("3_pm1bf")]
 
 [node name="PlaceholderFixation" type="Node3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6, 0, 0)
