@@ -1,23 +1,7 @@
-[gd_scene load_steps=2 format=3 uid="uid://n7shkduekcq2"]
-
-[ext_resource type="Script" path="res://Return to Main menu.gd" id="1_p6ug5"]
+[gd_scene format=3 uid="uid://n7shkduekcq2"]
 
 [node name="Player" type="Node3D"]
 
 [node name="Camera3D" type="Camera3D" parent="."]
 transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, 1.8, 0)
 fov = 70.0
-
-[node name="Menu" type="Control" parent="."]
-layout_mode = 3
-anchors_preset = 0
-offset_right = 40.0
-offset_bottom = 40.0
-script = ExtResource("1_p6ug5")
-
-[node name="Button" type="Button" parent="Menu"]
-layout_mode = 0
-offset_left = 53.0
-offset_top = 48.0
-offset_right = 224.0
-offset_bottom = 107.0
