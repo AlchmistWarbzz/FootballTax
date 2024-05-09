@@ -46,13 +46,13 @@ signal trial_started
 signal ball_kicked
 
 # flags
-var is_feeder_left: bool = false
 var is_trial_passed: bool = false
-var is_blue_ball: bool = false
-var is_shift_trial: bool = false
 
 # spans
-@onready var targets = [$"0/MeshInstance3D", $"1/MeshInstance3D", $"2/MeshInstance3D", $"3/MeshInstance3D", $"4/MeshInstance3D", $"5/MeshInstance3D", $"6/MeshInstance3D"]
+@onready var targets = [$"0/MeshInstance3D", $"1/MeshInstance3D"
+		, $"2/MeshInstance3D", $"3/MeshInstance3D"
+		, $"4/MeshInstance3D", $"5/MeshInstance3D"
+		, $"6/MeshInstance3D"]
 @onready var random_span = Array()
 @onready var random_span_numbers = Array()
 @onready var player_input_span = Array()
@@ -139,14 +139,14 @@ func _process(_delta: float) -> void:
 					player_input_span.append(result.collider.name)
 					
 					# destroy previous ball if found
-					var old_ball = $Player/PlaceholderBall/Child.get_child(0)
+					var old_ball = $Player/PlaceholderBall.get_child(0)
 					if old_ball != null:
 						old_ball.queue_free()
 					
 					# create new ball
 					var instance
 					instance = BLUE_BALL.instantiate()
-					$Player/PlaceholderBall/Child.add_child(instance)
+					$Player/PlaceholderBall.add_child(instance)
 					ball_kicked.emit(result.collider.get_global_position() + (Vector3.UP * 3))
 				
 				for n in random_span:
@@ -180,47 +180,12 @@ func _process(_delta: float) -> void:
 					ticks_msec_bookmark = Time.get_ticks_msec()
 				
 				random_span_numbers = Array()
-			
-			
-			#elif Input.is_action_just_pressed("kick_left") and not is_trial_passed:
-				#if check_correct_kick(true): # is kick left
-					#ball_kicked.emit($GoalPostLeft.global_position)
-					#is_trial_passed = true
-					# 
-					#if is_shift_trial:
-						#shift_trials_passed += 1
-						#print("shift_trial_passed")
-					#else:
-						#non_shift_trials_passed += 1
-						#print("non_shift_trial_passed")
-				#else:
-					##go_trial_failed.emit()
-					#print("non_shift_trial_failed")
-				#append_new_metrics_entry(Time.get_ticks_msec() - ticks_msec_bookmark)
-			
-			#elif Input.is_action_just_pressed("kick_right") and not is_trial_passed:
-				#if check_correct_kick(false): # is kick right
-					#ball_kicked.emit($GoalPostRight.global_position)
-					#is_trial_passed = true
-					#
-					#if is_shift_trial:
-						#shift_trials_passed += 1
-						#print("shift_trial_passed")
-					#else:
-						#non_shift_trials_passed += 1
-						#print("non_shift_trial_passed")
-				#else:
-					##go_trial_failed.emit()
-					#if is_shift_trial:
-						#print("shift_trial_failed")
-					#else:
-						#print("non_shift_trial_failed")
-				#append_new_metrics_entry(Time.get_ticks_msec() - ticks_msec_bookmark)
+
 
 func scene_reset():
 	print("scene_reset")
 	
-	## remove left ball feeder
+	# remove left ball feeder
 	#if $PlaceholderBallFeederLeft.get_child_count() != 0:
 		#$PlaceholderBallFeederLeft/BallFeeder.free()
 	
@@ -236,6 +201,11 @@ func scene_reset():
 	# spawn fixation cone
 	var new_fixation_cone = FIXATION_CONE.instantiate()
 	$PlaceholderFixation.add_child(new_fixation_cone)
+	
+	# remove balls
+	#var balls = $Player/PlaceholderBall.get_children()
+	#for b in balls:
+		#b.queue_free()
 
 func scene_ready():
 	print("scene_ready")
@@ -267,8 +237,8 @@ func scene_trial_start():
 	is_trial_passed = false
 	
 	# spawn ball feeder, randomly choosing left or right side
-	var new_ball_feeder = BALL_FEEDER_SCENE.instantiate()
-	$PlaceholderBallFeederLeft.add_child(new_ball_feeder)
+	#var new_ball_feeder = BALL_FEEDER_SCENE.instantiate()
+	#$PlaceholderBallFeederLeft.add_child(new_ball_feeder)
 	#if randf() > 0.5:
 		#is_feeder_left = true
 		#$PlaceholderBallFeederLeft.add_child(new_ball_feeder)
@@ -276,24 +246,8 @@ func scene_trial_start():
 		#is_feeder_left = false
 		#$PlaceholderBallFeederRight.add_child(new_ball_feeder)
 	
-	# determine ball colour
-	if is_shift_trial:
-		is_blue_ball = not is_blue_ball
-	
 	# emit signal for ball feeder
 	#trial_started.emit(is_blue_ball)
-
-func check_correct_kick(is_kick_left: bool) -> bool:
-	if is_kick_left:
-		if is_feeder_left:
-			return not is_blue_ball
-		else:
-			return is_blue_ball
-	else:
-		if is_feeder_left:
-			return is_blue_ball
-		else:
-			return not is_blue_ball
 
 func append_new_metrics_entry():
 	metrics_array.append([block_counter, trial_counter, is_trial_passed])
@@ -353,8 +307,8 @@ func write_sst_summary_log(datetime_dict):
 		#summary_log_file.store_line("shift_trial_counter: " + str(shift_trial_counter))
 		#summary_log_file.store_line("shift_trials_passed: " + str(shift_trials_passed))
 		
-		# calculate probability of passing Shift Trials
-		var p_rs: float = float(trials_passed) / float(trial_counter) # successes / total
+		# calculate probability of passing Trials
+		var p_pt: float = float(trials_passed) / float(trial_counter) # successes / total
 		
 		## collect rolling totals for calculating means
 		#var rolling_total_shift_reaction_time: int = 0
@@ -376,7 +330,7 @@ func write_sst_summary_log(datetime_dict):
 		
 		# write summary data
 		summary_log_file.store_string("\n-Calculated Summary Values-\n\n")
-		summary_log_file.store_line("probability of passing Shift Trials: " + str(p_rs))
+		summary_log_file.store_line("probability of passing Trials: " + str(p_pt))
 		#summary_log_file.store_line("mean reaction time (in ms) in Shift trials that were passed: " + str(sr_rt))
 		#summary_log_file.store_line("mean reaction time (in ms) in Non Shift trials that were passed: " + str(nsr_rt))
 		

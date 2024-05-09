@@ -39,6 +39,7 @@ enum scene_state {WAIT, READY, TRIAL}
 
 # signals
 signal trial_started
+signal trial_ended
 signal ball_kicked
 
 # flags
@@ -114,7 +115,7 @@ func _process(_delta: float) -> void:
 			
 			elif Input.is_action_just_pressed("kick_left") and not is_trial_passed:
 				if check_correct_kick(true): # is kick left
-					ball_kicked.emit($GoalPostLeft.global_position)
+					ball_kicked.emit($MiniGoalLeft.global_position)
 					is_trial_passed = true
 					
 					if is_shift_trial:
@@ -130,7 +131,7 @@ func _process(_delta: float) -> void:
 			
 			elif Input.is_action_just_pressed("kick_right") and not is_trial_passed:
 				if check_correct_kick(false): # is kick right
-					ball_kicked.emit($GoalPostRight.global_position)
+					ball_kicked.emit($MiniGoalRight.global_position)
 					is_trial_passed = true
 					
 					if is_shift_trial:
@@ -150,13 +151,15 @@ func _process(_delta: float) -> void:
 func scene_reset():
 	print("scene_reset")
 	
-	# remove left ball feeder
-	if $PlaceholderBallFeederLeft.get_child_count() != 0:
-		$PlaceholderBallFeederLeft/BallFeeder.free()
+	## remove left ball feeder
+	#if $PlaceholderBallFeederLeft.get_child_count() != 0:
+		#$PlaceholderBallFeederLeft/BallFeeder.free()
+	#
+	## remove right ball feeder
+	#if $PlaceholderBallFeederRight.get_child_count() != 0:
+		#$PlaceholderBallFeederRight/BallFeeder.free()
 	
-	# remove right ball feeder
-	if $PlaceholderBallFeederRight.get_child_count() != 0:
-		$PlaceholderBallFeederRight/BallFeeder.free()
+	trial_ended.emit()
 
 func scene_ready():
 	print("scene_ready")
@@ -183,21 +186,17 @@ func scene_trial_start():
 	# set up flags
 	is_trial_passed = false
 	
-	# spawn ball feeder, randomly choosing left or right side
-	var new_ball_feeder = BALL_FEEDER_SCENE.instantiate()
-	if randf() > 0.5:
-		is_feeder_left = true
-		$PlaceholderBallFeederLeft.add_child(new_ball_feeder)
-	else:
-		is_feeder_left = false
-		$PlaceholderBallFeederRight.add_child(new_ball_feeder)
-	
 	# determine ball colour
 	if is_shift_trial:
 		is_blue_ball = not is_blue_ball
 	
-	# emit signal for ball feeder
-	trial_started.emit(is_blue_ball)
+	# randomly choosing left or right ball feeder
+	if randf() > 0.5:
+		is_feeder_left = true
+		trial_started.emit(is_blue_ball, is_feeder_left)
+	else:
+		is_feeder_left = false
+		trial_started.emit(is_blue_ball, is_feeder_left)
 
 func check_correct_kick(is_kick_left: bool) -> bool:
 	if is_kick_left:
