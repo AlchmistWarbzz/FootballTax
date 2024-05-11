@@ -1,9 +1,9 @@
 extends Node
 
 var Levels : Array[LevelData]
-
+var trial_length : int
 var main_scene : Node3D = null
-var loaded_level : Level = null 
+var loaded_level : Level = null
 var task_to_load_UI
 
 func unload_level() -> void:
