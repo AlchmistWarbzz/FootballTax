@@ -17,8 +17,8 @@ enum block_type {TEST, PRACTICE}
 var blocks_index: int = 0
 
 # counters
-const SHIFT_TRIALS_PER_PRACTICE_BLOCK: int = 2
-const NON_SHIFT_TRIALS_PER_PRACTICE_BLOCK: int = 6
+const SHIFT_TRIALS_PER_PRACTICE_BLOCK: int = 1
+const NON_SHIFT_TRIALS_PER_PRACTICE_BLOCK: int = 3
 const SHIFT_TRIALS_PER_TEST_BLOCK: int = 12
 const NON_SHIFT_TRIALS_PER_TEST_BLOCK: int = 36
 
@@ -73,28 +73,9 @@ func _process(_delta: float) -> void:
 		scene_state.WAIT:
 			if (Time.get_ticks_msec() - ticks_msec_bookmark) > TICKS_BETWEEN_TRIALS_MSEC:
 				# wait time is up
-				scene_ready()
-		
-		
-		scene_state.READY:
-			if (Time.get_ticks_msec() - ticks_msec_bookmark) > READY_TICKS_MSEC:
-				# ready time is up
 				
-				# determine shift or non shift trial
-				var rand_is_shift_trial = (randf() < 0.25)
-				if rand_is_shift_trial and shift_trial_counter < shift_trials_per_block:
-					# shift is rand selected and shifts remain
-					is_shift_trial = true
-				elif non_shift_trial_counter < non_shift_trials_per_block:
-					# out of shifts but non-shifts remain, force non-shift
-					is_shift_trial = false
-				elif not rand_is_shift_trial and non_shift_trial_counter < non_shift_trials_per_block:
-					# non-shift is rand selected and non-shifts remain
-					is_shift_trial = false
-				elif shift_trial_counter < shift_trials_per_block:
-					# out of non-shifts but shifts remain, force shift
-					is_shift_trial = true
-				else:
+				# check block finished
+				if shift_trial_counter >= shift_trials_per_block and non_shift_trial_counter >= non_shift_trials_per_block:
 					print("block finished.")
 					# trial block finished
 					write_sst_raw_log(Time.get_datetime_dict_from_system())
@@ -106,10 +87,22 @@ func _process(_delta: float) -> void:
 					# TODO new block transition
 					
 					scene_reset()
+				else:
+					scene_ready()
+		
+		
+		scene_state.READY:
+			if (Time.get_ticks_msec() - ticks_msec_bookmark) > READY_TICKS_MSEC:
+				# ready time is up
 				
-				scene_trial_start()
-				current_state = scene_state.TRIAL
-				ticks_msec_bookmark = Time.get_ticks_msec()
+				# determine shift or non shift trial
+				var rand_is_shift : bool = (randf() < 0.25)
+				if rand_is_shift and shift_trial_counter < shift_trials_per_block:
+					is_shift_trial = true
+					scene_trial_start()
+				elif (not rand_is_shift) and non_shift_trial_counter < non_shift_trials_per_block:
+					is_shift_trial = false
+					scene_trial_start()
 		
 		
 		scene_state.TRIAL:
@@ -215,6 +208,9 @@ func scene_trial_start():
 	else:
 		is_feeder_left = false
 		trial_started.emit(is_blue_ball, is_feeder_left)
+	
+	current_state = scene_state.TRIAL
+	ticks_msec_bookmark = Time.get_ticks_msec()
 
 func reset_counters():
 	print("new block. is_practice_block: " + str(blocks[blocks_index] == block_type.PRACTICE))
