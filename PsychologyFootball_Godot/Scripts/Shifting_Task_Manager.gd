@@ -188,19 +188,18 @@ func scene_ready():
 	ticks_msec_bookmark = Time.get_ticks_msec()
 
 func scene_trial_start():
-	var bool_string = "shift" if is_shift_trial else "non_shift"
-	print("scene_trial_start " + bool_string)
-	
-	# remove fixation cone
-	if $PlaceholderFixation.get_child_count() != 0:
-		$PlaceholderFixation/FixationCone.free()
-	
 	# update trial counters
 	trial_counter += 1
 	if is_shift_trial:
 		shift_trial_counter += 1
 	else:
 		non_shift_trial_counter += 1
+		
+	print("scene_trial_start " + str(trial_counter) + ", is_shift_trial: " + str(is_shift_trial))
+	
+	# remove fixation cone
+	if $PlaceholderFixation.get_child_count() != 0:
+		$PlaceholderFixation/FixationCone.free()
 	
 	# set up flags
 	is_trial_passed = false
