@@ -76,17 +76,23 @@ func _process(_delta: float) -> void:
 				
 				# check block finished
 				if shift_trial_counter >= shift_trials_per_block and non_shift_trial_counter >= non_shift_trials_per_block:
-					print("block finished.")
+					print("block " + str(blocks_index + 1) + " finished.")
 					# trial block finished
 					write_sst_raw_log(Time.get_datetime_dict_from_system())
 					write_sst_summary_log(Time.get_datetime_dict_from_system())
 					
-					# set up next block
-					blocks_index += 1
-					reset_counters() # reset counters now their data has been saved
-					# TODO new block transition
-					
-					scene_reset()
+					if blocks_index + 1 < blocks.size():
+						# set up next block
+						blocks_index += 1
+						reset_counters() # reset counters now their data has been saved
+						# TODO new block transition
+						
+						scene_reset()
+					else:
+						print("all blocks finished.")
+						# TODO end task/task select screen
+						#LevelManager.load_level(1, 1)
+						get_tree().change_scene_to_file("res://Main.tscn")
 				else:
 					scene_ready()
 		
@@ -213,7 +219,7 @@ func scene_trial_start():
 	ticks_msec_bookmark = Time.get_ticks_msec()
 
 func reset_counters():
-	print("new block. is_practice_block: " + str(blocks[blocks_index] == block_type.PRACTICE))
+	print("start block " + str(blocks_index + 1) + ". is_practice_block: " + str(blocks[blocks_index] == block_type.PRACTICE))
 	
 	if blocks[blocks_index] == block_type.PRACTICE:
 		shift_trials_per_block = SHIFT_TRIALS_PER_PRACTICE_BLOCK
