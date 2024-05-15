@@ -1,6 +1,5 @@
 extends RigidBody3D
 
-
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	var task_manager_node
@@ -31,16 +30,16 @@ func _on_collision(body: Node):
 		print("ball hit Teammate. kill velocity")
 
 
-func _on_task_manager_ball_kicked(target: Vector3):
-	kick(target)
+func _on_task_manager_ball_kicked(target: Vector3, impulse_magnitude: float):
+	kick(target, impulse_magnitude)
 
 
-func kick(target: Vector3) -> void:
+func kick(target: Vector3, impulse_magnitude: float) -> void:
 	set_linear_velocity(Vector3.ZERO)
 	set_angular_velocity(Vector3.ZERO)
 	look_at(target)
 	
-	apply_central_impulse(get_global_transform().basis.z * -7)
+	apply_central_impulse(get_global_transform().basis.z * -1 * impulse_magnitude)
 	
 	AudioManager.football_kick_sfx.set_pitch_scale(1.0 + (randf() / 20.0))
 	AudioManager.football_kick_sfx.play()

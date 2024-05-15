@@ -45,6 +45,7 @@ enum scene_state {WAIT, READY, TRIAL}
 signal trial_started
 signal trial_ended
 signal ball_kicked
+@export var ball_kick_magnitude : float = 7
 
 # flags
 var is_feeder_left: bool = false
@@ -127,7 +128,7 @@ func _process(_delta: float) -> void:
 			
 			elif Input.is_action_just_pressed("kick_left") and not is_trial_passed:
 				if check_correct_kick(true): # is kick left
-					ball_kicked.emit($MiniGoalLeft.global_position)
+					ball_kicked.emit($MiniGoalLeft.global_position, ball_kick_magnitude)
 					is_trial_passed = true
 					
 					if is_shift_trial:
@@ -143,7 +144,7 @@ func _process(_delta: float) -> void:
 			
 			elif Input.is_action_just_pressed("kick_right") and not is_trial_passed:
 				if check_correct_kick(false): # is kick right
-					ball_kicked.emit($MiniGoalRight.global_position)
+					ball_kicked.emit($MiniGoalRight.global_position, ball_kick_magnitude)
 					is_trial_passed = true
 					
 					if is_shift_trial:

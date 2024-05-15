@@ -56,6 +56,7 @@ signal stop_signal
 signal ball_kicked
 signal go_trial_failed
 signal stop_trial_failed
+@export var ball_kick_magnitude : float = 7
 
 # flags
 var is_feeder_left: bool = false
@@ -124,7 +125,7 @@ func _process(_delta):
 			
 			elif Input.is_action_just_pressed("kick_left") and not is_trial_passed:
 				if is_feeder_left:
-					ball_kicked.emit($PlaceholderFixation.global_position)
+					ball_kicked.emit($PlaceholderFixation.global_position, ball_kick_magnitude)
 					is_trial_passed = true
 					go_trials_passed += 1
 					print("go_trial_passed")
@@ -135,7 +136,7 @@ func _process(_delta):
 			
 			elif Input.is_action_just_pressed("kick_right") and not is_trial_passed:
 				if not is_feeder_left: # is feeder right
-					ball_kicked.emit($PlaceholderFixation.global_position)
+					ball_kicked.emit($PlaceholderFixation.global_position, ball_kick_magnitude)
 					is_trial_passed = true
 					go_trials_passed += 1
 					print("go_trial_passed")
@@ -170,7 +171,7 @@ func _process(_delta):
 			
 			if Input.is_action_just_pressed("kick_left") or Input.is_action_just_pressed("kick_right"):
 				is_trial_passed = false
-				#ball_kicked.emit()
+				ball_kicked.emit($PlaceholderFixation.global_position, ball_kick_magnitude)
 				stop_trial_failed.emit()
 				print("stop_trial_failed")
 				append_new_metrics_entry(true, is_trial_passed, Time.get_ticks_msec() - ticks_msec_bookmark)

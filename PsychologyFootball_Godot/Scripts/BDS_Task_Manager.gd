@@ -44,6 +44,7 @@ enum scene_state {WAIT, READY, SHOW_TARGET, TRIAL}
 # signals
 signal trial_started
 signal ball_kicked
+@export var ball_kick_magnitude : float = 15
 
 # flags
 var is_trial_passed: bool = false
@@ -83,8 +84,6 @@ func _process(_delta: float) -> void:
 			if (Time.get_ticks_msec() - ticks_msec_bookmark) > TICKS_BETWEEN_TRIALS_MSEC:
 				# wait time is up
 				scene_ready()
-				current_state = scene_state.READY
-				ticks_msec_bookmark = Time.get_ticks_msec()
 		
 		
 		scene_state.READY:
@@ -93,12 +92,8 @@ func _process(_delta: float) -> void:
 				
 				if current_target_show_index < span_length:
 					scene_show_target()
-					current_state = scene_state.SHOW_TARGET
-					ticks_msec_bookmark = Time.get_ticks_msec()
 				else:
 					scene_trial_start()
-					current_state = scene_state.TRIAL
-					ticks_msec_bookmark = Time.get_ticks_msec()
 		
 		
 		scene_state.SHOW_TARGET:
@@ -106,9 +101,6 @@ func _process(_delta: float) -> void:
 				# show time is up
 				scene_hide_target()
 				scene_ready()
-				current_state = scene_state.READY
-				ticks_msec_bookmark = Time.get_ticks_msec()
-				
 		
 		scene_state.TRIAL:
 			if (Time.get_ticks_msec() - ticks_msec_bookmark) > TRIAL_TICKS_MSEC:
@@ -147,7 +139,8 @@ func _process(_delta: float) -> void:
 					var instance
 					instance = BLUE_BALL.instantiate()
 					$Player/PlaceholderBall.add_child(instance)
-					ball_kicked.emit(result.collider.get_global_position() + (Vector3.UP * 3))
+					ball_kicked.emit(result.collider.get_global_position() + (Vector3.UP * 4)
+					, ball_kick_magnitude)
 				
 				for n in random_span:
 					var n_stringname = str(targets.find(n))
@@ -208,17 +201,23 @@ func scene_reset():
 		#b.queue_free()
 
 func scene_ready():
-	print("scene_ready")
+	#print("scene_ready")
 	
 	current_target_show_index += 1
 	
 	# spawn fixation cone
 	var new_fixation_cone = FIXATION_CONE.instantiate()
 	$PlaceholderFixation.add_child(new_fixation_cone)
+	
+	current_state = scene_state.READY
+	ticks_msec_bookmark = Time.get_ticks_msec()
 
 func scene_show_target():
 	#random_span[next_target_to_show_index].set_surface_override_material(0, M_TEMP_GOAL)
 	random_span[current_target_show_index].set_surface_override_material(0, M_TEMP_GOAL)
+	
+	current_state = scene_state.SHOW_TARGET
+	ticks_msec_bookmark = Time.get_ticks_msec()
 
 func scene_hide_target():
 	random_span[current_target_show_index].set_surface_override_material(0, null)
@@ -248,6 +247,9 @@ func scene_trial_start():
 	
 	# emit signal for ball feeder
 	#trial_started.emit(is_blue_ball)
+	
+	current_state = scene_state.TRIAL
+	ticks_msec_bookmark = Time.get_ticks_msec()
 
 func append_new_metrics_entry():
 	metrics_array.append([block_counter, trial_counter, is_trial_passed])
