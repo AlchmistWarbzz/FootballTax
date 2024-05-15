@@ -16,21 +16,12 @@ const TRIAL_TICKS_MSEC: int = 50000
 # counters
 const PRACTICE_BLOCKS: int = 1
 const TEST_BLOCKS: int = 4
-const SHIFT_TRIALS_PER_PRACTICE_BLOCK: int = 5
-const NON_SHIFT_TRIALS_PER_PRACTICE_BLOCK: int = 15
-const SHIFT_TRIALS_PER_TEST_BLOCK: int = 12
-const NON_SHIFT_TRIALS_PER_TEST_BLOCK: int = 36
 
 var is_practice_block: bool = true
-var shift_trials_per_block: int = SHIFT_TRIALS_PER_PRACTICE_BLOCK
-var non_shift_trials_per_block: int = NON_SHIFT_TRIALS_PER_PRACTICE_BLOCK
 var block_counter: int = 0
 var trial_counter: int = 0
-var span_length: int = 3
-#var shift_trial_counter: int = 0
 var trials_passed: int = 0
-#var non_shift_trial_counter: int = 0
-#var non_shift_trials_passed: int = 0
+var span_length: int = 3
 
 # metrics
 @onready var metrics_array = Array()
@@ -113,9 +104,6 @@ func _process(_delta: float) -> void:
 				append_new_metrics_entry()
 				
 				scene_reset()
-				
-				current_state = scene_state.WAIT
-				ticks_msec_bookmark = Time.get_ticks_msec()
 			
 			if Input.is_action_just_pressed("select"):
 				var raycast_length = 1000
@@ -142,12 +130,10 @@ func _process(_delta: float) -> void:
 					ball_kicked.emit(result.collider.get_global_position() + (Vector3.UP * 4)
 					, ball_kick_magnitude)
 				
-				for n in random_span:
-					var n_stringname = str(targets.find(n))
-					random_span_numbers.append(StringName(n_stringname))
-				random_span_numbers.reverse() # ensure backward digits
-				
-				if player_input_span == random_span_numbers:
+				var required_input_span = random_span_numbers.duplicate()
+				required_input_span.reverse() # ensure backward digits
+				#print(required_input_span)
+				if player_input_span == required_input_span:
 					# trial passed
 					print("trial passed")
 					is_trial_passed = true
@@ -158,9 +144,6 @@ func _process(_delta: float) -> void:
 					append_new_metrics_entry()
 					
 					scene_reset()
-					
-					current_state = scene_state.WAIT
-					ticks_msec_bookmark = Time.get_ticks_msec()
 				
 				elif player_input_span.size() >= random_span.size():
 					print("trial failed")
@@ -168,11 +151,6 @@ func _process(_delta: float) -> void:
 					append_new_metrics_entry()
 					
 					scene_reset()
-					
-					current_state = scene_state.WAIT
-					ticks_msec_bookmark = Time.get_ticks_msec()
-				
-				random_span_numbers = Array()
 
 
 func scene_reset():
@@ -191,6 +169,12 @@ func scene_reset():
 	new_span.shuffle()
 	random_span = new_span.slice(0, span_length, 1)
 	
+	# update vars
+	random_span_numbers = Array()
+	for n in random_span:
+		var n_string = str(targets.find(n))
+		random_span_numbers.append(StringName(n_string))
+	
 	# spawn fixation cone
 	var new_fixation_cone = FIXATION_CONE.instantiate()
 	$PlaceholderFixation.add_child(new_fixation_cone)
@@ -199,6 +183,9 @@ func scene_reset():
 	#var balls = $Player/PlaceholderBall.get_children()
 	#for b in balls:
 		#b.queue_free()
+	
+	current_state = scene_state.WAIT
+	ticks_msec_bookmark = Time.get_ticks_msec()
 
 func scene_ready():
 	#print("scene_ready")
@@ -215,6 +202,7 @@ func scene_ready():
 func scene_show_target():
 	#random_span[next_target_to_show_index].set_surface_override_material(0, M_TEMP_GOAL)
 	random_span[current_target_show_index].set_surface_override_material(0, M_TEMP_GOAL)
+	print("scene_show_target " + str(random_span_numbers[current_target_show_index]))
 	
 	current_state = scene_state.SHOW_TARGET
 	ticks_msec_bookmark = Time.get_ticks_msec()
@@ -223,15 +211,15 @@ func scene_hide_target():
 	random_span[current_target_show_index].set_surface_override_material(0, null)
 
 func scene_trial_start():
-	print("scene_trial_start")
+	# update trial counters
+	trial_counter += 1
+	
+	print("scene_trial_start " + str(trial_counter))
 	
 	# remove fixation cone
 	if $PlaceholderFixation.get_child_count() != 0:
 		$PlaceholderFixation/FixationCone.free()
-	
-	# update trial counters
-	trial_counter += 1
-	
+
 	# set up flags
 	is_trial_passed = false
 	
@@ -300,14 +288,10 @@ func write_sst_summary_log(datetime_dict):
 		
 		# write counters
 		summary_log_file.store_line("is_practice_block: " + str(is_practice_block))
-		#summary_log_file.store_line("non_shift_trials_per_block: " + str(non_shift_trials_per_block))
-		#summary_log_file.store_line("shift_trials_per_block: " + str(shift_trials_per_block))
 		summary_log_file.store_line("block_counter: " + str(block_counter))
 		summary_log_file.store_line("trial_counter: " + str(trial_counter))
-		#summary_log_file.store_line("trial_counter: " + str(trial_counter))
 		summary_log_file.store_line("trials_passed: " + str(trials_passed))
-		#summary_log_file.store_line("shift_trial_counter: " + str(shift_trial_counter))
-		#summary_log_file.store_line("shift_trials_passed: " + str(shift_trials_passed))
+		summary_log_file.store_line("span_length: " + str(span_length))
 		
 		# calculate probability of passing Trials
 		var p_pt: float = float(trials_passed) / float(trial_counter) # successes / total
