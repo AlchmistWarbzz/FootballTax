@@ -15,7 +15,7 @@ var task_to_load
 func _ready() -> void:
 	level_data = LevelManager.get_level_data_by_id(level_id)
 	
-	await get_tree().create_timer(5.0).timeout
+	await get_tree().create_timer(5.0).timeout # TODO replace: wait for play button
 	
 	# temp task manager selection
 	var instance = task_to_load.instantiate()

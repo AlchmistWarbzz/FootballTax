@@ -10,15 +10,19 @@ const READY_TICKS_MSEC: int = 1000
 const TRIAL_TICKS_MSEC: int = 2000
 @onready var ticks_msec_bookmark: int = 0
 
+# blocks
+enum block_type {TEST, PRACTICE}
+## Array determines the order and type of blocks in the test.
+@export var blocks: Array[block_type] = []
+var blocks_index: int = 0
+
 # counters
-const PRACTICE_BLOCKS: int = 1
-const TEST_BLOCKS: int = 4
-const SHIFT_TRIALS_PER_PRACTICE_BLOCK: int = 5
-const NON_SHIFT_TRIALS_PER_PRACTICE_BLOCK: int = 15
+const SHIFT_TRIALS_PER_PRACTICE_BLOCK: int = 1
+const NON_SHIFT_TRIALS_PER_PRACTICE_BLOCK: int = 3
 const SHIFT_TRIALS_PER_TEST_BLOCK: int = 12
 const NON_SHIFT_TRIALS_PER_TEST_BLOCK: int = 36
 
-var is_practice_block: bool = true
+#var is_practice_block: bool = true
 var shift_trials_per_block: int = SHIFT_TRIALS_PER_PRACTICE_BLOCK
 var non_shift_trials_per_block: int = NON_SHIFT_TRIALS_PER_PRACTICE_BLOCK
 var block_counter: int = 0
@@ -52,6 +56,8 @@ var is_shift_trial: bool = false
 func _ready() -> void:
 	AudioManager.ambience_sfx.play()
 	
+	reset_counters()
+	
 	scene_reset() # ensure scene and scene_state are in agreement
 
 
@@ -59,17 +65,36 @@ func _ready() -> void:
 func _process(_delta: float) -> void:
 	if Input.is_action_just_pressed("save_log"):
 		#scene_trial_start(true)
-		write_sst_raw_log(start_datetime)
-		write_sst_summary_log(start_datetime)
+		write_sst_raw_log(Time.get_datetime_dict_from_system())
+		write_sst_summary_log(Time.get_datetime_dict_from_system())
 	
 	# tick-based scene sequencing
 	match current_state:
 		scene_state.WAIT:
 			if (Time.get_ticks_msec() - ticks_msec_bookmark) > TICKS_BETWEEN_TRIALS_MSEC:
 				# wait time is up
-				scene_ready()
-				current_state = scene_state.READY
-				ticks_msec_bookmark = Time.get_ticks_msec()
+				
+				# check block finished
+				if shift_trial_counter >= shift_trials_per_block and non_shift_trial_counter >= non_shift_trials_per_block:
+					print("block " + str(blocks_index + 1) + " finished.")
+					# trial block finished
+					write_sst_raw_log(Time.get_datetime_dict_from_system())
+					write_sst_summary_log(Time.get_datetime_dict_from_system())
+					
+					if blocks_index + 1 < blocks.size():
+						# set up next block
+						blocks_index += 1
+						reset_counters() # reset counters now their data has been saved
+						# TODO new block transition
+						
+						scene_reset()
+					else:
+						print("all blocks finished.")
+						# TODO end task/task select screen
+						#LevelManager.load_level(1, 1)
+						get_tree().change_scene_to_file("res://Main.tscn")
+				else:
+					scene_ready()
 		
 		
 		scene_state.READY:
@@ -77,26 +102,13 @@ func _process(_delta: float) -> void:
 				# ready time is up
 				
 				# determine shift or non shift trial
-				var rand_is_shift_trial = (randf() < 0.25)
-				if rand_is_shift_trial and shift_trial_counter < shift_trials_per_block:
-					# shift is rand selected and shifts remain
+				var rand_is_shift : bool = (randf() < 0.25)
+				if rand_is_shift and shift_trial_counter < shift_trials_per_block:
 					is_shift_trial = true
-				elif non_shift_trial_counter < non_shift_trials_per_block:
-					# out of shifts but non-shifts remain, force non-shift
+					scene_trial_start()
+				elif (not rand_is_shift) and non_shift_trial_counter < non_shift_trials_per_block:
 					is_shift_trial = false
-				elif not rand_is_shift_trial and non_shift_trial_counter < non_shift_trials_per_block:
-					# non-shift is rand selected and non-shifts remain
-					is_shift_trial = false
-				elif shift_trial_counter < shift_trials_per_block:
-					# out of non-shifts but shifts remain, force shift
-					is_shift_trial = true
-				else:
-					print("block finished. is_practice_block: " + str(is_practice_block))
-					# TODO block finished, load next block
-				
-				scene_trial_start()
-				current_state = scene_state.TRIAL
-				ticks_msec_bookmark = Time.get_ticks_msec()
+					scene_trial_start()
 		
 		
 		scene_state.TRIAL:
@@ -160,6 +172,9 @@ func scene_reset():
 		#$PlaceholderBallFeederRight/BallFeeder.free()
 	
 	trial_ended.emit()
+	
+	current_state = scene_state.WAIT
+	ticks_msec_bookmark = Time.get_ticks_msec()
 
 func scene_ready():
 	print("scene_ready")
@@ -167,21 +182,23 @@ func scene_ready():
 	# spawn fixation cone
 	var new_fixation_cone = FIXATION_CONE.instantiate()
 	$PlaceholderFixation.add_child(new_fixation_cone)
+	
+	current_state = scene_state.READY
+	ticks_msec_bookmark = Time.get_ticks_msec()
 
 func scene_trial_start():
-	var bool_string = "shift" if is_shift_trial else "non_shift"
-	print("scene_trial_start " + bool_string)
-	
-	# remove fixation cone
-	if $PlaceholderFixation.get_child_count() != 0:
-		$PlaceholderFixation/FixationCone.free()
-	
 	# update trial counters
 	trial_counter += 1
 	if is_shift_trial:
 		shift_trial_counter += 1
 	else:
 		non_shift_trial_counter += 1
+		
+	print("scene_trial_start " + str(trial_counter) + ", is_shift_trial: " + str(is_shift_trial))
+	
+	# remove fixation cone
+	if $PlaceholderFixation.get_child_count() != 0:
+		$PlaceholderFixation/FixationCone.free()
 	
 	# set up flags
 	is_trial_passed = false
@@ -197,6 +214,25 @@ func scene_trial_start():
 	else:
 		is_feeder_left = false
 		trial_started.emit(is_blue_ball, is_feeder_left)
+	
+	current_state = scene_state.TRIAL
+	ticks_msec_bookmark = Time.get_ticks_msec()
+
+func reset_counters():
+	print("start block " + str(blocks_index + 1) + ". is_practice_block: " + str(blocks[blocks_index] == block_type.PRACTICE))
+	
+	if blocks[blocks_index] == block_type.PRACTICE:
+		shift_trials_per_block = SHIFT_TRIALS_PER_PRACTICE_BLOCK
+		non_shift_trials_per_block = NON_SHIFT_TRIALS_PER_PRACTICE_BLOCK
+	else:
+		shift_trials_per_block = SHIFT_TRIALS_PER_TEST_BLOCK
+		non_shift_trials_per_block = NON_SHIFT_TRIALS_PER_TEST_BLOCK
+	block_counter = 0
+	trial_counter = 0
+	shift_trial_counter = 0
+	shift_trials_passed = 0
+	non_shift_trial_counter = 0
+	non_shift_trials_passed = 0
 
 func check_correct_kick(is_kick_left: bool) -> bool:
 	if is_kick_left:
@@ -254,7 +290,7 @@ func write_sst_summary_log(datetime_dict):
 		summary_log_file.store_string("\n-Final States of Counters-\n\n")
 		
 		# write counters
-		summary_log_file.store_line("is_practice_block: " + str(is_practice_block))
+		summary_log_file.store_line("is_practice_block: " + str(blocks[blocks_index] == block_type.PRACTICE))
 		summary_log_file.store_line("non_shift_trials_per_block: " + str(non_shift_trials_per_block))
 		summary_log_file.store_line("shift_trials_per_block: " + str(shift_trials_per_block))
 		summary_log_file.store_line("block_counter: " + str(block_counter))

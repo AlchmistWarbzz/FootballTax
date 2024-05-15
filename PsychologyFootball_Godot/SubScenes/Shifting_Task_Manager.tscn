@@ -7,6 +7,7 @@
 
 [node name="Shifting_Task_Manager" type="Node3D"]
 script = ExtResource("1_84der")
+blocks = Array[int]([1, 0, 0])
 
 [node name="Player" parent="." instance=ExtResource("2_bpif1")]
 transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 0, 0, 0)
