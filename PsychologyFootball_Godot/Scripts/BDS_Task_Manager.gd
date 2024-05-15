@@ -66,8 +66,8 @@ func _ready() -> void:
 func _process(_delta: float) -> void:
 	if Input.is_action_just_pressed("save_log"):
 		#scene_trial_start(true)
-		write_sst_raw_log(start_datetime)
-		write_sst_summary_log(start_datetime)
+		write_sst_raw_log(Time.get_datetime_dict_from_system())
+		write_sst_summary_log(Time.get_datetime_dict_from_system())
 	
 	# tick-based scene sequencing
 	match current_state:
@@ -244,7 +244,7 @@ func append_new_metrics_entry():
 
 func write_sst_raw_log(datetime_dict):
 	# open/create file
-	var raw_log_file_path: String = "bds_{year}-{month}-{day}-{hour}-{minute}-{second}_raw.txt".format(datetime_dict) # TODO let user choose dir
+	var raw_log_file_path: String = "target_digit_{year}-{month}-{day}-{hour}-{minute}-{second}_raw.txt".format(datetime_dict) # TODO let user choose dir
 	var raw_log_file = FileAccess.open(raw_log_file_path, FileAccess.WRITE)
 	print("raw log file created at " + raw_log_file_path + " with error code " + str(FileAccess.get_open_error()))
 	
@@ -253,9 +253,11 @@ func write_sst_raw_log(datetime_dict):
 	# correct_response: bool, response_time: int (ms), stop_signal_delay: int (ms)
 	if raw_log_file:
 		# write date, time, subject, group, format guide
-		raw_log_file.store_line("PsychologyFootball - BDS Task - Raw Data Log")
+		raw_log_file.store_line("PsychologyFootball - Target Digit Test - Raw Data Log")
 		raw_log_file.store_line("date: {day}-{month}-{year}".format(datetime_dict))
 		raw_log_file.store_line("time: {hour}:{minute}:{second}".format(datetime_dict))
+		raw_log_file.store_line("start date: {day}-{month}-{year}".format(start_datetime))
+		raw_log_file.store_line("start time: {hour}:{minute}:{second}".format(start_datetime))
 		raw_log_file.store_line("subject: test") # TODO fill user-input subject and group
 		raw_log_file.store_line("group: test")
 		raw_log_file.store_string("\n-Format Guide-\n\nblock_counter, trial_counter, correct_response")
@@ -273,15 +275,18 @@ func write_sst_raw_log(datetime_dict):
 
 func write_sst_summary_log(datetime_dict):
 	# open/create file
-	var summary_log_file_path: String = "bds_{year}-{month}-{day}-{hour}-{minute}-{second}_summary.txt".format(datetime_dict) # TODO let user choose dir
+	var summary_log_file_path: String = "target_digit_{year}-{month}-{day}-{hour}-{minute}-{second}_summary.txt".format(datetime_dict) # TODO let user choose dir
+	# TODO add group and subject to file name
 	var summary_log_file = FileAccess.open(summary_log_file_path, FileAccess.WRITE)
 	print("summary log file created at " + summary_log_file_path + " with error code " + str(FileAccess.get_open_error()))
 	
 	if summary_log_file:
 		# write date, time, subject, group, format guide
-		summary_log_file.store_line("PsychologyFootball - BDS Task - Summary Data Log")
+		summary_log_file.store_line("PsychologyFootball - Target Digit Test - Summary Data Log")
 		summary_log_file.store_line("date: {day}-{month}-{year}".format(datetime_dict))
 		summary_log_file.store_line("time: {hour}:{minute}:{second}".format(datetime_dict))
+		summary_log_file.store_line("start date: {day}-{month}-{year}".format(start_datetime))
+		summary_log_file.store_line("start time: {hour}:{minute}:{second}".format(start_datetime))
 		summary_log_file.store_line("subject: test") # TODO fill user-input subject and group
 		summary_log_file.store_line("group: test")
 		summary_log_file.store_string("\n-Final States of Counters-\n\n")

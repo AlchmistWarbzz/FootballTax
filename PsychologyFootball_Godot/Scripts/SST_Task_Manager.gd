@@ -276,7 +276,7 @@ func scene_trial_start(is_stop_trial: bool):
 		#$PlaceholderFixation/FixationCone.free()
 
 func reset_counters():
-	print("new block. is_practice_block: " + str(blocks[blocks_index] == block_type.PRACTICE))
+	print("start STOP SIGNAL TASK block " + str(blocks_index + 1) + ". is_practice_block: " + str(blocks[blocks_index] == block_type.PRACTICE))
 	
 	if blocks[blocks_index] == block_type.PRACTICE:
 		go_trials_per_block = GO_TRIALS_PER_PRACTICE_BLOCK
@@ -305,9 +305,11 @@ func write_sst_raw_log(datetime_dict):
 	# correct_response: bool, response_time: int (ms), stop_signal_delay: int (ms)
 	if raw_log_file:
 		# write date, time, subject, group, format guide
-		raw_log_file.store_line("PsychologyFootball - Stop Signal Task - Raw Data Log")
+		raw_log_file.store_line("PsychologyFootball - Stop Signal Test - Raw Data Log")
 		raw_log_file.store_line("date: {day}-{month}-{year}".format(datetime_dict))
 		raw_log_file.store_line("time: {hour}:{minute}:{second}".format(datetime_dict))
+		raw_log_file.store_line("start date: {day}-{month}-{year}".format(start_datetime))
+		raw_log_file.store_line("start time: {hour}:{minute}:{second}".format(start_datetime))
 		raw_log_file.store_line("subject: test") # TODO fill user-input subject and group
 		raw_log_file.store_line("group: test")
 		raw_log_file.store_string("\n-Format Guide-\n\nblock_counter, trial_counter, stimulus_left (ball feeder side), stop_trial, correct_response, response_time (ms), stop_signal_delay (ms)")
@@ -327,9 +329,11 @@ func write_sst_summary_log(datetime_dict):
 	
 	if summary_log_file:
 		# write date, time, subject, group, format guide
-		summary_log_file.store_line("PsychologyFootball - Stop Signal Task - Summary Data Log")
+		summary_log_file.store_line("PsychologyFootball - Stop Signal Test - Summary Data Log")
 		summary_log_file.store_line("date: {day}-{month}-{year}".format(datetime_dict))
 		summary_log_file.store_line("time: {hour}:{minute}:{second}".format(datetime_dict))
+		summary_log_file.store_line("start date: {day}-{month}-{year}".format(start_datetime))
+		summary_log_file.store_line("start time: {hour}:{minute}:{second}".format(start_datetime))
 		summary_log_file.store_line("subject: test") # TODO fill user-input subject and group
 		summary_log_file.store_line("group: test")
 		summary_log_file.store_string("\n-Final States of Counters-\n\n")
