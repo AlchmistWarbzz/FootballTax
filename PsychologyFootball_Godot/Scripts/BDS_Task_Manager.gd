@@ -13,6 +13,12 @@ const TARGET_SHOW_TICKS_MSEC: int = 400
 const TRIAL_TICKS_MSEC: int = 50000
 @onready var ticks_msec_bookmark: int = 0
 
+# blocks
+enum block_type {TEST, PRACTICE}
+## Array determines the order and type of blocks in the test.
+@export var blocks: Array[block_type] = []
+var blocks_index: int = 0
+
 # counters
 const PRACTICE_BLOCKS: int = 1
 const TEST_BLOCKS: int = 4
