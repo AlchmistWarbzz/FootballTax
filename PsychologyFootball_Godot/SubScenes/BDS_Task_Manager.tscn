@@ -27,6 +27,7 @@ points = PackedVector3Array(-0.641527, 1.08286, 0.0256777, -0.637885, 1.07822, 0
 
 [node name="BDS_Task_Manager" type="Node3D"]
 script = ExtResource("1_5jgw8")
+blocks = Array[int]([1, 0, 0])
 
 [node name="Player" parent="." instance=ExtResource("2_uoig7")]
 transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 0, 0, 0)

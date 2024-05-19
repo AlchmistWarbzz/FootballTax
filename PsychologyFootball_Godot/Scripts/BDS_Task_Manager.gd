@@ -23,7 +23,6 @@ var blocks_index: int = 0
 const PRACTICE_BLOCKS: int = 1
 const TEST_BLOCKS: int = 4
 
-var is_practice_block: bool = true
 var block_counter: int = 0
 var trial_counter: int = 0
 var trials_passed: int = 0
@@ -61,9 +60,9 @@ var current_target_show_index: int = -1
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
-	
-	
 	AudioManager.ambience_sfx.play()
+	
+	reset_counters()
 	
 	scene_reset() # ensure scene and scene_state are in agreement
 
@@ -245,6 +244,20 @@ func scene_trial_start():
 	current_state = scene_state.TRIAL
 	ticks_msec_bookmark = Time.get_ticks_msec()
 
+func reset_counters():
+	print("start TARGET DIGIT TEST block " + str(blocks_index + 1) + ". is_practice_block: " + str(blocks[blocks_index] == block_type.PRACTICE))
+	
+	#if blocks[blocks_index] == block_type.PRACTICE:
+		#shift_trials_per_block = SHIFT_TRIALS_PER_PRACTICE_BLOCK
+		#non_shift_trials_per_block = NON_SHIFT_TRIALS_PER_PRACTICE_BLOCK
+	#else:
+		#shift_trials_per_block = SHIFT_TRIALS_PER_TEST_BLOCK
+		#non_shift_trials_per_block = NON_SHIFT_TRIALS_PER_TEST_BLOCK
+	block_counter = 0
+	trial_counter = 0
+	trials_passed = 0
+	span_length = 3
+
 func append_new_metrics_entry():
 	metrics_array.append([block_counter, trial_counter, is_trial_passed])
 
@@ -298,7 +311,7 @@ func write_sst_summary_log(datetime_dict):
 		summary_log_file.store_string("\n-Final States of Counters-\n\n")
 		
 		# write counters
-		summary_log_file.store_line("is_practice_block: " + str(is_practice_block))
+		summary_log_file.store_line("is_practice_block: " + str(blocks[blocks_index] == block_type.PRACTICE))
 		summary_log_file.store_line("block_counter: " + str(block_counter))
 		summary_log_file.store_line("trial_counter: " + str(trial_counter))
 		summary_log_file.store_line("trials_passed: " + str(trials_passed))
