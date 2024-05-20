@@ -53,6 +53,7 @@ var is_trial_passed: bool = false
 var is_blue_ball: bool = false
 var is_shift_trial: bool = false
 
+
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	AudioManager.ambience_sfx.play()
@@ -78,21 +79,21 @@ func _process(_delta: float) -> void:
 				# check block finished
 				if shift_trial_counter >= shift_trials_per_block and non_shift_trial_counter >= non_shift_trials_per_block:
 					print("block " + str(blocks_index + 1) + " finished.")
-					# trial block finished
+					
 					write_sst_raw_log(Time.get_datetime_dict_from_system())
 					write_sst_summary_log(Time.get_datetime_dict_from_system())
 					
+					# check more blocks remain
 					if blocks_index + 1 < blocks.size():
 						# set up next block
 						blocks_index += 1
-						reset_counters() # reset counters now their data has been saved
+						reset_counters()# reset counters now their data has been logged
+						
 						# TODO new block transition
 						
 						scene_reset()
 					else:
 						print("all blocks finished.")
-						# TODO end task/task select screen
-						#LevelManager.load_level(1, 1)
 						get_tree().change_scene_to_file("res://Main.tscn")
 				else:
 					scene_ready()

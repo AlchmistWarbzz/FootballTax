@@ -9,7 +9,7 @@ const BLUE_BALL = preload("res://SubScenes/BlueBall.tscn")
 # time
 @export var ticks_between_trials_msec: int = 3000
 @export var ready_ticks_msec: int = 250
-@export var target_show_ticks_msec: int = 400
+@export var target_show_ticks_msec: int = 750
 @export var trial_ticks_msec: int = 50000
 
 @onready var ticks_msec_bookmark: int = 0
@@ -19,6 +19,9 @@ enum block_type {TEST, PRACTICE}
 ## Array determines the order and type of blocks in the test.
 @export var blocks: Array[block_type] = []
 var blocks_index: int = 0
+
+@export var practice_block_span_max_digits: int = 5
+@export var test_block_span_max_digits: int = 9
 
 # counters
 var block_counter: int = 0
@@ -32,7 +35,6 @@ var span_length: int = 3
 
 # states
 enum scene_state {WAIT, READY, SHOW_TARGET, TRIAL}
-# TODO create dict of states and corresponding func callables for defensive prog.
 @onready var current_state = scene_state.WAIT
 
 # signals
@@ -78,6 +80,11 @@ func _process(_delta: float) -> void:
 		scene_state.WAIT:
 			if (Time.get_ticks_msec() - ticks_msec_bookmark) > ticks_between_trials_msec:
 				# wait time is up
+				
+				# TODO check if block done, create logs
+				
+				# TODO check if all blocks done, return to menu
+				
 				scene_ready()
 		
 		
@@ -145,6 +152,7 @@ func _process(_delta: float) -> void:
 					trials_passed += 1
 					
 					span_length += 1
+					print("span length increased to " + str(span_length))
 					
 					append_new_metrics_entry()
 					
@@ -161,18 +169,14 @@ func _process(_delta: float) -> void:
 func scene_reset():
 	print("scene_reset")
 	
-	# remove left ball feeder
-	#if $PlaceholderBallFeederLeft.get_child_count() != 0:
-		#$PlaceholderBallFeederLeft/BallFeeder.free()
-	
 	# reset span stuff
 	current_target_show_index = -1
 	player_input_span = Array()
 	
 	# calculate new span stuff
-	var new_span = targets.duplicate(true)
-	new_span.shuffle()
-	random_span = new_span.slice(0, span_length, 1)
+	var s = targets.duplicate()
+	s.shuffle()
+	random_span = s.slice(0, span_length, 1)
 	
 	# update vars
 	random_span_numbers = Array()
@@ -183,11 +187,6 @@ func scene_reset():
 	# spawn fixation cone
 	var new_fixation_cone = FIXATION_CONE.instantiate()
 	$PlaceholderFixation.add_child(new_fixation_cone)
-	
-	# remove balls
-	#var balls = $Player/PlaceholderBall.get_children()
-	#for b in balls:
-		#b.queue_free()
 	
 	current_state = scene_state.WAIT
 	ticks_msec_bookmark = Time.get_ticks_msec()

@@ -63,6 +63,8 @@ var is_feeder_left: bool = false
 var is_trial_passed: bool = false
 var stop_signal_shown: bool = false
 
+
+# Called when the node enters the scene tree for the first time.
 func _ready():
 	AudioManager.ambience_sfx.play()
 	
@@ -70,8 +72,9 @@ func _ready():
 	
 	scene_reset() # ensure scene and scene_state are in agreement
 
+
 # Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(_delta):
+func _process(_delta: float) -> void:
 	if Input.is_action_just_pressed("save_log"):
 		#scene_trial_start(true)
 		write_sst_raw_log(Time.get_datetime_dict_from_system())
@@ -81,12 +84,12 @@ func _process(_delta):
 	match current_state:
 		scene_state.WAIT:
 			if (Time.get_ticks_msec() - ticks_msec_bookmark) > TICKS_BETWEEN_TRIALS_MSEC:
-				# wait time between trials is up, prepare next state
+				# wait time is up
 				
 				# check block finished
 				if stop_trial_counter >= stop_trials_per_block and go_trial_counter >= go_trials_per_block:
 					print("block finished.")
-					# trial block finished
+					
 					write_sst_raw_log(Time.get_datetime_dict_from_system())
 					write_sst_summary_log(Time.get_datetime_dict_from_system())
 					
