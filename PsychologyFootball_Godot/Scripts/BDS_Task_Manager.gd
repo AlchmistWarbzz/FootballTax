@@ -20,10 +20,13 @@ enum block_type {TEST, PRACTICE}
 @export var blocks: Array[block_type] = []
 var blocks_index: int = 0
 
-@export var practice_block_span_max_digits: int = 5
-@export var test_block_span_max_digits: int = 9
+#@export var practice_block_span_max_digits: int = 5
+#@export var test_block_span_max_digits: int = 9
+@export var trials_per_practice_block: int = 5
+@export var trials_per_test_block: int = 9
 
 # counters
+var trials_per_block: int = trials_per_practice_block
 var block_counter: int = 0
 var trial_counter: int = 0
 var trials_passed: int = 0
@@ -81,11 +84,36 @@ func _process(_delta: float) -> void:
 			if (Time.get_ticks_msec() - ticks_msec_bookmark) > ticks_between_trials_msec:
 				# wait time is up
 				
-				# TODO check if block done, create logs
+				# check block finished
 				
-				# TODO check if all blocks done, return to menu
+				#var block_finished_flag : bool = false
+				#if blocks[blocks_index] == block_type.PRACTICE:
+					#if span_length > practice_block_span_max_digits:
+						#block_finished_flag = true
+				#else:
+					#if span_length > test_block_span_max_digits:
+						#block_finished_flag = true
 				
-				scene_ready()
+				if trial_counter >= trials_per_block:
+					print("block " + str(blocks_index + 1) + " finished.")
+					
+					write_sst_raw_log(Time.get_datetime_dict_from_system())
+					write_sst_summary_log(Time.get_datetime_dict_from_system())
+					
+					# check if all blocks in sequence done
+					if blocks_index + 1 < blocks.size():
+						# set up next block
+						blocks_index += 1
+						reset_counters()# reset counters now their data has been logged
+						
+						# TODO new block transition
+						
+						scene_reset()
+					else:
+						print("all blocks finished.")
+						get_tree().change_scene_to_file("res://Main.tscn")
+				else:
+					scene_ready()
 		
 		
 		scene_state.READY:
@@ -229,12 +257,10 @@ func scene_trial_start():
 func reset_counters():
 	print("start TARGET DIGIT TEST block " + str(blocks_index + 1) + ". is_practice_block: " + str(blocks[blocks_index] == block_type.PRACTICE))
 	
-	#if blocks[blocks_index] == block_type.PRACTICE:
-		#shift_trials_per_block = SHIFT_TRIALS_PER_PRACTICE_BLOCK
-		#non_shift_trials_per_block = NON_SHIFT_TRIALS_PER_PRACTICE_BLOCK
-	#else:
-		#shift_trials_per_block = SHIFT_TRIALS_PER_TEST_BLOCK
-		#non_shift_trials_per_block = NON_SHIFT_TRIALS_PER_TEST_BLOCK
+	if blocks[blocks_index] == block_type.PRACTICE:
+		trials_per_block = trials_per_practice_block
+	else:
+		trials_per_block = trials_per_test_block
 	block_counter = 0
 	trial_counter = 0
 	trials_passed = 0
