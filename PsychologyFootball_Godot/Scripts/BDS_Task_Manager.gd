@@ -41,6 +41,7 @@ enum scene_state {WAIT, READY, SHOW_TARGET, TRIAL}
 signal trial_started
 signal ball_kicked
 @export var ball_kick_magnitude : float = 15
+@export var ball_kick_height_offset : float = 4
 
 # flags
 var is_trial_passed: bool = false
@@ -133,7 +134,7 @@ func _process(_delta: float) -> void:
 					var instance
 					instance = BLUE_BALL.instantiate()
 					$Player/PlaceholderBall.add_child(instance)
-					ball_kicked.emit(result.collider.get_global_position() + (Vector3.UP * 4)
+					ball_kicked.emit(result.collider.get_global_position() + (Vector3.UP * ball_kick_height_offset)
 					, ball_kick_magnitude)
 				
 				var required_input_span = random_span_numbers.duplicate()
@@ -224,8 +225,6 @@ func scene_trial_start():
 
 	# set up flags
 	is_trial_passed = false
-	
-	
 	
 	current_state = scene_state.TRIAL
 	ticks_msec_bookmark = Time.get_ticks_msec()
