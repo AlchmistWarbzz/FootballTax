@@ -7,10 +7,11 @@ const M_TEMP_GOAL = preload("res://Materials/M_TempGoal.tres")
 const BLUE_BALL = preload("res://SubScenes/BlueBall.tscn")
 
 # time
-const TICKS_BETWEEN_TRIALS_MSEC: int = 3000
-const READY_TICKS_MSEC: int = 250
-const TARGET_SHOW_TICKS_MSEC: int = 400
-const TRIAL_TICKS_MSEC: int = 50000
+@export var ticks_between_trials_msec: int = 3000
+@export var ready_ticks_msec: int = 250
+@export var target_show_ticks_msec: int = 400
+@export var trial_ticks_msec: int = 50000
+
 @onready var ticks_msec_bookmark: int = 0
 
 # blocks
@@ -20,9 +21,6 @@ enum block_type {TEST, PRACTICE}
 var blocks_index: int = 0
 
 # counters
-const PRACTICE_BLOCKS: int = 1
-const TEST_BLOCKS: int = 4
-
 var block_counter: int = 0
 var trial_counter: int = 0
 var trials_passed: int = 0
@@ -78,13 +76,13 @@ func _process(_delta: float) -> void:
 	# tick-based scene sequencing
 	match current_state:
 		scene_state.WAIT:
-			if (Time.get_ticks_msec() - ticks_msec_bookmark) > TICKS_BETWEEN_TRIALS_MSEC:
+			if (Time.get_ticks_msec() - ticks_msec_bookmark) > ticks_between_trials_msec:
 				# wait time is up
 				scene_ready()
 		
 		
 		scene_state.READY:
-			if (Time.get_ticks_msec() - ticks_msec_bookmark) > READY_TICKS_MSEC:
+			if (Time.get_ticks_msec() - ticks_msec_bookmark) > ready_ticks_msec:
 				# ready time is up
 				
 				if current_target_show_index < span_length:
@@ -94,14 +92,14 @@ func _process(_delta: float) -> void:
 		
 		
 		scene_state.SHOW_TARGET:
-			if (Time.get_ticks_msec() - ticks_msec_bookmark) > TARGET_SHOW_TICKS_MSEC:
+			if (Time.get_ticks_msec() - ticks_msec_bookmark) > target_show_ticks_msec:
 				# show time is up
 				scene_hide_target()
 				scene_ready()
 		
 		
 		scene_state.TRIAL:
-			if (Time.get_ticks_msec() - ticks_msec_bookmark) > TRIAL_TICKS_MSEC:
+			if (Time.get_ticks_msec() - ticks_msec_bookmark) > trial_ticks_msec:
 				# trial time is up
 				
 				if not is_trial_passed:
@@ -243,8 +241,8 @@ func reset_counters():
 	trials_passed = 0
 	span_length = 3
 
-func append_new_metrics_entry():
-	metrics_array.append([block_counter, trial_counter, is_trial_passed])
+func append_new_metrics_entry():# TODO take required sequence and input sequence
+	metrics_array.append([block_counter, trial_counter, span_length, is_trial_passed])
 
 func write_sst_raw_log(datetime_dict):
 	# open/create file
