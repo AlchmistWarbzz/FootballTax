@@ -83,7 +83,7 @@ func _process(_delta: float) -> void:
 					write_sst_raw_log(Time.get_datetime_dict_from_system())
 					write_sst_summary_log(Time.get_datetime_dict_from_system())
 					
-					# check more blocks remain
+					# check if all blocks in sequence done
 					if blocks_index + 1 < blocks.size():
 						# set up next block
 						blocks_index += 1
@@ -164,14 +164,6 @@ func _process(_delta: float) -> void:
 
 func scene_reset():
 	print("scene_reset")
-	
-	## remove left ball feeder
-	#if $PlaceholderBallFeederLeft.get_child_count() != 0:
-		#$PlaceholderBallFeederLeft/BallFeeder.free()
-	#
-	## remove right ball feeder
-	#if $PlaceholderBallFeederRight.get_child_count() != 0:
-		#$PlaceholderBallFeederRight/BallFeeder.free()
 	
 	trial_ended.emit()
 	
