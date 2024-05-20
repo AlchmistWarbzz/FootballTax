@@ -98,6 +98,7 @@ func _process(_delta: float) -> void:
 				scene_hide_target()
 				scene_ready()
 		
+		
 		scene_state.TRIAL:
 			if (Time.get_ticks_msec() - ticks_msec_bookmark) > TRIAL_TICKS_MSEC:
 				# trial time is up
@@ -197,10 +198,6 @@ func scene_ready():
 	
 	current_target_show_index += 1
 	
-	# spawn fixation cone
-	var new_fixation_cone = FIXATION_CONE.instantiate()
-	$PlaceholderFixation.add_child(new_fixation_cone)
-	
 	current_state = scene_state.READY
 	ticks_msec_bookmark = Time.get_ticks_msec()
 
@@ -228,18 +225,7 @@ func scene_trial_start():
 	# set up flags
 	is_trial_passed = false
 	
-	# spawn ball feeder, randomly choosing left or right side
-	#var new_ball_feeder = BALL_FEEDER_SCENE.instantiate()
-	#$PlaceholderBallFeederLeft.add_child(new_ball_feeder)
-	#if randf() > 0.5:
-		#is_feeder_left = true
-		#$PlaceholderBallFeederLeft.add_child(new_ball_feeder)
-	#else:
-		#is_feeder_left = false
-		#$PlaceholderBallFeederRight.add_child(new_ball_feeder)
 	
-	# emit signal for ball feeder
-	#trial_started.emit(is_blue_ball)
 	
 	current_state = scene_state.TRIAL
 	ticks_msec_bookmark = Time.get_ticks_msec()
