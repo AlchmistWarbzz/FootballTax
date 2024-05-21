@@ -93,7 +93,7 @@ func _process(_delta: float) -> void:
 						
 						scene_reset()
 					else:
-						print("all blocks finished.")
+						print("all blocks finished. returning to main menu.")
 						get_tree().change_scene_to_file("res://Main.tscn")
 				else:
 					scene_ready()

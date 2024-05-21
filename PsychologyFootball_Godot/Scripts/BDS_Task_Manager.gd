@@ -22,7 +22,7 @@ var blocks_index: int = 0
 
 #@export var practice_block_span_max_digits: int = 5
 #@export var test_block_span_max_digits: int = 9
-@export var trials_per_practice_block: int = 5
+@export var trials_per_practice_block: int = 3
 @export var trials_per_test_block: int = 9
 
 # counters
@@ -110,7 +110,7 @@ func _process(_delta: float) -> void:
 						
 						scene_reset()
 					else:
-						print("all blocks finished.")
+						print("all blocks finished. returning to main menu.")
 						get_tree().change_scene_to_file("res://Main.tscn")
 				else:
 					scene_ready()
