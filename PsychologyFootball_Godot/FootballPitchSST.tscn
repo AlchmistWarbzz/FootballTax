@@ -1,4 +1,4 @@
-[gd_scene load_steps=40 format=3 uid="uid://rjin0qqtw7jx"]
+[gd_scene load_steps=39 format=3 uid="uid://rjin0qqtw7jx"]
 
 [ext_resource type="Script" path="res://Scripts/level.gd" id="1_7q4w2"]
 [ext_resource type="Material" uid="uid://t05uv2wgginr" path="res://Materials/M_TempHill.tres" id="1_niqus"]
@@ -28,7 +28,6 @@
 [ext_resource type="ArrayMesh" uid="uid://cxyqct7m8eupo" path="res://Assets/Environment/SM_ENV__TreeT2.res" id="27_sssm6"]
 [ext_resource type="PackedScene" uid="uid://diy4oxifvl3ya" path="res://Character/character.tscn" id="28_0rfv3"]
 [ext_resource type="PackedScene" uid="uid://dfi240ptdepwf" path="res://go_trial_Rules.tscn" id="29_sloev"]
-[ext_resource type="Script" path="res://go_trial_Rules.gd" id="30_4achb"]
 [ext_resource type="ArrayMesh" uid="uid://f42g0unsqh3d" path="res://Assets/Building/SM__House1.res" id="31_acq1m"]
 [ext_resource type="ArrayMesh" uid="uid://kcwdwepxtdty" path="res://Assets/Building/SM__House2.res" id="32_v5off"]
 [ext_resource type="ArrayMesh" uid="uid://b86o0ugylg3i0" path="res://Assets/Building/SM__House4.res" id="33_cmdr1"]
@@ -69,6 +68,12 @@ point_count = 2
 [node name="root" type="Node3D"]
 script = ExtResource("1_7q4w2")
 level_id = 1
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="returnMainMenu" parent="CanvasLayer" instance=ExtResource("33_h0l5p")]
+
+[node name="GoTrial" parent="CanvasLayer" instance=ExtResource("29_sloev")]
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = SubResource("Environment_vmebv")
@@ -581,11 +586,6 @@ visible = false
 [node name="Townhall" parent="." instance=ExtResource("27_lw8c4")]
 transform = Transform3D(-0.364015, 0, 0.931393, 0, 1, 0, -0.931393, 0, -0.364015, -171.581, -1.29854, 54.0868)
 
-[node name="CanvasLayer" type="CanvasLayer" parent="."]
-
-[node name="GoTrial" parent="CanvasLayer" instance=ExtResource("29_sloev")]
-script = ExtResource("30_4achb")
-
 [node name="SmHouse1" type="MeshInstance3D" parent="."]
 transform = Transform3D(0.967086, 0, -0.25445, 0, 1, 0, 0.25445, 0, 0.967086, -109.009, 7.45555, -41.9473)
 mesh = ExtResource("31_acq1m")
@@ -609,5 +609,3 @@ mesh = ExtResource("32_v5off")
 [node name="SmHouse4" type="MeshInstance3D" parent="."]
 transform = Transform3D(0.99911, 0, 0.0421722, 0, 1, 0, -0.0421722, 0, 0.99911, -126.474, 3.18999, -3.18064)
 mesh = ExtResource("33_cmdr1")
-
-[node name="returnMainMenu" parent="." instance=ExtResource("33_h0l5p")]
