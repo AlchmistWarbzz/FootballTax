@@ -70,8 +70,9 @@ offset_bottom = 37.0
 grow_horizontal = 2
 grow_vertical = 2
 theme_override_font_sizes/font_size = 20
-placeholder_text = "LENGTH"
+placeholder_text = "Subject Name"
 alignment = 1
+expand_to_text_length = true
 script = ExtResource("4_gqbb3")
 
 [node name="Button" type="Button" parent="."]

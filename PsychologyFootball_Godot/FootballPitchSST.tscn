@@ -71,9 +71,9 @@ level_id = 1
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 
-[node name="GoTrial" parent="CanvasLayer" instance=ExtResource("29_sloev")]
-
 [node name="returnMainMenu" parent="CanvasLayer" instance=ExtResource("33_h0l5p")]
+
+[node name="GoTrial" parent="CanvasLayer" instance=ExtResource("29_sloev")]
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = SubResource("Environment_vmebv")

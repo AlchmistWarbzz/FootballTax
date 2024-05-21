@@ -6,6 +6,8 @@ var main_scene : Node3D = null
 var loaded_level : Level = null
 var task_to_load_UI : int = 0
 
+var subject_name : String = "Subject"
+
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
