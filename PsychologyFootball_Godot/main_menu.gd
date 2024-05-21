@@ -27,10 +27,10 @@ func _on_button_3_pressed() -> void:
 
 func deactivate() -> void:
 	hide()
-	set_process_unhandled_input(false)
-	set_process_input(false)
-	set_physics_process(false)
-	set_process(false)
+	#set_process_unhandled_input(false)
+	#set_process_input(false)
+	#set_physics_process(false)
+	#set_process(false)
 
 
 
