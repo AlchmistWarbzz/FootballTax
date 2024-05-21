@@ -88,17 +88,23 @@ func _process(_delta: float) -> void:
 				
 				# check block finished
 				if stop_trial_counter >= stop_trials_per_block and go_trial_counter >= go_trials_per_block:
-					print("block finished.")
+					print("block " + str(blocks_index + 1) + " finished.")
 					
 					write_sst_raw_log(Time.get_datetime_dict_from_system())
 					write_sst_summary_log(Time.get_datetime_dict_from_system())
 					
-					# set up next block
-					blocks_index += 1
-					reset_counters() # reset counters now their data has been saved
-					# TODO new block transition
-					
-					scene_reset()
+					# check if all blocks in sequence done
+					if blocks_index + 1 < blocks.size():
+						# set up next block
+						blocks_index += 1
+						reset_counters()# reset counters now their data has been logged
+						
+						# TODO new block transition
+						
+						scene_reset()
+					else:
+						print("all blocks finished. returning to main menu.")
+						get_tree().change_scene_to_file("res://Main.tscn")
 				else:
 					scene_ready()
 		
