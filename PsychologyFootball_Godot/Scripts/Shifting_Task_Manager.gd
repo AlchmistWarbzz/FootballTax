@@ -45,12 +45,14 @@ enum scene_state {WAIT, READY, TRIAL}
 signal trial_started
 signal trial_ended
 signal ball_kicked
+@export var ball_kick_magnitude : float = 7
 
 # flags
 var is_feeder_left: bool = false
 var is_trial_passed: bool = false
 var is_blue_ball: bool = false
 var is_shift_trial: bool = false
+
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
@@ -77,21 +79,21 @@ func _process(_delta: float) -> void:
 				# check block finished
 				if shift_trial_counter >= shift_trials_per_block and non_shift_trial_counter >= non_shift_trials_per_block:
 					print("block " + str(blocks_index + 1) + " finished.")
-					# trial block finished
+					
 					write_sst_raw_log(Time.get_datetime_dict_from_system())
 					write_sst_summary_log(Time.get_datetime_dict_from_system())
 					
+					# check if all blocks in sequence done
 					if blocks_index + 1 < blocks.size():
 						# set up next block
 						blocks_index += 1
-						reset_counters() # reset counters now their data has been saved
+						reset_counters()# reset counters now their data has been logged
+						
 						# TODO new block transition
 						
 						scene_reset()
 					else:
-						print("all blocks finished.")
-						# TODO end task/task select screen
-						#LevelManager.load_level(1, 1)
+						print("all blocks finished. returning to main menu.")
 						get_tree().change_scene_to_file("res://Main.tscn")
 				else:
 					scene_ready()
@@ -127,7 +129,7 @@ func _process(_delta: float) -> void:
 			
 			elif Input.is_action_just_pressed("kick_left") and not is_trial_passed:
 				if check_correct_kick(true): # is kick left
-					ball_kicked.emit($MiniGoalLeft.global_position)
+					ball_kicked.emit($MiniGoalLeft.global_position, ball_kick_magnitude)
 					is_trial_passed = true
 					
 					if is_shift_trial:
@@ -143,7 +145,7 @@ func _process(_delta: float) -> void:
 			
 			elif Input.is_action_just_pressed("kick_right") and not is_trial_passed:
 				if check_correct_kick(false): # is kick right
-					ball_kicked.emit($MiniGoalRight.global_position)
+					ball_kicked.emit($MiniGoalRight.global_position, ball_kick_magnitude)
 					is_trial_passed = true
 					
 					if is_shift_trial:
@@ -162,14 +164,6 @@ func _process(_delta: float) -> void:
 
 func scene_reset():
 	print("scene_reset")
-	
-	## remove left ball feeder
-	#if $PlaceholderBallFeederLeft.get_child_count() != 0:
-		#$PlaceholderBallFeederLeft/BallFeeder.free()
-	#
-	## remove right ball feeder
-	#if $PlaceholderBallFeederRight.get_child_count() != 0:
-		#$PlaceholderBallFeederRight/BallFeeder.free()
 	
 	trial_ended.emit()
 	
@@ -219,7 +213,7 @@ func scene_trial_start():
 	ticks_msec_bookmark = Time.get_ticks_msec()
 
 func reset_counters():
-	print("start block " + str(blocks_index + 1) + ". is_practice_block: " + str(blocks[blocks_index] == block_type.PRACTICE))
+	print("start COLOUR BALL TEST block " + str(blocks_index + 1) + ". is_practice_block: " + str(blocks[blocks_index] == block_type.PRACTICE))
 	
 	if blocks[blocks_index] == block_type.PRACTICE:
 		shift_trials_per_block = SHIFT_TRIALS_PER_PRACTICE_BLOCK
@@ -251,7 +245,7 @@ func append_new_metrics_entry(response_time: int):
 
 func write_sst_raw_log(datetime_dict):
 	# open/create file
-	var raw_log_file_path: String = "shifting_{year}-{month}-{day}-{hour}-{minute}-{second}_raw.txt".format(datetime_dict) # TODO let user choose dir
+	var raw_log_file_path: String = "colour_ball_{year}-{month}-{day}-{hour}-{minute}-{second}_raw.txt".format(datetime_dict) # TODO let user choose dir
 	var raw_log_file = FileAccess.open(raw_log_file_path, FileAccess.WRITE)
 	print("raw log file created at " + raw_log_file_path + " with error code " + str(FileAccess.get_open_error()))
 	
@@ -260,9 +254,11 @@ func write_sst_raw_log(datetime_dict):
 	# correct_response: bool, response_time: int (ms), stop_signal_delay: int (ms)
 	if raw_log_file:
 		# write date, time, subject, group, format guide
-		raw_log_file.store_line("PsychologyFootball - Shifting Task - Raw Data Log")
+		raw_log_file.store_line("PsychologyFootball - Colour Ball Test - Raw Data Log")
 		raw_log_file.store_line("date: {day}-{month}-{year}".format(datetime_dict))
 		raw_log_file.store_line("time: {hour}:{minute}:{second}".format(datetime_dict))
+		raw_log_file.store_line("start date: {day}-{month}-{year}".format(start_datetime))
+		raw_log_file.store_line("start time: {hour}:{minute}:{second}".format(start_datetime))
 		raw_log_file.store_line("subject: test") # TODO fill user-input subject and group
 		raw_log_file.store_line("group: test")
 		raw_log_file.store_string("\n-Format Guide-\n\nblock_counter, trial_counter, stimulus_left (ball feeder side), is_blue_ball, is_shift_trial, correct_response, response_time (ms)")
@@ -276,15 +272,17 @@ func write_sst_raw_log(datetime_dict):
 
 func write_sst_summary_log(datetime_dict):
 	# open/create file
-	var summary_log_file_path: String = "shifting_{year}-{month}-{day}-{hour}-{minute}-{second}_summary.txt".format(datetime_dict) # TODO let user choose dir
+	var summary_log_file_path: String = "colour_ball_{year}-{month}-{day}-{hour}-{minute}-{second}_summary.txt".format(datetime_dict) # TODO let user choose dir
 	var summary_log_file = FileAccess.open(summary_log_file_path, FileAccess.WRITE)
 	print("summary log file created at " + summary_log_file_path + " with error code " + str(FileAccess.get_open_error()))
 	
 	if summary_log_file:
 		# write date, time, subject, group, format guide
-		summary_log_file.store_line("PsychologyFootball - Shifting Task - Summary Data Log")
+		summary_log_file.store_line("PsychologyFootball - Colour Ball Test - Summary Data Log")
 		summary_log_file.store_line("date: {day}-{month}-{year}".format(datetime_dict))
 		summary_log_file.store_line("time: {hour}:{minute}:{second}".format(datetime_dict))
+		summary_log_file.store_line("start date: {day}-{month}-{year}".format(start_datetime))
+		summary_log_file.store_line("start time: {hour}:{minute}:{second}".format(start_datetime))
 		summary_log_file.store_line("subject: test") # TODO fill user-input subject and group
 		summary_log_file.store_line("group: test")
 		summary_log_file.store_string("\n-Final States of Counters-\n\n")

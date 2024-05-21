@@ -56,12 +56,15 @@ signal stop_signal
 signal ball_kicked
 signal go_trial_failed
 signal stop_trial_failed
+@export var ball_kick_magnitude : float = 7
 
 # flags
 var is_feeder_left: bool = false
 var is_trial_passed: bool = false
 var stop_signal_shown: bool = false
 
+
+# Called when the node enters the scene tree for the first time.
 func _ready():
 	AudioManager.ambience_sfx.play()
 	
@@ -69,8 +72,9 @@ func _ready():
 	
 	scene_reset() # ensure scene and scene_state are in agreement
 
+
 # Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(_delta):
+func _process(_delta: float) -> void:
 	if Input.is_action_just_pressed("save_log"):
 		#scene_trial_start(true)
 		write_sst_raw_log(Time.get_datetime_dict_from_system())
@@ -80,12 +84,12 @@ func _process(_delta):
 	match current_state:
 		scene_state.WAIT:
 			if (Time.get_ticks_msec() - ticks_msec_bookmark) > TICKS_BETWEEN_TRIALS_MSEC:
-				# wait time between trials is up, prepare next state
+				# wait time is up
 				
 				# check block finished
 				if stop_trial_counter >= stop_trials_per_block and go_trial_counter >= go_trials_per_block:
 					print("block finished.")
-					# trial block finished
+					
 					write_sst_raw_log(Time.get_datetime_dict_from_system())
 					write_sst_summary_log(Time.get_datetime_dict_from_system())
 					
@@ -124,7 +128,7 @@ func _process(_delta):
 			
 			elif Input.is_action_just_pressed("kick_left") and not is_trial_passed:
 				if is_feeder_left:
-					ball_kicked.emit($PlaceholderFixation.global_position)
+					ball_kicked.emit($PlaceholderFixation.global_position, ball_kick_magnitude)
 					is_trial_passed = true
 					go_trials_passed += 1
 					print("go_trial_passed")
@@ -135,7 +139,7 @@ func _process(_delta):
 			
 			elif Input.is_action_just_pressed("kick_right") and not is_trial_passed:
 				if not is_feeder_left: # is feeder right
-					ball_kicked.emit($PlaceholderFixation.global_position)
+					ball_kicked.emit($PlaceholderFixation.global_position, ball_kick_magnitude)
 					is_trial_passed = true
 					go_trials_passed += 1
 					print("go_trial_passed")
@@ -170,7 +174,7 @@ func _process(_delta):
 			
 			if Input.is_action_just_pressed("kick_left") or Input.is_action_just_pressed("kick_right"):
 				is_trial_passed = false
-				#ball_kicked.emit()
+				ball_kicked.emit($PlaceholderFixation.global_position, ball_kick_magnitude)
 				stop_trial_failed.emit()
 				print("stop_trial_failed")
 				append_new_metrics_entry(true, is_trial_passed, Time.get_ticks_msec() - ticks_msec_bookmark)
@@ -275,7 +279,7 @@ func scene_trial_start(is_stop_trial: bool):
 		#$PlaceholderFixation/FixationCone.free()
 
 func reset_counters():
-	print("new block. is_practice_block: " + str(blocks[blocks_index] == block_type.PRACTICE))
+	print("start STOP SIGNAL TASK block " + str(blocks_index + 1) + ". is_practice_block: " + str(blocks[blocks_index] == block_type.PRACTICE))
 	
 	if blocks[blocks_index] == block_type.PRACTICE:
 		go_trials_per_block = GO_TRIALS_PER_PRACTICE_BLOCK
@@ -304,9 +308,11 @@ func write_sst_raw_log(datetime_dict):
 	# correct_response: bool, response_time: int (ms), stop_signal_delay: int (ms)
 	if raw_log_file:
 		# write date, time, subject, group, format guide
-		raw_log_file.store_line("PsychologyFootball - Stop Signal Task - Raw Data Log")
+		raw_log_file.store_line("PsychologyFootball - Stop Signal Test - Raw Data Log")
 		raw_log_file.store_line("date: {day}-{month}-{year}".format(datetime_dict))
 		raw_log_file.store_line("time: {hour}:{minute}:{second}".format(datetime_dict))
+		raw_log_file.store_line("start date: {day}-{month}-{year}".format(start_datetime))
+		raw_log_file.store_line("start time: {hour}:{minute}:{second}".format(start_datetime))
 		raw_log_file.store_line("subject: test") # TODO fill user-input subject and group
 		raw_log_file.store_line("group: test")
 		raw_log_file.store_string("\n-Format Guide-\n\nblock_counter, trial_counter, stimulus_left (ball feeder side), stop_trial, correct_response, response_time (ms), stop_signal_delay (ms)")
@@ -326,9 +332,11 @@ func write_sst_summary_log(datetime_dict):
 	
 	if summary_log_file:
 		# write date, time, subject, group, format guide
-		summary_log_file.store_line("PsychologyFootball - Stop Signal Task - Summary Data Log")
+		summary_log_file.store_line("PsychologyFootball - Stop Signal Test - Summary Data Log")
 		summary_log_file.store_line("date: {day}-{month}-{year}".format(datetime_dict))
 		summary_log_file.store_line("time: {hour}:{minute}:{second}".format(datetime_dict))
+		summary_log_file.store_line("start date: {day}-{month}-{year}".format(start_datetime))
+		summary_log_file.store_line("start time: {hour}:{minute}:{second}".format(start_datetime))
 		summary_log_file.store_line("subject: test") # TODO fill user-input subject and group
 		summary_log_file.store_line("group: test")
 		summary_log_file.store_string("\n-Final States of Counters-\n\n")
