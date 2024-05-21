@@ -69,6 +69,12 @@ point_count = 2
 script = ExtResource("1_7q4w2")
 level_id = 1
 
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="GoTrial" parent="CanvasLayer" instance=ExtResource("29_sloev")]
+
+[node name="returnMainMenu" parent="CanvasLayer" instance=ExtResource("33_h0l5p")]
+
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = SubResource("Environment_vmebv")
 
@@ -580,10 +586,6 @@ visible = false
 [node name="Townhall" parent="." instance=ExtResource("27_lw8c4")]
 transform = Transform3D(-0.364015, 0, 0.931393, 0, 1, 0, -0.931393, 0, -0.364015, -171.581, -1.29854, 54.0868)
 
-[node name="CanvasLayer" type="CanvasLayer" parent="."]
-
-[node name="GoTrial" parent="CanvasLayer" instance=ExtResource("29_sloev")]
-
 [node name="SmHouse1" type="MeshInstance3D" parent="."]
 transform = Transform3D(0.967086, 0, -0.25445, 0, 1, 0, 0.25445, 0, 0.967086, -109.009, 7.45555, -41.9473)
 mesh = ExtResource("31_acq1m")
@@ -607,5 +609,3 @@ mesh = ExtResource("32_v5off")
 [node name="SmHouse4" type="MeshInstance3D" parent="."]
 transform = Transform3D(0.99911, 0, 0.0421722, 0, 1, 0, -0.0421722, 0, 0.99911, -126.474, 3.18999, -3.18064)
 mesh = ExtResource("33_cmdr1")
-
-[node name="returnMainMenu" parent="." instance=ExtResource("33_h0l5p")]
