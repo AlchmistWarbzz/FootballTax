@@ -61,6 +61,7 @@ signal stop_trial_failed
 # flags
 var is_feeder_left: bool = false
 var is_trial_passed: bool = false
+var has_responded: bool = false
 var stop_signal_shown: bool = false
 
 
@@ -125,14 +126,15 @@ func _process(_delta: float) -> void:
 			if (Time.get_ticks_msec() - ticks_msec_bookmark) > TRIAL_TICKS_MSEC:
 				# trial time is up
 				
-				if not is_trial_passed:
+				if not is_trial_passed and not has_responded:
 					go_trial_failed.emit()
 					print("go_trial_failed")
 					append_new_metrics_entry(false, is_trial_passed, 0)
 				
 				scene_reset()
 			
-			elif Input.is_action_just_pressed("kick_left") and not is_trial_passed:
+			elif Input.is_action_just_pressed("kick_left") and not has_responded:
+				has_responded = true
 				if is_feeder_left:
 					ball_kicked.emit($PlaceholderFixation.global_position, ball_kick_magnitude)
 					is_trial_passed = true
@@ -143,7 +145,8 @@ func _process(_delta: float) -> void:
 					print("go_trial_failed")
 				append_new_metrics_entry(false, is_trial_passed, Time.get_ticks_msec() - ticks_msec_bookmark)
 			
-			elif Input.is_action_just_pressed("kick_right") and not is_trial_passed:
+			elif Input.is_action_just_pressed("kick_right") and not has_responded:
+				has_responded = true
 				if not is_feeder_left: # is feeder right
 					ball_kicked.emit($PlaceholderFixation.global_position, ball_kick_magnitude)
 					is_trial_passed = true
@@ -178,9 +181,10 @@ func _process(_delta: float) -> void:
 				AudioManager.footsteps_sfx.play(0.0)
 				AudioManager.footsteps_sfx.play(3.55)
 			
-			if Input.is_action_just_pressed("kick_left") or Input.is_action_just_pressed("kick_right"):
+			if (Input.is_action_just_pressed("kick_left") or Input.is_action_just_pressed("kick_right")) and not has_responded:
+				has_responded = true
 				is_trial_passed = false
-				ball_kicked.emit($PlaceholderFixation.global_position, ball_kick_magnitude)
+				#ball_kicked.emit($PlaceholderFixation.global_position, ball_kick_magnitude)
 				stop_trial_failed.emit()
 				print("stop_trial_failed")
 				append_new_metrics_entry(true, is_trial_passed, Time.get_ticks_msec() - ticks_msec_bookmark)
@@ -250,6 +254,7 @@ func scene_trial_start(is_stop_trial: bool):
 	print("scene_trial_start " + str(trial_counter) + ", is_stop_trial: " + str(is_stop_trial))
 	
 	# set up flags
+	has_responded = false
 	is_trial_passed = is_stop_trial
 	stop_signal_shown = false
 	if is_stop_trial:

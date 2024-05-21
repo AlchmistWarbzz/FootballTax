@@ -52,6 +52,7 @@ var is_feeder_left: bool = false
 var is_trial_passed: bool = false
 var is_blue_ball: bool = false
 var is_shift_trial: bool = false
+var has_responded: bool = false
 
 
 # Called when the node enters the scene tree for the first time.
@@ -117,7 +118,7 @@ func _process(_delta: float) -> void:
 			if (Time.get_ticks_msec() - ticks_msec_bookmark) > TRIAL_TICKS_MSEC:
 				# trial time is up
 				
-				if not is_trial_passed:
+				if not is_trial_passed and not has_responded:
 					#go_trial_failed.emit()
 					print("non_shift_trial_failed")
 					append_new_metrics_entry(0)
@@ -127,7 +128,8 @@ func _process(_delta: float) -> void:
 				current_state = scene_state.WAIT
 				ticks_msec_bookmark = Time.get_ticks_msec()
 			
-			elif Input.is_action_just_pressed("kick_left") and not is_trial_passed:
+			elif Input.is_action_just_pressed("kick_left") and not has_responded:
+				has_responded = true
 				if check_correct_kick(true): # is kick left
 					ball_kicked.emit($MiniGoalLeft.global_position, ball_kick_magnitude)
 					is_trial_passed = true
@@ -143,7 +145,8 @@ func _process(_delta: float) -> void:
 					print("non_shift_trial_failed")
 				append_new_metrics_entry(Time.get_ticks_msec() - ticks_msec_bookmark)
 			
-			elif Input.is_action_just_pressed("kick_right") and not is_trial_passed:
+			elif Input.is_action_just_pressed("kick_right") and not has_responded:
+				has_responded = true
 				if check_correct_kick(false): # is kick right
 					ball_kicked.emit($MiniGoalRight.global_position, ball_kick_magnitude)
 					is_trial_passed = true
@@ -195,6 +198,7 @@ func scene_trial_start():
 		$PlaceholderFixation/FixationCone.free()
 	
 	# set up flags
+	has_responded = false
 	is_trial_passed = false
 	
 	# determine ball colour
