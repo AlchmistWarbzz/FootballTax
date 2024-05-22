@@ -31,7 +31,7 @@ func _ready():
 	#print(str($"Stop & Go".get_texture()))
 	
 	
-	await get_tree().create_timer(5.0).timeout
+	await get_tree().create_timer(10.0).timeout
 	deactivate()
 
 
