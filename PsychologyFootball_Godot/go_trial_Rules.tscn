@@ -6,7 +6,7 @@
 [ext_resource type="Texture2D" uid="uid://b84d35r5nfbif" path="res://UI/How To Play/BDS Test.png" id="3_p5kfn"]
 [ext_resource type="Script" path="res://Scripts/Text_edit.gd" id="4_gqbb3"]
 
-[node name="GoTrial" type="Control"]
+[node name="GoTrial" type="Control" node_paths=PackedStringArray("play_button")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -16,6 +16,7 @@ offset_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_27y46")
+play_button = NodePath("PlayButton")
 
 [node name="Stop & Go" type="TextureRect" parent="."]
 layout_mode = 1
@@ -75,7 +76,7 @@ alignment = 1
 expand_to_text_length = true
 script = ExtResource("4_gqbb3")
 
-[node name="Button" type="Button" parent="."]
+[node name="PlayButton" type="Button" parent="."]
 layout_mode = 1
 anchors_preset = 7
 anchor_left = 0.5

@@ -6,10 +6,13 @@ extends Control
 #var sst_rules_image = "res://UI/How To Play/Rules.png"
 #var shifting_rules_image = "res://UI/How To Play/Colour Shifting.png"
 #var bds_rules_image = "res://UI/How To Play/BDS Test.png"
+@export var play_button : Button
 
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
+	play_button.pressed.connect(_play_button_pressed)
+	
 	#var image_to_set
 	match LevelManager.task_to_load_UI:
 		1:
@@ -31,8 +34,8 @@ func _ready():
 	#print(str($"Stop & Go".get_texture()))
 	
 	
-	await get_tree().create_timer(10.0).timeout
-	deactivate()
+	#await get_tree().create_timer(10.0).timeout
+	#deactivate()
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -46,3 +49,8 @@ func deactivate() -> void:
 	#set_process_input(false)
 	#set_physics_process(false)
 	#set_process(false)
+
+
+func _play_button_pressed() -> void:
+	deactivate()
+
