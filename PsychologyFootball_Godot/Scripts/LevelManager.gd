@@ -8,6 +8,8 @@ var task_to_load_UI : int = 0
 
 var subject_name : String = "Subject"
 
+signal play_button_pressed
+
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
