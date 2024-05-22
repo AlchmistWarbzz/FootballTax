@@ -27,7 +27,7 @@
 [ext_resource type="PackedScene" uid="uid://diitrg1h4hthl" path="res://Import GLTF/Townhall.gltf" id="27_lw8c4"]
 [ext_resource type="ArrayMesh" uid="uid://cxyqct7m8eupo" path="res://Assets/Environment/SM_ENV__TreeT2.res" id="27_sssm6"]
 [ext_resource type="PackedScene" uid="uid://diy4oxifvl3ya" path="res://Character/character.tscn" id="28_0rfv3"]
-[ext_resource type="PackedScene" uid="uid://dfi240ptdepwf" path="res://go_trial_Rules.tscn" id="29_sloev"]
+[ext_resource type="PackedScene" uid="uid://dfi240ptdepwf" path="res://trial_rules.tscn" id="29_sloev"]
 [ext_resource type="ArrayMesh" uid="uid://f42g0unsqh3d" path="res://Assets/Building/SM__House1.res" id="31_acq1m"]
 [ext_resource type="ArrayMesh" uid="uid://kcwdwepxtdty" path="res://Assets/Building/SM__House2.res" id="32_v5off"]
 [ext_resource type="ArrayMesh" uid="uid://b86o0ugylg3i0" path="res://Assets/Building/SM__House4.res" id="33_cmdr1"]
@@ -73,7 +73,7 @@ level_id = 1
 
 [node name="returnMainMenu" parent="CanvasLayer" instance=ExtResource("33_h0l5p")]
 
-[node name="GoTrial" parent="CanvasLayer" instance=ExtResource("29_sloev")]
+[node name="TrialRules" parent="CanvasLayer" instance=ExtResource("29_sloev")]
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = SubResource("Environment_vmebv")

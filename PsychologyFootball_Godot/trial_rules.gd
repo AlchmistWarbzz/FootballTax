@@ -6,13 +6,10 @@ extends Control
 #var sst_rules_image = "res://UI/How To Play/Rules.png"
 #var shifting_rules_image = "res://UI/How To Play/Colour Shifting.png"
 #var bds_rules_image = "res://UI/How To Play/BDS Test.png"
-@export var play_button : Button
 
 
 # Called when the node enters the scene tree for the first time.
-func _ready():
-	play_button.pressed.connect(_play_button_pressed)
-	
+func _ready():	
 	#var image_to_set
 	match LevelManager.task_to_load_UI:
 		1:
@@ -51,6 +48,6 @@ func deactivate() -> void:
 	#set_process(false)
 
 
-func _play_button_pressed() -> void:
+func _on_play_button_pressed() -> void:
 	deactivate()
-
+	LevelManager.play_button_pressed.emit()
