@@ -134,6 +134,10 @@ func _process(_delta: float) -> void:
 		
 		
 		scene_state.TRIAL:
+			var required_input_span = random_span_numbers.duplicate()
+			required_input_span.reverse() # ensure backward digits
+			#print(required_input_span)
+			
 			if (Time.get_ticks_msec() - ticks_msec_bookmark) > trial_ticks_msec:
 				# trial time is up
 				
@@ -141,7 +145,7 @@ func _process(_delta: float) -> void:
 					#go_trial_failed.emit()
 					print("trial_failed")
 				
-				append_new_metrics_entry()
+				append_new_metrics_entry(required_input_span, [])
 				
 				scene_reset()
 			
@@ -170,26 +174,23 @@ func _process(_delta: float) -> void:
 					ball_kicked.emit(result.collider.get_global_position() + (Vector3.UP * ball_kick_height_offset)
 					, ball_kick_magnitude)
 				
-				var required_input_span = random_span_numbers.duplicate()
-				required_input_span.reverse() # ensure backward digits
-				#print(required_input_span)
 				if player_input_span == required_input_span:
 					# trial passed
 					print("trial passed")
 					is_trial_passed = true
 					trials_passed += 1
 					
+					append_new_metrics_entry(required_input_span, player_input_span)
+					
 					span_length += 1
 					print("span length increased to " + str(span_length))
-					
-					append_new_metrics_entry()
 					
 					scene_reset()
 				
 				elif player_input_span.size() >= random_span.size():
 					print("trial failed")
 					
-					append_new_metrics_entry()
+					append_new_metrics_entry(required_input_span, player_input_span)
 					
 					scene_reset()
 
@@ -266,8 +267,8 @@ func reset_counters():
 	trials_passed = 0
 	span_length = 3
 
-func append_new_metrics_entry():# TODO take required sequence and input sequence
-	metrics_array.append([block_counter, trial_counter, span_length, is_trial_passed])
+func append_new_metrics_entry(required_input_array: Array, player_input_array: Array):
+	metrics_array.append([block_counter, trial_counter, span_length, is_trial_passed, required_input_array, player_input_array])
 
 func write_sst_raw_log(datetime_dict):
 	# open/create file
@@ -287,14 +288,20 @@ func write_sst_raw_log(datetime_dict):
 		raw_log_file.store_line("start time: {hour}:{minute}:{second}".format(start_datetime))
 		raw_log_file.store_line("subject: " + LevelManager.subject_name) # TODO fill user-input subject and group
 		raw_log_file.store_line("group: test")
-		raw_log_file.store_string("\n-Format Guide-\n\nblock_counter, trial_counter, correct_response")
+		raw_log_file.store_string("\n-Format Guide-\n\nblock_counter, trial_counter, span_length, correct_response, [required_input_array], [player_input_array]")
 		raw_log_file.store_string("\n\n-Raw Data-\n\n")
 		
 		for sub_array in metrics_array:
 			#var line = "{0}, {1}, {2}, {3}, {4}, {5}, {6}"
 			#raw_log_file.store_line(line.format(sub_array))
 			for item in sub_array:
-				raw_log_file.store_string(str(item) + ", ")
+				if type_string(typeof(item)) == "TYPE_ARRAY":
+					raw_log_file.store_string("[")
+					for sequenceNum in item:
+						raw_log_file.store_string(str(sequenceNum) + ", ")
+					raw_log_file.store_string("], ")
+				else:
+					raw_log_file.store_string(str(item) + ", ")
 			
 			raw_log_file.store_string("\n")
 		
