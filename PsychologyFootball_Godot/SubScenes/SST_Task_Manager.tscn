@@ -8,7 +8,7 @@
 
 [node name="SST_Task_Manager" type="Node3D"]
 script = ExtResource("1_hrvas")
-blocks = Array[int]([1, 0, 0])
+blocks = Array[int]([1, 0])
 ball_kick_magnitude = 8.0
 
 [node name="Player" parent="." instance=ExtResource("2_a7xoq")]
