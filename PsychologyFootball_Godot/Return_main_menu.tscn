@@ -13,15 +13,11 @@ script = ExtResource("1_eivqs")
 
 [node name="Button" type="Button" parent="."]
 layout_mode = 1
-anchors_preset = 2
-anchor_top = 1.0
-anchor_bottom = 1.0
-offset_left = 10.0
-offset_top = -639.0
-offset_right = 124.0
-offset_bottom = -600.0
-grow_vertical = 0
+offset_left = 27.0
+offset_top = 20.0
+offset_right = 141.0
+offset_bottom = 59.0
 toggle_mode = true
-text = "Test Select"
+text = "Quit to Menu"
 
 [connection signal="pressed" from="Button" to="." method="_on_button_pressed"]
