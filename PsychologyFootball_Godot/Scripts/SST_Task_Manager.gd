@@ -21,7 +21,7 @@ var stop_signal_delay: int = 250
 # blocks
 enum block_type {TEST, PRACTICE}
 ## Array determines the order and type of blocks in the test.
-@export var blocks: Array[block_type] = []
+@export var blocks: Array[block_type] = Array()
 var blocks_index: int = 0
 
 # trial selection counters
@@ -38,7 +38,7 @@ var go_trial_counter: int = 0
 var stop_trial_counter: int = 0
 
 # trial selection
-@onready var trials_array = Array()
+@onready var trials_array: Array[scene_state] = Array()
 
 # metrics
 @onready var metrics_array = Array()
@@ -297,6 +297,10 @@ func scene_trial_start(is_stop_trial: bool):
 	## remove fixation cone
 	#if $PlaceholderFixation.get_child_count() != 0:
 		#$PlaceholderFixation/FixationCone.free()
+
+
+func populate_trials_array():
+	pass
 
 
 func reset_counters():
