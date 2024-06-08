@@ -24,25 +24,24 @@ enum block_type {TEST, PRACTICE}
 @export var blocks: Array[block_type] = []
 var blocks_index: int = 0
 
-# counters
+# trial selection counters
 const GO_TRIALS_PER_PRACTICE_BLOCK: int = 3
 const STOP_TRIALS_PER_PRACTICE_BLOCK: int = 1
 const GO_TRIALS_PER_TEST_BLOCK: int = 75
 const STOP_TRIALS_PER_TEST_BLOCK: int = 25
-
 #var is_practice_block: bool = true
 var go_trials_per_block: int = GO_TRIALS_PER_PRACTICE_BLOCK
 var stop_trials_per_block: int = STOP_TRIALS_PER_PRACTICE_BLOCK
 var block_counter: int = 0
 var trial_counter: int = 0
 var go_trial_counter: int = 0
-var go_trials_passed: int = 0
 var stop_trial_counter: int = 0
-var stop_trials_passed: int = 0
 
 # metrics
 @onready var metrics_array = Array()
 @onready var start_datetime = Time.get_datetime_dict_from_system()
+var go_trials_passed: int = 0
+var stop_trials_passed: int = 0
 
 # states
 enum scene_state {WAIT, READY, GO_TRIAL, STOP_TRIAL}
@@ -106,6 +105,7 @@ func _process(_delta: float) -> void:
 					else:
 						print("all blocks finished. returning to main menu.")
 						get_tree().change_scene_to_file("res://Main.tscn")
+					
 				else:
 					scene_ready()
 		
@@ -143,6 +143,7 @@ func _process(_delta: float) -> void:
 				else:
 					go_trial_failed.emit()
 					print("go_trial_failed")
+				
 				append_new_metrics_entry(false, is_trial_passed, Time.get_ticks_msec() - ticks_msec_bookmark)
 			
 			elif Input.is_action_just_pressed("kick_right") and not has_responded:
@@ -155,6 +156,7 @@ func _process(_delta: float) -> void:
 				else:
 					go_trial_failed.emit()
 					print("go_trial_failed")
+				
 				append_new_metrics_entry(false, is_trial_passed, Time.get_ticks_msec() - ticks_msec_bookmark)
 		
 		
@@ -172,7 +174,7 @@ func _process(_delta: float) -> void:
 						print("ssd adjusted up to " + str(stop_signal_delay))
 				
 				scene_reset()
-			
+				
 			elif (Time.get_ticks_msec() - ticks_msec_bookmark) > stop_signal_delay and not stop_signal_shown:
 				# time for stop signal
 				stop_signal_shown = true
