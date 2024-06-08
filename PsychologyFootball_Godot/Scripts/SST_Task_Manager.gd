@@ -21,7 +21,7 @@ var stop_signal_delay: int = 250
 # blocks
 enum block_type {TEST, PRACTICE}
 ## Array determines the order and type of blocks in the test.
-@export var blocks: Array[block_type] = Array()
+@export var blocks: Array[block_type] = []
 var blocks_index: int = 0
 
 # trial selection counters
@@ -38,10 +38,10 @@ var go_trial_counter: int = 0
 var stop_trial_counter: int = 0
 
 # trial selection
-@onready var trials_array: Array[scene_state] = Array()
+@onready var trials_array: Array[scene_state] = []
 
 # metrics
-@onready var metrics_array = Array()
+@onready var metrics_array = []
 @onready var start_datetime = Time.get_datetime_dict_from_system()
 var go_trials_passed: int = 0
 var stop_trials_passed: int = 0
@@ -71,7 +71,11 @@ var stop_signal_shown: bool = false
 func _ready():
 	AudioManager.ambience_sfx.play()
 	
+	# set up first block
 	reset_counters()
+	trials_array.clear()
+	populate_trials_array(go_trials_per_block, stop_trials_per_block)
+	trials_array.shuffle()
 	
 	scene_reset() # ensure scene and scene_state are in agreement
 
@@ -89,8 +93,8 @@ func _process(_delta: float) -> void:
 			if (Time.get_ticks_msec() - ticks_msec_bookmark) > TICKS_BETWEEN_TRIALS_MSEC:
 				# wait time is up
 				
-				# check block finished
-				if stop_trial_counter >= stop_trials_per_block and go_trial_counter >= go_trials_per_block:#TODO refactor to array size check
+				# check if all trials in block done, therefore block finished
+				if trials_array.size() == 0:
 					print("block " + str(blocks_index + 1) + " finished.")
 					
 					write_sst_raw_log(Time.get_datetime_dict_from_system())
@@ -101,6 +105,9 @@ func _process(_delta: float) -> void:
 						# set up next block
 						blocks_index += 1
 						reset_counters()# reset counters now their data has been logged
+						trials_array.clear()
+						populate_trials_array(go_trials_per_block, stop_trials_per_block)
+						trials_array.shuffle()
 						
 						# TODO new block transition
 						
@@ -118,11 +125,13 @@ func _process(_delta: float) -> void:
 				# ready time is up
 				
 				# determine go or stop trial
-				var is_stop: bool = (randf() < 0.25)
-				if is_stop and stop_trial_counter < stop_trials_per_block:
-					scene_trial_start(is_stop)
-				elif (not is_stop) and go_trial_counter < go_trials_per_block:
-					scene_trial_start(is_stop)
+				scene_trial_start(trials_array.pop_back() == scene_state.STOP_TRIAL)
+				
+				#var is_stop: bool = (randf() < 0.25)
+				#if is_stop and stop_trial_counter < stop_trials_per_block:
+					#scene_trial_start(is_stop)
+				#elif (not is_stop) and go_trial_counter < go_trials_per_block:
+					#scene_trial_start(is_stop)
 		
 		
 		scene_state.GO_TRIAL:
@@ -316,6 +325,7 @@ func reset_counters():
 	else:
 		go_trials_per_block = GO_TRIALS_PER_TEST_BLOCK
 		stop_trials_per_block = STOP_TRIALS_PER_TEST_BLOCK
+	
 	block_counter = 0
 	trial_counter = 0
 	go_trial_counter = 0
