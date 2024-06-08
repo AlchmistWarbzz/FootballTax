@@ -299,8 +299,12 @@ func scene_trial_start(is_stop_trial: bool):
 		#$PlaceholderFixation/FixationCone.free()
 
 
-func populate_trials_array():
-	pass
+func populate_trials_array(go_trials: int, stop_trials: int):
+	for i in range(go_trials):
+		trials_array.append(scene_state.GO_TRIAL)
+	
+	for i in range(stop_trials):
+		trials_array.append(scene_state.STOP_TRIAL)
 
 
 func reset_counters():
