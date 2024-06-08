@@ -24,25 +24,27 @@ enum block_type {TEST, PRACTICE}
 @export var blocks: Array[block_type] = []
 var blocks_index: int = 0
 
-# counters
+# trial selection counters
 const GO_TRIALS_PER_PRACTICE_BLOCK: int = 3
 const STOP_TRIALS_PER_PRACTICE_BLOCK: int = 1
 const GO_TRIALS_PER_TEST_BLOCK: int = 75
 const STOP_TRIALS_PER_TEST_BLOCK: int = 25
-
 #var is_practice_block: bool = true
 var go_trials_per_block: int = GO_TRIALS_PER_PRACTICE_BLOCK
 var stop_trials_per_block: int = STOP_TRIALS_PER_PRACTICE_BLOCK
 var block_counter: int = 0
 var trial_counter: int = 0
 var go_trial_counter: int = 0
-var go_trials_passed: int = 0
 var stop_trial_counter: int = 0
-var stop_trials_passed: int = 0
+
+# trial selection
+@onready var trials_array: Array[scene_state] = []
 
 # metrics
-@onready var metrics_array = Array()
+@onready var metrics_array = []
 @onready var start_datetime = Time.get_datetime_dict_from_system()
+var go_trials_passed: int = 0
+var stop_trials_passed: int = 0
 
 # states
 enum scene_state {WAIT, READY, GO_TRIAL, STOP_TRIAL}
@@ -69,7 +71,11 @@ var stop_signal_shown: bool = false
 func _ready():
 	AudioManager.ambience_sfx.play()
 	
+	# set up first block
 	reset_counters()
+	trials_array.clear()
+	populate_trials_array(go_trials_per_block, stop_trials_per_block)
+	trials_array.shuffle()
 	
 	scene_reset() # ensure scene and scene_state are in agreement
 
@@ -87,8 +93,8 @@ func _process(_delta: float) -> void:
 			if (Time.get_ticks_msec() - ticks_msec_bookmark) > TICKS_BETWEEN_TRIALS_MSEC:
 				# wait time is up
 				
-				# check block finished
-				if stop_trial_counter >= stop_trials_per_block and go_trial_counter >= go_trials_per_block:
+				# check if all trials in block done, therefore block finished
+				if trials_array.size() == 0:
 					print("block " + str(blocks_index + 1) + " finished.")
 					
 					write_sst_raw_log(Time.get_datetime_dict_from_system())
@@ -99,6 +105,9 @@ func _process(_delta: float) -> void:
 						# set up next block
 						blocks_index += 1
 						reset_counters()# reset counters now their data has been logged
+						trials_array.clear()
+						populate_trials_array(go_trials_per_block, stop_trials_per_block)
+						trials_array.shuffle()
 						
 						# TODO new block transition
 						
@@ -106,6 +115,7 @@ func _process(_delta: float) -> void:
 					else:
 						print("all blocks finished. returning to main menu.")
 						get_tree().change_scene_to_file("res://Main.tscn")
+					
 				else:
 					scene_ready()
 		
@@ -115,11 +125,13 @@ func _process(_delta: float) -> void:
 				# ready time is up
 				
 				# determine go or stop trial
-				var is_stop: bool = (randf() < 0.25)
-				if is_stop and stop_trial_counter < stop_trials_per_block:
-					scene_trial_start(is_stop)
-				elif (not is_stop) and go_trial_counter < go_trials_per_block:
-					scene_trial_start(is_stop)
+				scene_trial_start(trials_array.pop_back() == scene_state.STOP_TRIAL)
+				
+				#var is_stop: bool = (randf() < 0.25)
+				#if is_stop and stop_trial_counter < stop_trials_per_block:
+					#scene_trial_start(is_stop)
+				#elif (not is_stop) and go_trial_counter < go_trials_per_block:
+					#scene_trial_start(is_stop)
 		
 		
 		scene_state.GO_TRIAL:
@@ -143,6 +155,7 @@ func _process(_delta: float) -> void:
 				else:
 					go_trial_failed.emit()
 					print("go_trial_failed")
+				
 				append_new_metrics_entry(false, is_trial_passed, Time.get_ticks_msec() - ticks_msec_bookmark)
 			
 			elif Input.is_action_just_pressed("kick_right") and not has_responded:
@@ -155,6 +168,7 @@ func _process(_delta: float) -> void:
 				else:
 					go_trial_failed.emit()
 					print("go_trial_failed")
+				
 				append_new_metrics_entry(false, is_trial_passed, Time.get_ticks_msec() - ticks_msec_bookmark)
 		
 		
@@ -172,7 +186,7 @@ func _process(_delta: float) -> void:
 						print("ssd adjusted up to " + str(stop_signal_delay))
 				
 				scene_reset()
-			
+				
 			elif (Time.get_ticks_msec() - ticks_msec_bookmark) > stop_signal_delay and not stop_signal_shown:
 				# time for stop signal
 				stop_signal_shown = true
@@ -192,6 +206,7 @@ func _process(_delta: float) -> void:
 				if stop_signal_delay >= MIN_STOP_SIGNAL_DELAY + STOP_SIGNAL_DELAY_ADJUST_STEP:
 					stop_signal_delay -= STOP_SIGNAL_DELAY_ADJUST_STEP
 					print("ssd adjusted down to " + str(stop_signal_delay))
+
 
 func scene_reset():
 	print("scene_reset")
@@ -233,6 +248,7 @@ func scene_reset():
 	current_state = scene_state.WAIT
 	ticks_msec_bookmark = Time.get_ticks_msec()
 
+
 func scene_ready():
 	print("scene_ready")
 	
@@ -242,6 +258,7 @@ func scene_ready():
 	
 	current_state = scene_state.READY
 	ticks_msec_bookmark = Time.get_ticks_msec()
+
 
 func scene_trial_start(is_stop_trial: bool):
 	# update trial counters
@@ -284,10 +301,20 @@ func scene_trial_start(is_stop_trial: bool):
 	
 	ticks_msec_bookmark = Time.get_ticks_msec()
 
+
 #func stop_trial_start():
 	## remove fixation cone
 	#if $PlaceholderFixation.get_child_count() != 0:
 		#$PlaceholderFixation/FixationCone.free()
+
+
+func populate_trials_array(go_trials: int, stop_trials: int):
+	for i in range(go_trials):
+		trials_array.append(scene_state.GO_TRIAL)
+	
+	for i in range(stop_trials):
+		trials_array.append(scene_state.STOP_TRIAL)
+
 
 func reset_counters():
 	print("start STOP SIGNAL TASK block " + str(blocks_index + 1) + ". is_practice_block: " + str(blocks[blocks_index] == block_type.PRACTICE))
@@ -298,6 +325,7 @@ func reset_counters():
 	else:
 		go_trials_per_block = GO_TRIALS_PER_TEST_BLOCK
 		stop_trials_per_block = STOP_TRIALS_PER_TEST_BLOCK
+	
 	block_counter = 0
 	trial_counter = 0
 	go_trial_counter = 0
@@ -305,8 +333,10 @@ func reset_counters():
 	stop_trial_counter = 0
 	stop_trials_passed = 0
 
+
 func append_new_metrics_entry(stop_trial: bool, correct_response: bool, response_time: int):
 		metrics_array.append([block_counter, trial_counter, is_feeder_left, stop_trial, correct_response, response_time, stop_signal_delay])
+
 
 func write_sst_raw_log(datetime_dict):
 	# open/create file
@@ -338,6 +368,7 @@ func write_sst_raw_log(datetime_dict):
 			raw_log_file.store_line(line.format(sub_array))
 		
 		raw_log_file.close()
+
 
 func write_sst_summary_log(datetime_dict):
 	# open/create file
