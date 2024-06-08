@@ -37,6 +37,9 @@ var trial_counter: int = 0
 var go_trial_counter: int = 0
 var stop_trial_counter: int = 0
 
+# trial selection
+@onready var trials_array = Array()
+
 # metrics
 @onready var metrics_array = Array()
 @onready var start_datetime = Time.get_datetime_dict_from_system()
@@ -87,7 +90,7 @@ func _process(_delta: float) -> void:
 				# wait time is up
 				
 				# check block finished
-				if stop_trial_counter >= stop_trials_per_block and go_trial_counter >= go_trials_per_block:
+				if stop_trial_counter >= stop_trials_per_block and go_trial_counter >= go_trials_per_block:#TODO refactor to array size check
 					print("block " + str(blocks_index + 1) + " finished.")
 					
 					write_sst_raw_log(Time.get_datetime_dict_from_system())
