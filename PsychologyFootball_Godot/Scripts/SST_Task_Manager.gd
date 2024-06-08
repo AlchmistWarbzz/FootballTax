@@ -198,6 +198,7 @@ func _process(_delta: float) -> void:
 					stop_signal_delay -= STOP_SIGNAL_DELAY_ADJUST_STEP
 					print("ssd adjusted down to " + str(stop_signal_delay))
 
+
 func scene_reset():
 	print("scene_reset")
 	
@@ -238,6 +239,7 @@ func scene_reset():
 	current_state = scene_state.WAIT
 	ticks_msec_bookmark = Time.get_ticks_msec()
 
+
 func scene_ready():
 	print("scene_ready")
 	
@@ -247,6 +249,7 @@ func scene_ready():
 	
 	current_state = scene_state.READY
 	ticks_msec_bookmark = Time.get_ticks_msec()
+
 
 func scene_trial_start(is_stop_trial: bool):
 	# update trial counters
@@ -289,10 +292,12 @@ func scene_trial_start(is_stop_trial: bool):
 	
 	ticks_msec_bookmark = Time.get_ticks_msec()
 
+
 #func stop_trial_start():
 	## remove fixation cone
 	#if $PlaceholderFixation.get_child_count() != 0:
 		#$PlaceholderFixation/FixationCone.free()
+
 
 func reset_counters():
 	print("start STOP SIGNAL TASK block " + str(blocks_index + 1) + ". is_practice_block: " + str(blocks[blocks_index] == block_type.PRACTICE))
@@ -310,8 +315,10 @@ func reset_counters():
 	stop_trial_counter = 0
 	stop_trials_passed = 0
 
+
 func append_new_metrics_entry(stop_trial: bool, correct_response: bool, response_time: int):
 		metrics_array.append([block_counter, trial_counter, is_feeder_left, stop_trial, correct_response, response_time, stop_signal_delay])
+
 
 func write_sst_raw_log(datetime_dict):
 	# open/create file
@@ -343,6 +350,7 @@ func write_sst_raw_log(datetime_dict):
 			raw_log_file.store_line(line.format(sub_array))
 		
 		raw_log_file.close()
+
 
 func write_sst_summary_log(datetime_dict):
 	# open/create file
