@@ -24,6 +24,8 @@ var blocks_index: int = 0
 #@export var test_block_span_max_digits: int = 9
 @export var trials_per_practice_block: int = 3
 @export var trials_per_test_block: int = 9
+@export var max_span_length: int = 7
+@export var starting_span_length: int = 3
 
 # counters
 var trials_per_block: int = trials_per_practice_block
@@ -182,8 +184,9 @@ func _process(_delta: float) -> void:
 					
 					append_new_metrics_entry(required_input_span, player_input_span)
 					
-					span_length += 1
-					print("span length increased to " + str(span_length))
+					if span_length < max_span_length:
+						span_length += 1
+						print("span length increased to " + str(span_length))
 					
 					scene_reset()
 				
@@ -265,7 +268,7 @@ func reset_counters():
 	block_counter = 0
 	trial_counter = 0
 	trials_passed = 0
-	span_length = 3
+	span_length = starting_span_length
 
 func append_new_metrics_entry(required_input_array: Array, player_input_array: Array):
 	metrics_array.append([block_counter, trial_counter, span_length, is_trial_passed, required_input_array, player_input_array])
